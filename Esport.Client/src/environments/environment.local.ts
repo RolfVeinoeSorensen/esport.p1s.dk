@@ -4,9 +4,7 @@
 
 export const environment = {
   site: 'https://localhost:4200',
-  sitename: 'Hourplanner.com',
-  sitemode: 'dev',
-  matomoUrl: 'http://matomo.hourplanner.com',
+  sitename: 'esport.p1s.dk',
   matomoSiteId: '3',
   apiUrl: 'http://localhost:4302',
 };

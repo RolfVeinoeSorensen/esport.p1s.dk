@@ -59,14 +59,14 @@ try
             config.PostProcess = document =>
             {
                 document.Info.Version = "v1";
-                document.Info.Title = "Hourplanner API";
-                document.Info.Description = "API for interacting with Hourplanner";
+                document.Info.Title = "esport.p1s.dk API";
+                document.Info.Description = "API for interacting with esport.p1s.dk";
                 document.Info.TermsOfService = "None";
                 document.Info.Contact = new NSwag.OpenApiContact
                 {
-                    Name = "hourplanner.com",
-                    Email = "mail@hourplanner.com",
-                    Url = "https://www.hourplanner.com"
+                    Name = "esport.p1s.dk",
+                    Email = "rvs@easymodules.net",
+                    Url = "https://esport.p1s.dk"
                 };
             };
         });

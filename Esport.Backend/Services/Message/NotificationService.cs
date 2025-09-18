@@ -35,7 +35,7 @@ namespace Esport.Backend.Services.Message
                 {
                     To = user.Username,
                     Body = html,
-                    Subject = "Hourplanner.com - Reset password"
+                    Subject = "esport.p1s.dk - Reset password"
                 };
                 await _emailSender.SendEmailAsync(email);
 

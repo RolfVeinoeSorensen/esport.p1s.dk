@@ -49,7 +49,7 @@ export class AppComponent implements OnInit {
   private router = inject(Router);
   private activatedRoute = inject(ActivatedRoute);
   private ui = inject(UiService);
-  title = 'Hourplanner';
+  title = 'esport.p1s.dk';
   items: MenuItem[] | undefined;
   private locale = inject(LOCALE_ID);
   private meta = inject(Meta);
