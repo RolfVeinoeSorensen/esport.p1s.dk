@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="Esport.Backend/Esport.Backend.csproj" />
+  <Project Path="Esport.Database/Esport.Database.csproj" />
+</Solution>

@@ -1,0 +1,50 @@
+name: "Esport"
+services:
+  esport_client:
+    build:
+      platforms:
+      - "linux/amd64"
+      - "linux/arm64"
+      context: ./Esport.Client
+      dockerfile: Dockerfile
+    container_name: "esport_client"
+    ports:
+      - 4301:80
+  esport_backend:
+    build:
+      context: ./Esport.Backend
+      dockerfile: Dockerfile
+    container_name: "esport_backend"
+    depends_on:
+      esport_mssql:
+        condition: service_started
+      esport_database:
+        condition: service_completed_successfully
+    ports:
+      - 4302:8080
+  esport_database:
+    build:
+      context: ./Esport.Database
+      dockerfile: Dockerfile
+    container_name: "esport_database"
+    depends_on:
+      esport_mssql:
+        condition: service_started
+  esport_mssql:
+    build:
+      context: ./Esport.MSSQL
+      dockerfile: Dockerfile
+    container_name: "esport_mssql"
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=Z-PQW9aCvSE!nhg
+      - MSSQL_PID=Express
+    volumes:
+      - ./Esport.MSSQL/data:/var/opt/mssql/data
+      - ./Esport.MSSQL/log:/var/opt/mssql/log
+      - ./Esport.MSSQL/secrets:/var/opt/mssql/secrets
+    ports:
+      - 4303:1433
+volumes:
+  esport_mssql:
+    driver: local

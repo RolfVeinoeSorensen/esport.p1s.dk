@@ -1,0 +1,32 @@
+<header class="main-bg w-full sticky top-0">
+<p-menubar [model]="items">
+    <ng-template #start>
+      <a href="/">
+            <img
+              class="brand-logo"
+              src="logos/logo.png"
+              srcset="logos/logo.svg"
+              alt="Hourplanner logo" />
+      </a>
+    </ng-template>
+    <ng-template #item let-item let-root="root">
+        <a pRipple class="flex items-center p-menubar-item-link">
+            <span>{{ item.label }}</span>
+        </a>
+    </ng-template>
+    <ng-template #end>
+        <div class="flex items-center gap-2">
+            <input type="text" pInputText placeholder="Search" class="size-auto" />
+            <p-button icon="pi pi-moon" [rounded]="true" [text]="true" severity="info" [title]="'Toggle Dark Mode'" (onClick)="toggleDarkMode()"/>
+            <p-button icon="pi pi-user" [rounded]="true" [text]="true" severity="info" [title]="'Sign in'" (onClick)="logIn()"/>
+        </div>
+    </ng-template>
+</p-menubar>
+</header>
+
+<div class="container mx-auto py-4 main">
+  <router-outlet #routerOutlet="outlet" [@routeAnimation]="getAnimationData(routerOutlet)"></router-outlet>
+</div>
+<app-footer></app-footer>
+
+<p-scrollTop></p-scrollTop>
