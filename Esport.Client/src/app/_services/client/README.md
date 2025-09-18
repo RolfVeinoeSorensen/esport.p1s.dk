@@ -1,6 +1,6 @@
 # @
 
-API for interacting with Hourplanner.com
+API for interacting with esport.p1s.dk
 
 The version of the OpenAPI document: v1
 
