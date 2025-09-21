@@ -1,4 +1,4 @@
-<header class="main-bg w-full sticky top-0 pl-28">
+<header class="main-bg w-full sticky top-0 pl-20">
   <p-menubar [model]="items">
     <ng-template #start>
       <a href="/" class="brand-logo-link">
@@ -26,12 +26,14 @@
           (onClick)="toggleDarkMode()"
         />
         <p-button
-          (click)="visibleLogin = true"
+          (click)="isLoggedIn === true ? visibleLogin = false : visibleLogin = true"
           icon="pi pi-user"
           [rounded]="true"
           [text]="true"
+          [label]="isLoggedIn === true ? 'Hej, ' + user.firstName : 'Log ind'"
           severity="info"
         />
+        <form [formGroup]="loginForm" (ngSubmit)="signIn()">
         <p-dialog
           maskStyleClass="backdrop-blur-sm"
           [(visible)]="visibleLogin"
@@ -46,6 +48,7 @@
                 <input
                   pInputText
                   id="username"
+                  formControlName="username"
                   class="!bg-white/20 !border-0 !p-4 !text-primary-50 w-80"
                 />
               </div>
@@ -56,6 +59,7 @@
                 <input
                   pInputText
                   id="password"
+                  formControlName="password"
                   class="!bg-white/20 !border-0 !p-4 !text-primary-50 w-80"
                   type="password"
                 />
@@ -79,6 +83,7 @@
             </div>
           </ng-template>
         </p-dialog>
+        </form>
       </div>
     </ng-template>
   </p-menubar>

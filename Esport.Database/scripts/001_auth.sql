@@ -39,7 +39,7 @@ VALUES
     1, 
     N'Rolf', 
     N'Veinø Sørensen', 
-    N'rvs@hourplanner.com', 
+    N'rvs@easymodules.net', 
     1, 
     CAST(N'0001-01-01T00:00:00.0000000' AS DateTime2), 
     N'$2a$11$uniuE9CTaTV/3dqbUHOzQ.ugjm5Yd7efdEPVYYgKQ1jRSHELwEmme', 

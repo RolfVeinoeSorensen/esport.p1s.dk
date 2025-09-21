@@ -1,14 +1,14 @@
-import { Component, inject, LOCALE_ID, OnInit } from '@angular/core';
+import { Component, inject, LOCALE_ID, OnDestroy, OnInit } from '@angular/core';
 import {
   ActivatedRoute,
   NavigationEnd,
   Router,
   RouterOutlet,
-  RouterLink,
 } from '@angular/router';
+import { FormsModule,ReactiveFormsModule } from '@angular/forms';
+import { filter, first, map, mergeMap, Subscription } from 'rxjs';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { slideInAnimation } from '@app/animations';
-import { BehaviorSubject, Subscription, filter, map, mergeMap } from 'rxjs';
 import { MenuItem } from 'primeng/api';
 import { MenubarModule } from 'primeng/menubar';
 import { InputTextModule } from 'primeng/inputtext';
@@ -20,19 +20,16 @@ import { Meta } from '@angular/platform-browser';
 import { FooterComponent } from './cms/footer/footer.component';
 import { UiService } from '@services/ui.service';
 import { DialogModule } from 'primeng/dialog';
+import { AuthenticationService } from '@services/authentication.service';
+import {
+  UntypedFormBuilder,
+  UntypedFormGroup,
+  Validators,
+} from '@angular/forms';
+import { User } from '@models/user';
 
 @Component({
   selector: 'app-root',
-  animations: [
-    slideInAnimation,
-    trigger('slideInOut', [
-      transition(':enter', [
-        style({ transform: 'translateY(-100%)' }),
-        animate('500ms ease-in', style({ transform: 'translateY(0%)' })),
-      ]),
-      transition(':leave', [animate('500ms ease-in', style({ transform: 'translateY(-100%)' }))]),
-    ]),
-  ],
   imports: [
     RouterOutlet,
     MenubarModule,
@@ -43,20 +40,61 @@ import { DialogModule } from 'primeng/dialog';
     ButtonModule,
     FooterComponent,
     DialogModule,
+    ReactiveFormsModule,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
+  animations: [
+    slideInAnimation,
+    trigger('slideInOut', [
+      transition(':enter', [
+        style({ transform: 'translateY(-100%)' }),
+        animate('500ms ease-in', style({ transform: 'translateY(0%)' })),
+      ]),
+      transition(':leave', [
+        animate('500ms ease-in', style({ transform: 'translateY(-100%)' })),
+      ]),
+    ]),
+  ],
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
   private router = inject(Router);
   private activatedRoute = inject(ActivatedRoute);
   private ui = inject(UiService);
+  private authenticationService: AuthenticationService = inject(
+    AuthenticationService
+  );
+  userSubscription!: Subscription;
   title = 'esport.p1s.dk';
   items: MenuItem[] | undefined;
   private locale = inject(LOCALE_ID);
   private meta = inject(Meta);
   visibleLogin: boolean = false;
+  loginForm: UntypedFormGroup;
+  isLoggedIn = false;
+  user!: User;
+  // convenience getter for easy access to form fields
+  get f() {
+    return this.loginForm.controls;
+  }
+
+  constructor(private formBuilder: UntypedFormBuilder) {
+    this.loginForm = this.formBuilder.group({
+      username: [
+        '',
+        [Validators.required, Validators.email, Validators.maxLength(255)],
+      ],
+      password: ['', Validators.required],
+    });
+  }
+  ngOnDestroy(): void {
+    this.userSubscription.unsubscribe();
+  }
   ngOnInit(): void {
+    this.userSubscription = this.authenticationService.userSubject.subscribe(user => {
+      this.isLoggedIn = true;
+      this.user = user;
+    })
     if (
       typeof window !== 'undefined' &&
       window.matchMedia &&
@@ -78,16 +116,16 @@ export class AppComponent implements OnInit {
     ]);
     this.router.events
       .pipe(
-        filter(event => event instanceof NavigationEnd),
+        filter((event) => event instanceof NavigationEnd),
         map(() => this.activatedRoute),
-        map(route => {
+        map((route) => {
           while (route.firstChild) route = route.firstChild;
           return route;
         }),
-        filter(route => route.outlet === 'primary'),
-        mergeMap(route => route.data)
+        filter((route) => route.outlet === 'primary'),
+        mergeMap((route) => route.data)
       )
-      .subscribe(event => {
+      .subscribe((event) => {
         this.ui.setMeta({
           title: event['title'],
           description: event['description'],
@@ -95,9 +133,16 @@ export class AppComponent implements OnInit {
           url: event['ogUrl'] ?? this.router.url,
         });
       });
+    this.loginForm = this.formBuilder.group({
+      username: [
+        '',
+        [Validators.required, Validators.email, Validators.maxLength(255)],
+      ],
+      password: ['', Validators.required],
+    });
     this.items = [
       {
-        label: "Nyheder"
+        label: 'Nyheder',
       },
       {
         label: 'Ydelser',
@@ -116,7 +161,7 @@ export class AppComponent implements OnInit {
         ],
       },
       {
-        label: "Om os"
+        label: 'Om os',
       },
     ];
   }
@@ -131,5 +176,27 @@ export class AppComponent implements OnInit {
     const element = document.querySelector('html');
     if (element) element.classList.toggle('app-dark');
   }
-  signIn() {}
+  signIn() {
+    console.log(this.f)
+    // stop here if form is invalid
+    if (this.loginForm.invalid) {
+      return;
+    }
+    this.authenticationService
+      .login(this.f['username'].value, this.f['password'].value)
+      .pipe(first())
+      .subscribe({
+        next: () => {
+          // get return url from query parameters or default to home page
+          const returnUrl =
+            this.activatedRoute.snapshot.queryParams['returnUrl'] || '/';
+          this.router.navigateByUrl(returnUrl);
+        },
+        error: (error) => {
+          console.log(error);
+          // this.error = error;
+          // this.loading = false;
+        },
+      });
+  }
 }

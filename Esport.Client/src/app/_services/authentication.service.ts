@@ -16,7 +16,7 @@ export class AuthenticationService {
         private router: Router,
         private service: UsersService
     ) {
-        let lUser = localStorage.getItem('user');
+        let lUser =typeof window !== "undefined" ? localStorage.getItem('user') : null;
         if(lUser){
             this.userSubject.next(JSON.parse(lUser));
             this.user = this.userSubject.asObservable();
