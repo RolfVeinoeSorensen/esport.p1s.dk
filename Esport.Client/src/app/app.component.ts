@@ -19,6 +19,7 @@ import { ButtonModule } from 'primeng/button';
 import { Meta } from '@angular/platform-browser';
 import { FooterComponent } from './cms/footer/footer.component';
 import { UiService } from '@services/ui.service';
+import { DialogModule } from 'primeng/dialog';
 
 @Component({
   selector: 'app-root',
@@ -41,6 +42,7 @@ import { UiService } from '@services/ui.service';
     ScrollTop,
     ButtonModule,
     FooterComponent,
+    DialogModule,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
@@ -53,6 +55,7 @@ export class AppComponent implements OnInit {
   items: MenuItem[] | undefined;
   private locale = inject(LOCALE_ID);
   private meta = inject(Meta);
+  visibleLogin: boolean = false;
   ngOnInit(): void {
     if (
       typeof window !== 'undefined' &&
@@ -94,24 +97,26 @@ export class AppComponent implements OnInit {
       });
     this.items = [
       {
-        label: 'Services',
+        label: "Nyheder"
+      },
+      {
+        label: 'Ydelser',
         items: [
           {
-            label: 'Core',
+            label: 'Træning',
             shortcut: '⌘+S',
           },
           {
-            label: 'Blocks',
+            label: 'LAN',
             shortcut: '⌘+B',
           },
           {
             separator: true,
           },
-          {
-            label: 'UI Kit',
-            shortcut: '⌘+U',
-          },
         ],
+      },
+      {
+        label: "Om os"
       },
     ];
   }
@@ -126,5 +131,5 @@ export class AppComponent implements OnInit {
     const element = document.querySelector('html');
     if (element) element.classList.toggle('app-dark');
   }
-  logIn() {}
+  signIn() {}
 }

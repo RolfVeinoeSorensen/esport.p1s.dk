@@ -1,12 +1,28 @@
 import { definePreset } from '@primeng/themes';
-import Aura from '@primeng/themes/aura';
+import Material from '@primeng/themes/material';
 
-const ThemePreset = definePreset(Aura, {
+const ThemePreset = definePreset(Material, {
   // PrimeNG customizations, see https://primeng.org/theming#customization for examples
   // Also view the node_modules/@primeng/themes/aura/base/index.ts to see a list of variables
   semantic: {
+    primary: {
+      50: '{blue.50}',
+      100: '{blue.100}',
+      200: '{blue.200}',
+      300: '{blue.300}',
+      400: '{blue.400}',
+      500: '{blue.500}',
+      600: '{blue.600}',
+      700: '{blue.700}',
+      800: '{blue.800}',
+      900: '{blue.900}',
+      950: '{blue.950}',
+    },
     colorScheme: {
       light: {
+        content: {
+          background: '#FFFDD0'
+        },
         surface: {
           0: '#ffffff',
           50: '{gray.50}',
@@ -52,8 +68,8 @@ const ThemePreset = definePreset(Aura, {
   },
   components: {
     menubar: {
-      root:{
-        background: '#253749',
+      root: {
+        background: '#212124',
         color: '#ffffff',
         borderRadius: '0px',
         borderColor: 'transparent',
@@ -74,33 +90,32 @@ const ThemePreset = definePreset(Aura, {
         },
       },
       submenu: {
-        background: '#253749',
+        background: '#212124',
         borderRadius: '0px',
       },
       mobileButton: {
         color: '{text.muted.color}',
         hoverColor: '{text.hover.muted.color}',
         hoverBackground: '#1F2E3D',
-      }
+      },
     },
     drawer: {
       colorScheme: {
         dark: {
-          root:{
+          root: {
             background: '#253749',
             borderColor: '#253749',
             color: '#ffffff',
-          }
+          },
         },
-        light:{
-            root:{
+        light: {
+          root: {
             background: '#253749',
             borderColor: '#253749',
             color: '#ffffff',
-          }
-        }
-      }
-
+          },
+        },
+      },
     },
     datatable: {
       headerCell: {

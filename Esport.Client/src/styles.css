@@ -3,84 +3,58 @@
 html,
 body {
   margin: 0;
+  background-color: #FBFAF5;
+}
+.app-dark html, .app-dark body{
+  background-color: #161618;
 }
 .main {
   min-height: calc(100vh - 250px);
   padding-bottom: 2rem;
 }
-.main-bg{
-  background-color: #253749;
+.main-bg, .app-dark .main-bg {
+  background-color: #212124;
 }
-.brand-logo {
-  height: 96px;
+.brand-logo-link {
   position: fixed;
   top: 4px;
   left: 4px;
 }
-h1 {
-  display: block;
-  font-size: 2em;
-  font-weight: bold;
-  margin-block-start: .67em;
-  margin-block-end: .67em;
+.brand-logo-img {
+  height: 96px;
 }
-
+h1,
 h2,
-:-moz-any(article, aside, nav, section)
-h1 {
+h3 {
   display: block;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  font-weight: 800;
+}
+h1 {
+  font-size: 2em;
+}
+
+h2 {
   font-size: 1.5em;
-  font-weight: bold;
-  margin-block-start: .83em;
-  margin-block-end: .83em;
 }
 
-h3,
-:-moz-any(article, aside, nav, section)
-:-moz-any(article, aside, nav, section)
-h1 {
-  display: block;
+h3 {
   font-size: 1.17em;
-  font-weight: bold;
-  margin-block-start: 1em;
-  margin-block-end: 1em;
 }
 
-h4,
-:-moz-any(article, aside, nav, section)
-:-moz-any(article, aside, nav, section)
-:-moz-any(article, aside, nav, section)
-h1 {
-  display: block;
-  font-size: 1.00em;
-  font-weight: bold;
-  margin-block-start: 1.33em;
-  margin-block-end: 1.33em;
+h4 {
+  font-size: 1em;
 }
 
-h5,
-:-moz-any(article, aside, nav, section)
-:-moz-any(article, aside, nav, section)
-:-moz-any(article, aside, nav, section)
-:-moz-any(article, aside, nav, section)
-h1 {
-  display: block;
+h5 {
   font-size: 0.83em;
-  font-weight: bold;
-  margin-block-start: 1.67em;
-  margin-block-end: 1.67em;
 }
 
-h6,
-:-moz-any(article, aside, nav, section)
-:-moz-any(article, aside, nav, section)
-:-moz-any(article, aside, nav, section)
-:-moz-any(article, aside, nav, section)
-:-moz-any(article, aside, nav, section)
-h1 {
-  display: block;
+h6 {
   font-size: 0.67em;
-  font-weight: bold;
-  margin-block-start: 2.33em;
-  margin-block-end: 2.33em;
+}
+p {
+  display: block;
+  padding-bottom: 0.5rem;
 }
