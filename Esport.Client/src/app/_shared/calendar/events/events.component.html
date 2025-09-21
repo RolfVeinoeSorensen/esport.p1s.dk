@@ -1,0 +1,8 @@
+<div class="event-list-container">
+    <ul>
+        <h3 *ngFor="let event of events">
+            {{ event }}
+            <button class="remove-event-btn" (click)="onRemoveEvent(event)">x</button>
+        </h3>
+    </ul>
+</div>

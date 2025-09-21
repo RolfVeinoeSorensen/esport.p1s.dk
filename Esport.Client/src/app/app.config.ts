@@ -18,6 +18,11 @@ import { BASE_PATH } from '@services/client';
 import { JwtInterceptor } from '@helpers/jwt.interceptor';
 import { ErrorInterceptor } from '@helpers/error.interceptor';
 import { BrowserAnimationsModule, provideAnimations } from '@angular/platform-browser/animations';
+import { LOCALE_ID } from '@angular/core';
+import { registerLocaleData } from '@angular/common';
+import localeDa from '@angular/common/locales/da';
+
+registerLocaleData(localeDa);
 export function getBaseUrl(): string {
   return environment.apiUrl;
 }
@@ -46,6 +51,7 @@ export const appConfig: ApplicationConfig = {
       },
     }),
     provideHttpClient(),
+    { provide: LOCALE_ID, useValue: 'da-DK' },
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     { provide: BASE_PATH, useValue: environment.apiUrl },

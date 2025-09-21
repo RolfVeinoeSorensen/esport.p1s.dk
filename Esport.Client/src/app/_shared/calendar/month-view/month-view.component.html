@@ -1,0 +1,19 @@
+<div class="grid md:grid-cols-7 grid-cols-1 gap-2 mx-auto">
+    <div class="flex flex-col" *ngFor="let day of days" (click)="selectDate(day)">
+        <h4>{{ day | date : "EEEE, dd" }}</h4>
+        @if (checkEvent(day) >= 1){
+            <p>...</p>
+        }
+        <div class="flex align-items-end">
+            <button class="add-event-btn" (click)="addEvent(day)">+</button>
+        </div>
+    </div>
+</div>
+
+<!-- Events section -->
+<div class="events-container" *ngIf="selectedDate">
+    <h3>Events for {{ selectedDate | date : "EEEE, MMMM dd, yyyy" }}</h3>
+
+    <app-events [events]="events[selectedDate.toISOString().split('T')[0]] || []"
+        (removeEvent)="removeEvent(selectedDate, $event)"></app-events>
+</div>
