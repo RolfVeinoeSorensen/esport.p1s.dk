@@ -5,13 +5,15 @@ body {
   margin: 0;
 }
 .main {
-  width: 100%;
-  min-height: calc(100vh - 150px);
+  min-height: calc(100vh - 250px);
   padding-bottom: 2rem;
 }
 .main-bg{
   background-color: #253749;
 }
 .brand-logo {
-  height: 48px;
+  height: 64px;
+  position: fixed;
+  top: 10px;
+  left: 10px;
 }

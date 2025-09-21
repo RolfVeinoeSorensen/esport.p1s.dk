@@ -1,4 +1,4 @@
-<header class="main-bg w-full sticky top-0">
+<header class="main-bg w-full sticky top-0 pl-28">
 <p-menubar [model]="items">
     <ng-template #start>
       <a href="/">
@@ -6,7 +6,7 @@
               class="brand-logo"
               src="logos/logo.png"
               srcset="logos/logo.svg"
-              alt="Hourplanner logo" />
+              alt="E-sport p1s.dk logo" />
       </a>
     </ng-template>
     <ng-template #item let-item let-root="root">
@@ -24,7 +24,7 @@
 </p-menubar>
 </header>
 
-<div class="container mx-auto py-4 main">
+<div class="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8 main">
   <router-outlet #routerOutlet="outlet" [@routeAnimation]="getAnimationData(routerOutlet)"></router-outlet>
 </div>
 <app-footer></app-footer>

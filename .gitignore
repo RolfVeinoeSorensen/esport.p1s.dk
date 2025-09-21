@@ -1,3 +1,5 @@
 /Esport.MSSQL/data
 /Esport.MSSQL/log
 /Esport.MSSQL/secrets
+/Esport.Backend/obj
+/Esport.Database/obj
