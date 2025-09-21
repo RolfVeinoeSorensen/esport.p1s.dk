@@ -1,7 +1,7 @@
-import { Inject, Injectable, inject } from '@angular/core';
+import { Inject, Injectable, inject, DOCUMENT } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
 import { environment } from '@environments/environment';
-import { DOCUMENT } from '@angular/common';
+
 
 export interface MetaData {
   title: string | undefined;
