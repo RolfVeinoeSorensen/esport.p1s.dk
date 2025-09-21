@@ -21,7 +21,7 @@ const ThemePreset = definePreset(Material, {
     colorScheme: {
       light: {
         content: {
-          background: '#FFFDD0'
+          background: '#FFFDD0',
         },
         surface: {
           0: '#ffffff',
@@ -125,6 +125,23 @@ const ThemePreset = definePreset(Material, {
         borderColor: '#253749',
         color: '#ffffff',
         padding: '0.75rem 1rem',
+      },
+    },
+    card: {
+      root: {
+        borderRadius: "0.5rem"
+      },
+      colorScheme: {
+        dark: {
+          root: {
+            background: '#212124',
+          },
+        },
+        light: {
+          root: {
+            background: '#eeeeee',
+          },
+        },
       },
     },
   },
