@@ -3,3 +3,5 @@
 /Esport.MSSQL/secrets
 /Esport.Backend/obj
 /Esport.Database/obj
+/.vs
+/Esport.Backend/bin

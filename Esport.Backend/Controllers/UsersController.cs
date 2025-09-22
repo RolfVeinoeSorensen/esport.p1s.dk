@@ -41,8 +41,7 @@ namespace Esport.Backend.Controllers
         public ActionResult<AuthenticateResponse> GetById(int id)
         {
             // only admins can access other user records
-            var currentUser = (User)HttpContext.Items["User"];
-            if (id != currentUser.Id && currentUser.Role != UserRole.Admin)
+            if (HttpContext.Items["User"] is not User currentUser || (id != currentUser.Id && currentUser.Role != UserRole.Admin))
                 return Unauthorized(new { message = "Unauthorized" });
 
             var user =  userService.GetById(id);

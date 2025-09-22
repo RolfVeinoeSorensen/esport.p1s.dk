@@ -5,6 +5,8 @@ namespace Esport.Backend.Enums
         Admin = 1,
         Family = 2,
         Friend = 3,
-        User = 4
+        User = 4,
+        MemberKid = 5,
+        MemberAdult = 6
     }
 }

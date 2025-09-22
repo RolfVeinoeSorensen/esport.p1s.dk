@@ -1,0 +1,29 @@
+SET IDENTITY_INSERT [auth].[Users] ON 
+GO
+INSERT [auth].[Users] 
+(
+    [Id], 
+    [FirstName], 
+    [LastName], 
+    [Username], 
+    [Role], 
+    [CreatedUtc], 
+    [PasswordHash], 
+    [PasswordResetToken], 
+    [PasswordResetTokenExpiration]
+) 
+VALUES 
+(
+    1, 
+    N'Rolf', 
+    N'Veinø Sørensen', 
+    N'rvs@easymodules.net', 
+    1, 
+    CAST(N'0001-01-01T00:00:00.0000000' AS DateTime2), 
+    N'$2a$11$uniuE9CTaTV/3dqbUHOzQ.ugjm5Yd7efdEPVYYgKQ1jRSHELwEmme', 
+    N'$2a$11$DdhJ5lOi769tZO95PznW2u2obMYx/uOgoE1MjkEweqgrmA3OwC1Ba', 
+    CAST(N'2024-07-16T00:07:28.9355702' AS DateTime2)
+)
+GO
+SET IDENTITY_INSERT [auth].[Users] OFF
+GO
