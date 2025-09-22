@@ -67,6 +67,19 @@ const ThemePreset = definePreset(Material, {
     },
   },
   components: {
+    button: {
+      colorScheme:{
+        dark:{
+          text: {
+            primary:{
+              hoverBackground: '#395570',
+              activeBackground: "1F2E3D",
+              color: '#ffffff',
+            }
+          }
+        }
+      }
+    },
     menubar: {
       root: {
         background: '#212124',

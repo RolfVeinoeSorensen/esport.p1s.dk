@@ -1,11 +1,14 @@
 <div class="grid md:grid-cols-7 grid-cols-1 gap-2 mx-auto">
-    <div class="flex flex-col bg-gray-200 dark:bg-gray-800 h-40" *ngFor="let day of days" (click)="selectDate(day)">
-        <h4 class="bg-sky-800 w-full text-center">{{ day | date : "EEEE, dd" }}</h4>
-        @if (checkEvent(day) >= 1){
-            <p>...</p>
+    <div class="flex flex-col bg-gray-200 dark:bg-gray-800 h-40 rounded-lg relative" *ngFor="let day of days" (click)="selectDate(day)">
+        <h4 class="bg-sky-800 w-full text-center text-white rounded-t-lg p-2">{{ day | date : "EEEE, dd" }}</h4>
+        @if (checkEvent(day) === true){
+            @for (ev of getEvent(day); track ev){
+                <p class="w-full p-2 truncate">{{ev}}</p>
+            }
+
         }
-        <div class="flex align-items-end">
-            <button class="add-event-btn" (click)="addEvent(day)">+</button>
+        <div class="absolute bottom-0 right-0">
+            <p-button class="add-event-btn" (click)="addEvent(day)" icon="pi pi-calendar-plus" text="true" />
         </div>
     </div>
 </div>

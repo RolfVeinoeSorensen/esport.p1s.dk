@@ -2,10 +2,12 @@ import { Component, Input, OnInit } from '@angular/core';
 import { EventsComponent } from '../events/events.component';
 import { CommonModule } from '@angular/common';
 import { EventService } from '../events/events.service';
+import { ButtonModule } from 'primeng/button';
+import { DialogModule } from 'primeng/dialog';
 
 @Component({
   selector: 'app-month-view',
-  imports: [CommonModule, EventsComponent],
+  imports: [CommonModule, EventsComponent, ButtonModule, DialogModule],
   templateUrl: './month-view.component.html',
   styleUrl: './month-view.component.css'
 })
@@ -63,9 +65,14 @@ export class MonthViewComponent implements OnInit {
         this.eventService.removeEvent(dateString, event);
         this.loadEvents();
     }
-    checkEvent(day: Date) {
+    checkEvent(day: Date):boolean {
         const dateString = day.toISOString().split('T')[0];
         const arr = this.eventService.getEvents(dateString);
-        return arr.length;
+        return arr.length > 0;
+    }
+    getEvent(day: Date) {
+        const dateString = day.toISOString().split('T')[0];
+        const arr = this.eventService.getEvents(dateString);
+        return arr;
     }
 }
