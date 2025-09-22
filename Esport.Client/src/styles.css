@@ -1,18 +1,19 @@
 @import "tailwindcss";
 @import "primeicons/primeicons.css";
+@custom-variant dark (&:where(.dark, .dark *));
 html,
 body {
   margin: 0;
   background-color: #FBFAF5;
 }
-.app-dark html, .app-dark body{
+.dark html, .dark body{
   background-color: #161618;
 }
 .main {
   min-height: calc(100vh - 250px);
   padding-bottom: 2rem;
 }
-.main-bg, .app-dark .main-bg {
+.main-bg, .dark .main-bg {
   background-color: #212124;
 }
 .brand-logo-link {

@@ -4,8 +4,9 @@ import {
   NavigationEnd,
   Router,
   RouterOutlet,
+  RouterLink
 } from '@angular/router';
-import { FormsModule,ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { filter, first, map, mergeMap, Subscription } from 'rxjs';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { slideInAnimation } from '@app/animations';
@@ -27,11 +28,13 @@ import {
   Validators,
 } from '@angular/forms';
 import { User } from '@models/user';
+import { UserRole } from './_models/userrole';
 
 @Component({
   selector: 'app-root',
   imports: [
     RouterOutlet,
+    RouterLink,
     MenubarModule,
     InputTextModule,
     Ripple,
@@ -41,7 +44,8 @@ import { User } from '@models/user';
     FooterComponent,
     DialogModule,
     ReactiveFormsModule,
-  ],
+    RouterLink
+],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
   animations: [
@@ -91,10 +95,15 @@ export class AppComponent implements OnInit, OnDestroy {
     this.userSubscription.unsubscribe();
   }
   ngOnInit(): void {
-    this.userSubscription = this.authenticationService.userSubject.subscribe(user => {
-      this.isLoggedIn = true;
-      this.user = user;
-    })
+    this.userSubscription = this.authenticationService.userSubject.subscribe(
+      (user) => {
+        this.user = user;
+        if (user.username !== undefined) {
+          this.isLoggedIn = true;
+          this.refreshMenu();
+        }
+      }
+    );
     if (
       typeof window !== 'undefined' &&
       window.matchMedia &&
@@ -140,6 +149,9 @@ export class AppComponent implements OnInit, OnDestroy {
       ],
       password: ['', Validators.required],
     });
+    this.refreshMenu();
+  }
+  refreshMenu() {
     this.items = [
       {
         label: 'Nyheder',
@@ -164,6 +176,26 @@ export class AppComponent implements OnInit, OnDestroy {
         label: 'Om os',
       },
     ];
+    if (this.isLoggedIn) {
+      this.items.push({
+        label: 'Mine ting',
+        items: [
+          {
+            label: "Overblik",
+            routerLink: "my-stuff"
+          },
+          {
+            label: 'Kalender',
+            routerLink: "my-stuff/team-calendar",
+          },
+        ],
+      });
+    }
+    if (this.user.role === UserRole.Admin) {
+      this.items.push({
+        label: 'Administration',
+      });
+    }
   }
   getAnimationData(outlet: RouterOutlet) {
     return (
@@ -174,14 +206,14 @@ export class AppComponent implements OnInit, OnDestroy {
   }
   toggleDarkMode() {
     const element = document.querySelector('html');
-    if (element) element.classList.toggle('app-dark');
+    if (element) element.classList.toggle('dark');
   }
   signIn() {
-    console.log(this.f)
     // stop here if form is invalid
     if (this.loginForm.invalid) {
       return;
     }
+    this.visibleLogin = false;
     this.authenticationService
       .login(this.f['username'].value, this.f['password'].value)
       .pipe(first())

@@ -11,7 +11,7 @@
       </a>
     </ng-template>
     <ng-template #item let-item let-root="root">
-      <a pRipple class="flex items-center p-menubar-item-link">
+      <a pRipple class="flex items-center p-menubar-item-link" [routerLink]="item.routerLink">
         <span>{{ item.label }}</span>
       </a>
     </ng-template>
@@ -74,7 +74,7 @@
                 />
                 <p-button
                   label="Log ind"
-                  (click)="signIn()"
+                  type="ngSubmit"
                   [text]="true"
                   styleClass="!p-4 w-full !text-primary-50 !border !border-white/30 hover:!bg-white/10"
                   class="w-full"

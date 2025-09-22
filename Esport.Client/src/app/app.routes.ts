@@ -12,8 +12,22 @@ export const routes: Routes = [
       import('./cms/gdpr/gdpr.component').then((m) => m.GdprComponent),
   },
   {
-    path: 'team-calendar',
-    loadComponent: () =>
-      import('./cms/team-calendar/team-calendar.component').then((m) => m.TeamCalendarComponent),
+    path: 'my-stuff',
+    children: [
+      {
+        path: 'team-calendar',
+        loadComponent: () =>
+          import('./cms/my-stuff/team-calendar/team-calendar.component').then(
+            (m) => m.TeamCalendarComponent
+          ),
+      },
+      {
+        path: '',
+        loadComponent: () =>
+          import('./cms/my-stuff/my-stuff.component').then(
+            (m) => m.MyStuffComponent
+          ),
+      },
+    ],
   },
 ];

@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MonthViewComponent } from './month-view/month-view.component';
-
+import { ButtonModule } from 'primeng/button';
 @Component({
   selector: 'app-calendar',
-  imports: [CommonModule, MonthViewComponent],
+  imports: [CommonModule, MonthViewComponent, ButtonModule],
   templateUrl: './calendar.component.html',
   styleUrl: './calendar.component.css'
 })

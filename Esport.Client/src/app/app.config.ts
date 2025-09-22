@@ -45,7 +45,7 @@ export const appConfig: ApplicationConfig = {
         preset: ThemePreset,
         options: {
           prefix: 'p',
-          darkModeSelector: '.app-dark',
+          darkModeSelector: '.dark',
           cssLayer: false,
         },
       },

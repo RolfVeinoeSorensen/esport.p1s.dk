@@ -1,8 +1,8 @@
 <div class="calendar-container">
-    <div class="header">
-        <button (click)="changeMonth(-1)">Forrige</button>
+    <div class="mx-auto grid justify-items-center grid-cols-3 gap-4 bg-gray-200 dark:bg-gray-800 p-2 mb-4">
+        <p-button (click)="changeMonth(-1)" label="Forrige" text="true" />
         <h2>{{ currentDate | date : "MMMM yyyy" }}</h2>
-        <button (click)="changeMonth(1)">Næste</button>
+        <p-button (click)="changeMonth(1)" label="Næste" text="true"/>
     </div>
     <app-month-view [date]="currentDate"></app-month-view>
 </div>
