@@ -14,7 +14,7 @@ import {
   withEventReplay,
 } from '@angular/platform-browser';
 import { HTTP_INTERCEPTORS, provideHttpClient } from '@angular/common/http';
-import { BASE_PATH } from '@services/client';
+import {  BASE_PATH as ClientBasePath, ApiModule as ClientModule, } from '@services/client';
 import { JwtInterceptor } from '@helpers/jwt.interceptor';
 import { ErrorInterceptor } from '@helpers/error.interceptor';
 import { BrowserAnimationsModule, provideAnimations } from '@angular/platform-browser/animations';
@@ -30,6 +30,7 @@ export function getBaseUrl(): string {
 export const appConfig: ApplicationConfig = {
   providers: [
     BrowserModule,
+    ClientModule,
     BrowserAnimationsModule,
     provideAnimations(),
     provideZoneChangeDetection({ eventCoalescing: true }),
@@ -54,7 +55,7 @@ export const appConfig: ApplicationConfig = {
     { provide: LOCALE_ID, useValue: 'da-DK' },
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-    { provide: BASE_PATH, useValue: environment.apiUrl },
+    { provide: ClientBasePath, useValue: environment.apiUrl },
     ScrollerModule,
     ScrollTopModule,
   ],
