@@ -3,10 +3,10 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  site: 'https://localhost:4200',
+  site: 'https://p1s.dk',
   sitename: 'esport.p1s.dk',
   sitemode: 'dev',
-  apiUrl: 'http://localhost:4302',
+  apiUrl: 'http://api.p1s.dk',
 };
 
 /*
