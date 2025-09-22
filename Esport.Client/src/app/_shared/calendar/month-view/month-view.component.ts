@@ -16,6 +16,7 @@ export class MonthViewComponent implements OnInit {
     days: Date[] = [];
     events: { [key: string]: string[] } = {};
     selectedDate: Date | null = null;
+    visibleDay = false;
 
     constructor(private eventService: EventService) { }
 
@@ -30,6 +31,7 @@ export class MonthViewComponent implements OnInit {
     }
     selectDate(day: Date) {
         this.selectedDate = day;
+        this.visibleDay = true;
     }
     getDaysInMonth(): Date[] {
         const days = [];
@@ -65,12 +67,12 @@ export class MonthViewComponent implements OnInit {
         this.eventService.removeEvent(dateString, event);
         this.loadEvents();
     }
-    checkEvent(day: Date):boolean {
+    checkEvents(day: Date):boolean {
         const dateString = day.toISOString().split('T')[0];
         const arr = this.eventService.getEvents(dateString);
         return arr.length > 0;
     }
-    getEvent(day: Date) {
+    getEvents(day: Date) {
         const dateString = day.toISOString().split('T')[0];
         const arr = this.eventService.getEvents(dateString);
         return arr;

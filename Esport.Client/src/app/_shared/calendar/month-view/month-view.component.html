@@ -1,22 +1,39 @@
 <div class="grid md:grid-cols-7 grid-cols-1 gap-2 mx-auto">
-    <div class="flex flex-col bg-gray-200 dark:bg-gray-800 h-40 rounded-lg relative" *ngFor="let day of days" (click)="selectDate(day)">
-        <h4 class="bg-sky-800 w-full text-center text-white rounded-t-lg p-2">{{ day | date : "EEEE, dd" }}</h4>
-        @if (checkEvent(day) === true){
-            @for (ev of getEvent(day); track ev){
-                <p class="w-full p-2 truncate">{{ev}}</p>
-            }
-
-        }
-        <div class="absolute bottom-0 right-0">
-            <p-button class="add-event-btn" (click)="addEvent(day)" icon="pi pi-calendar-plus" text="true" />
-        </div>
+  <div
+    class="flex flex-col bg-gray-200 dark:bg-gray-800 h-40 rounded-lg relative"
+    *ngFor="let day of days"
+    (click)="selectDate(day)"
+  >
+    <h4 class="bg-sky-800 w-full text-center text-white rounded-t-lg p-2">
+      {{ day | date : "EEEE, dd" }}
+    </h4>
+    @if (checkEvents(day) === true){ @for (ev of getEvents(day); track ev){
+    <p class="w-full p-2 truncate">{{ ev }}</p>
+    } }
+    <div class="absolute bottom-0 right-0">
+      <p-button
+        class="add-event-btn"
+        (click)="addEvent(day)"
+        icon="pi pi-calendar-plus"
+        text="true"
+      />
     </div>
+  </div>
 </div>
 
 <!-- Events section -->
-<div class="events-container" *ngIf="selectedDate">
-    <h3>Events for {{ selectedDate | date : "EEEE, MMMM dd, yyyy" }}</h3>
-
-    <app-events [events]="events[selectedDate.toISOString().split('T')[0]] || []"
-        (removeEvent)="removeEvent(selectedDate, $event)"></app-events>
-</div>
+<p-dialog [(visible)]="visibleDay" [modal]="true" [style]="{ width: '90vw', height: '90vh' }">
+  <ng-template #header>
+    <div class="inline-flex items-center justify-center gap-2">
+      <h3>Events for {{ selectedDate | date : "EEEE, MMMM dd, yyyy" }}</h3>
+    </div>
+  </ng-template>
+  <div>
+    @if(selectedDate){
+    <app-events
+      [events]="getEvents(selectedDate)"
+      (removeEvent)="removeEvent(selectedDate, $event)"
+    ></app-events>
+    }
+  </div>
+</p-dialog>
