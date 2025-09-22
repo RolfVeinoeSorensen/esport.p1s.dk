@@ -173,7 +173,15 @@ export class AppComponent implements OnInit, OnDestroy {
         ],
       },
       {
-        label: 'Om os',
+        label: 'Klubben',
+        items: [
+          {
+            label: "Om os"
+          },
+          {
+            label: "Mød holdet"
+          }
+        ]
       },
     ];
     if (this.isLoggedIn) {

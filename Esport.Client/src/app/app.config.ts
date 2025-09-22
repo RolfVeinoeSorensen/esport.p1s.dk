@@ -14,10 +14,16 @@ import {
   withEventReplay,
 } from '@angular/platform-browser';
 import { HTTP_INTERCEPTORS, provideHttpClient } from '@angular/common/http';
-import {  BASE_PATH as ClientBasePath, ApiModule as ClientModule, } from '@services/client';
+import {
+  BASE_PATH as ClientBasePath,
+  ApiModule as ClientModule,
+} from '@services/client';
 import { JwtInterceptor } from '@helpers/jwt.interceptor';
 import { ErrorInterceptor } from '@helpers/error.interceptor';
-import { BrowserAnimationsModule, provideAnimations } from '@angular/platform-browser/animations';
+import {
+  BrowserAnimationsModule,
+  provideAnimations,
+} from '@angular/platform-browser/animations';
 import { LOCALE_ID } from '@angular/core';
 import { registerLocaleData } from '@angular/common';
 import localeDa from '@angular/common/locales/da';
