@@ -3,7 +3,7 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  site: 'https://localhost:4200',
+  site: 'https://localhost:4300',
   sitename: 'esport.p1s.dk',
   sitemode: 'dev',
   apiUrl: 'https://api.p1s.dk',

@@ -66,7 +66,7 @@ try
                 {
                     Name = "esport.p1s.dk",
                     Email = "rvs@easymodules.net",
-                    Url = "https://esport.p1s.dk"
+                    Url = "https://p1s.dk"
                 };
             };
         });
