@@ -4,7 +4,7 @@ namespace Esport.Backend.Services
 {
     public interface IEventService
     {
-        IEnumerable<Event> GetAllEvents();
+        IEnumerable<Event> GetAllEvents(DateTime startDateTime, DateTime endDateTime);
         Event GetEventById(int id);
         Event CreateOrUpdateEvent(Event ev);
         void DeleteEvent(int id);

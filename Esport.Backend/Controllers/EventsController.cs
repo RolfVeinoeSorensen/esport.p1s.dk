@@ -12,9 +12,9 @@ namespace Esport.Backend.Controllers
 
         [Authorize([UserRole.Admin, UserRole.MemberAdult, UserRole.MemberKid])]
         [HttpGet("[action]")]
-        public ActionResult<IEnumerable<Event>> GetAllEvents()
+        public ActionResult<IEnumerable<Event>> GetAllEvents(DateTime startDateTime, DateTime endDateTime)
         {
-            var events = eventService.GetAllEvents();
+            var events = eventService.GetAllEvents(startDateTime, endDateTime);
             return Ok(events);
         }
 
@@ -40,7 +40,7 @@ namespace Esport.Backend.Controllers
         [HttpDelete("[action]")]
         public ActionResult<Event> DeleteEvent(int id)
         {
-            if (HttpContext.Items["User"] is not User currentUser || (currentUser.Role != UserRole.Admin))
+            if (HttpContext.Items["User"] as User is not User currentUser || (currentUser.Role != UserRole.Admin))
                 return Unauthorized(new { message = "Unauthorized" });
 
             eventService.DeleteEvent(id);
@@ -51,7 +51,7 @@ namespace Esport.Backend.Controllers
         [HttpPost("[action]")]
         public ActionResult<Event> CreateOrUpdateUserToEvent(int eventId, int userId, DateTime? Invited, DateTime? Accepted, DateTime? Declined)
         {
-            if (HttpContext.Items["User"] is not User currentUser || (currentUser.Role != UserRole.Admin))
+            if (HttpContext.Items["User"] is not User currentUser || currentUser.Role != UserRole.Admin || currentUser.Id != userId)
                 return Unauthorized(new { message = "Unauthorized" });
 
             var eventResult = eventService.CreateOrUpdateUserToEvent(eventId, userId, Invited, Accepted, Declined);
@@ -62,7 +62,7 @@ namespace Esport.Backend.Controllers
         [HttpDelete("[action]")]
         public ActionResult<Event> DeleteUserFromEvent(int eventId, int userId)
         {
-            if (HttpContext.Items["User"] is not User currentUser || (currentUser.Role != UserRole.Admin))
+            if (HttpContext.Items["User"] is not User currentUser || currentUser.Role != UserRole.Admin || currentUser.Id != userId)
                 return Unauthorized(new { message = "Unauthorized" });
 
             var eventResult = eventService.DeleteUserFromEvent(eventId, userId);

@@ -69,9 +69,9 @@ namespace Esport.Backend.Services
             return GetEventById(eventId);
         }
 
-        public IEnumerable<Event> GetAllEvents()
+        public IEnumerable<Event> GetAllEvents(DateTime startDateTime, DateTime endDateTime)
         {
-            return db.Events.Include(e => e.EventsUsers).ThenInclude(eu => eu.User);
+            return [.. db.Events.Include(e => e.EventsUsers).ThenInclude(eu => eu.User).Where(ev=> ev.StartDateTime >= startDateTime && ev.EndDateTime <= endDateTime)];
         }
 
         public Event GetEventById(int id)

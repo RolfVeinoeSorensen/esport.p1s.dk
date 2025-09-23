@@ -1,9 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { EventsComponent } from '../events/events.component';
 import { CommonModule } from '@angular/common';
-import { EventService } from '../events/events.service';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
+import { EventsService } from '@app/_services/client';
+import { EventService } from '../events/events.service';
 
 @Component({
   selector: 'app-month-view',
@@ -18,7 +19,7 @@ export class MonthViewComponent implements OnInit {
     selectedDate: Date | null = null;
     visibleDay = false;
 
-    constructor(private eventService: EventService) { }
+    constructor(private eventsService: EventsService, private eventService: EventService) { }
 
     ngOnInit() {
         this.days = this.getDaysInMonth();
@@ -47,6 +48,13 @@ export class MonthViewComponent implements OnInit {
     }
 
     loadEvents() {
+        const y = this.selectedDate != null ? this.selectedDate.getFullYear() : new Date().getFullYear();
+        const m = this.selectedDate != null ? this.selectedDate.getMonth() : new Date().getMonth();
+        var firstDay = new Date(y, m, 1, 23,59,59,599);
+        var lastDay = new Date(y, m + 1, 0,0,0,0,0);
+        this.eventsService.eventsGetAllEvents(firstDay.toISOString(), lastDay.toISOString()).subscribe(events =>{
+            console.log(events)
+        });
         this.days.forEach((day) => {
             const dateString = day.toISOString().split('T')[0];
             this.events[dateString] = this.eventService.getEvents(dateString);
