@@ -2,6 +2,7 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace Esport.Backend.Entities;
 
@@ -17,5 +18,13 @@ public partial class Event
 
     public DateTime EndDateTime { get; set; }
 
+    public int CreatedBy { get; set; }
+
+    public DateTime CreatedDateTime { get; set; }
+
+    [JsonIgnore]
+    public virtual User CreatedByNavigation { get; set; }
+    
+    [JsonIgnore]
     public virtual ICollection<EventsUser> EventsUsers { get; set; } = new List<EventsUser>();
 }

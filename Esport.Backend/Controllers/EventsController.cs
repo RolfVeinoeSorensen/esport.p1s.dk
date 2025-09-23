@@ -10,6 +10,13 @@ namespace Esport.Backend.Controllers
     {
         private readonly IEventService eventService = eventService;
 
+        [HttpGet("[action]")]
+        public ActionResult<IEnumerable<Event>> GetDates(int month, int year)
+        {
+            var dates = Extensions.Date.GetMonthYear(month, year);
+            return Ok(dates);
+        }
+
         [Authorize([UserRole.Admin, UserRole.MemberAdult, UserRole.MemberKid])]
         [HttpGet("[action]")]
         public ActionResult<IEnumerable<Event>> GetAllEvents(DateTime startDateTime, DateTime endDateTime)
@@ -28,7 +35,7 @@ namespace Esport.Backend.Controllers
 
         [Authorize([UserRole.Admin, UserRole.MemberAdult, UserRole.MemberKid])]
         [HttpPost("[action]")]
-        public ActionResult<Event> CreateOrUpdateEvent(Event ev)
+        public ActionResult<Event> CreateOrUpdateEvent([FromBody]Event ev)
         {
             if (HttpContext.Items["User"] is not User currentUser || (currentUser.Role != UserRole.Admin))
                 return Unauthorized(new { message = "Unauthorized" });
@@ -49,12 +56,12 @@ namespace Esport.Backend.Controllers
 
         [Authorize([UserRole.Admin, UserRole.MemberAdult, UserRole.MemberKid])]
         [HttpPost("[action]")]
-        public ActionResult<Event> CreateOrUpdateUserToEvent(int eventId, int userId, DateTime? Invited, DateTime? Accepted, DateTime? Declined)
+        public ActionResult<Event> CreateOrUpdateUserToEvent([FromBody]EventsUser eventsUser)
         {
-            if (HttpContext.Items["User"] is not User currentUser || currentUser.Role != UserRole.Admin || currentUser.Id != userId)
+            if (HttpContext.Items["User"] is not User currentUser || currentUser.Role != UserRole.Admin || currentUser.Id != eventsUser.UserId)
                 return Unauthorized(new { message = "Unauthorized" });
 
-            var eventResult = eventService.CreateOrUpdateUserToEvent(eventId, userId, Invited, Accepted, Declined);
+            var eventResult = eventService.CreateOrUpdateUserToEvent(eventsUser);
             return Ok(eventResult);
         }
 

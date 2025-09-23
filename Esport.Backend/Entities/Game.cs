@@ -2,6 +2,7 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace Esport.Backend.Entities;
 
@@ -13,5 +14,6 @@ public partial class Game
 
     public string Description { get; set; }
 
+    [JsonIgnore]
     public virtual ICollection<GameServer> GameServers { get; set; } = new List<GameServer>();
 }

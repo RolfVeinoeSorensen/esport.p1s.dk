@@ -7,7 +7,6 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { EventsUser } from './eventsUser';
 
 
 export interface Event { 
@@ -16,6 +15,7 @@ export interface Event {
     description?: string;
     startDateTime: string;
     endDateTime: string;
-    eventsUsers?: Array<EventsUser>;
+    createdBy: number;
+    createdDateTime: string;
 }
 

@@ -44,7 +44,7 @@ namespace Esport.Backend.Controllers
 
         [AllowAnonymous]
         [HttpPost("[action]")]
-        public async Task<ActionResult<bool>> RegisterUser(RegisterRequest model)
+        public async Task<ActionResult<bool>> RegisterUser([FromBody]RegisterRequest model)
         {
             var response = await userService.RegisterUser(model);
             return Ok(response);

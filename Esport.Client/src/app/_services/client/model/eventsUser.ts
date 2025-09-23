@@ -7,8 +7,6 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { User } from './user';
-import { Event } from './event';
 
 
 export interface EventsUser { 
@@ -17,7 +15,5 @@ export interface EventsUser {
     invited?: string;
     accepted?: string;
     declined?: string;
-    event?: Event;
-    user?: User;
 }
 

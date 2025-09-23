@@ -9,7 +9,7 @@ namespace Esport.Backend.Services
         Event CreateOrUpdateEvent(Event ev);
         void DeleteEvent(int id);
 
-        Event CreateOrUpdateUserToEvent(int eventId, int userId, DateTime? Invited, DateTime? Accepted, DateTime? Declined);
+        Event CreateOrUpdateUserToEvent(EventsUser eventsUser);
         Event DeleteUserFromEvent(int eventId, int userId);
     }
 }

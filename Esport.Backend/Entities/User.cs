@@ -1,5 +1,6 @@
 ﻿#nullable disable
 
+using System.Text.Json.Serialization;
 using Esport.Backend.Enums;
 
 namespace Esport.Backend.Entities
@@ -42,8 +43,17 @@ namespace Esport.Backend.Entities
 
         public bool ConsentShowImages { get; set; }
 
-        public virtual ICollection<User> InverseParent { get; set; } = new List<User>();
+        public bool CanBringLaptop { get; set; }
 
+        public bool CanBringStationaryPc { get; set; }
+
+        public bool CanBringPlaystation { get; set; }
+
+        [JsonIgnore]
+        public virtual ICollection<Event> Events { get; set; } = new List<Event>();
+        [JsonIgnore]
+        public virtual ICollection<User> InverseParent { get; set; } = new List<User>();
+        [JsonIgnore]
         public virtual User Parent { get; set; }
     }
 }

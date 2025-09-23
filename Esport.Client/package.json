@@ -10,7 +10,8 @@
     "test": "ng test",
     "serve:ssr:Esport.Client": "node dist/Esport.client/server/server.mjs",
     "api-openapi-versions": "openapi-generator-cli version-manager list",
-    "api-client": "export JAVA_OPTS=-'Dio.swagger.parser.util.RemoteUrl.trustAll=true -Dio.swagger.v3.parser.util.RemoteUrl.trustAll=true' && openapi-generator-cli generate -i http://localhost:4302/swagger/v1/swagger.json -g typescript-angular -c ./swagger-codegen.options  -o ./src/app/_services/client --reserved-words-mappings abstract=abstract"
+    "api-client": "export JAVA_OPTS=-'Dio.swagger.parser.util.RemoteUrl.trustAll=true -Dio.swagger.v3.parser.util.RemoteUrl.trustAll=true' && openapi-generator-cli generate -i http://localhost:4302/swagger/v1/swagger.json -g typescript-angular -c ./swagger-codegen.options  -o ./src/app/_services/client --reserved-words-mappings abstract=abstract",
+    "api-client-win": "openapi-generator-cli generate -i http://localhost:4302/swagger/v1/swagger.json -g typescript-angular -c ./swagger-codegen.options  -o ./src/app/_services/client --reserved-words-mappings abstract=abstract"
   },
   "private": true,
   "dependencies": {
@@ -41,7 +42,7 @@
     "@angular/build": "^20.3.2",
     "@angular/cli": "^20.3.2",
     "@angular/compiler-cli": "^20.3.1",
-    "@openapitools/openapi-generator-cli": "^2.21.2",
+    "@openapitools/openapi-generator-cli": "^2.23.4",
     "@types/express": "^4.17.17",
     "@types/jasmine": "~5.1.0",
     "@types/node": "^18.18.0",

@@ -43,9 +43,17 @@ namespace Esport.Backend.Data
             modelBuilder.Entity<Event>(entity =>
             {
                 entity.Property(e => e.Id).HasColumnName("id");
+                entity.Property(e => e.CreatedDateTime).HasColumnType("datetime");
                 entity.Property(e => e.EndDateTime).HasColumnType("datetime");
-                entity.Property(e => e.Name).HasMaxLength(255);
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(255);
                 entity.Property(e => e.StartDateTime).HasColumnType("datetime");
+
+                entity.HasOne(d => d.CreatedByNavigation).WithMany(p => p.Events)
+                    .HasForeignKey(d => d.CreatedBy)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Events_Users");
             });
 
             modelBuilder.Entity<EventsUser>(entity =>
@@ -114,6 +122,9 @@ namespace Esport.Backend.Data
                 entity.Property(e => e.AddressPostalCode).HasMaxLength(10);
                 entity.Property(e => e.AddressSide).HasMaxLength(50);
                 entity.Property(e => e.AddressStreet).HasMaxLength(255);
+                entity.Property(e => e.CanBringLaptop).HasAnnotation("Relational:DefaultConstraintName", "DF_Users_CanBringLaptop");
+                entity.Property(e => e.CanBringPlaystation).HasAnnotation("Relational:DefaultConstraintName", "DF_Users_CanBringPlaystation");
+                entity.Property(e => e.CanBringStationaryPc).HasAnnotation("Relational:DefaultConstraintName", "DF_Users_CanBringStationaryPc");
                 entity.Property(e => e.ConsentShowImages).HasAnnotation("Relational:DefaultConstraintName", "DF_Users_ConsentShowImages");
                 entity.Property(e => e.Mobile).HasMaxLength(50);
                 entity.Property(e => e.PasswordHash).IsRequired();

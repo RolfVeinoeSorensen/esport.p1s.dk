@@ -29,8 +29,9 @@ export interface User {
     addressCity?: string;
     mobile?: string;
     consentShowImages: boolean;
-    inverseParent?: Array<User>;
-    parent?: User;
+    canBringLaptop: boolean;
+    canBringStationaryPc: boolean;
+    canBringPlaystation: boolean;
 }
 export namespace User {
 }

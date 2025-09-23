@@ -2,6 +2,7 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace Esport.Backend.Entities;
 
@@ -13,7 +14,8 @@ public partial class UsersGame
 
     public string InGameName { get; set; }
 
+    [JsonIgnore]
     public virtual Game Game { get; set; }
-
+    [JsonIgnore]
     public virtual User User { get; set; }
 }

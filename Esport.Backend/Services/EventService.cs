@@ -26,31 +26,20 @@ namespace Esport.Backend.Services
             }
         }
 
-        public Event CreateOrUpdateUserToEvent(int eventId, int userId, DateTime? Invited, DateTime? Accepted, DateTime? Declined)
+        public Event CreateOrUpdateUserToEvent(EventsUser eventsUser)
         {
-            var eu = db.EventsUsers.FirstOrDefault(eu => eu.EventId == eventId && eu.UserId == userId);
-            if (eu == null)
+            var eu = db.EventsUsers.Any(eu => eu.EventId == eventsUser.EventId && eu.UserId == eventsUser.UserId);
+            if (eu == false)
             {
-                eu = new EventsUser
-                {
-                    EventId = eventId,
-                    UserId = userId,
-                    Invited = Invited,
-                    Accepted = Accepted,
-                    Declined = Declined
-                };
-                db.EventsUsers.Add(eu);
+                db.EventsUsers.Add(eventsUser);
                 db.SaveChanges();
-                return GetEventById(eventId);
+                return GetEventById(eventsUser.EventId);
             }
             else
             {
-                eu.Invited = Invited;
-                eu.Accepted = Accepted;
-                eu.Declined = Declined;
-                db.EventsUsers.Update(eu);
+                db.EventsUsers.Update(eventsUser);
                 db.SaveChanges();
-                return GetEventById(eventId);
+                return GetEventById(eventsUser.EventId);
             }
         }
 
