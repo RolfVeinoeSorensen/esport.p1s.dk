@@ -15,7 +15,7 @@
       {{ day.key | date : "EEEE, dd" }}
     </h4>
     @if (day.value.events.length > -1){ @for (ev of day.value.events; track ev){
-    <p class="w-full p-2 truncate">{{ ev.name }}</p>
+    <p class="w-full p-2 truncate cursor-pointer hover:bg-gray-700 hover:text-white">{{ ev.name }}</p>
     } } @if (day.value.weekendWorkday.isHoliday === true){
     <div class="absolute bottom-3 left-3">
       <i class="pi pi-info-circle" [title]="day.value.weekendWorkday.title"></i>
