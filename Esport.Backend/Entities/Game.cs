@@ -14,6 +14,7 @@ public partial class Game
 
     public string Description { get; set; }
 
-    [JsonIgnore]
     public virtual ICollection<GameServer> GameServers { get; set; } = new List<GameServer>();
+
+    public virtual ICollection<UsersGame> UsersGames { get; set; } = new List<UsersGame>();
 }

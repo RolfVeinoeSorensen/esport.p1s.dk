@@ -20,7 +20,7 @@ namespace Esport.Backend.Controllers
 
         [Authorize([UserRole.Admin, UserRole.MemberAdult, UserRole.MemberKid])]
         [HttpGet("[action]")]
-        public ActionResult<Dictionary<DateTime, EventDto>> GetAllEvents(int month, int year)
+        public ActionResult<Dictionary<string, EventDto>> GetAllEvents(int month, int year)
         {
             var events = eventService.GetAllEvents(month, year);
             return Ok(events);

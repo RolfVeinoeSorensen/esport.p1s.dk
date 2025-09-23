@@ -5,7 +5,7 @@ namespace Esport.Backend.Services
 {
     public interface IEventService
     {
-        Dictionary<DateTime, EventDto> GetAllEvents(int month, int year);
+        Dictionary<string, EventDto> GetAllEvents(int month, int year);
         Event GetEventById(int id);
         Event CreateOrUpdateEvent(Event ev);
         void DeleteEvent(int id);

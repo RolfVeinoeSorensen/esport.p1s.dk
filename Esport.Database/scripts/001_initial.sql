@@ -1,13 +1,13 @@
 ALTER DATABASE [Esport]
     COLLATE Latin1_General_100_CS_AS_SC;
 GO
-/****** Object:  Schema [auth]    Script Date: 23/09/2025 16.21.45 ******/
+/****** Object:  Schema [auth]    Script Date: 23/09/2025 21.38.42 ******/
 CREATE SCHEMA [auth]
 GO
-/****** Object:  Schema [log]    Script Date: 23/09/2025 16.21.45 ******/
+/****** Object:  Schema [log]    Script Date: 23/09/2025 21.38.42 ******/
 CREATE SCHEMA [log]
 GO
-/****** Object:  Table [auth].[Users]    Script Date: 23/09/2025 16.21.45 ******/
+/****** Object:  Table [auth].[Users]    Script Date: 23/09/2025 21.38.42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -40,7 +40,7 @@ CREATE TABLE [auth].[Users](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Events]    Script Date: 23/09/2025 16.21.45 ******/
+/****** Object:  Table [dbo].[Events]    Script Date: 23/09/2025 21.38.42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -59,7 +59,7 @@ CREATE TABLE [dbo].[Events](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[EventsUsers]    Script Date: 23/09/2025 16.21.45 ******/
+/****** Object:  Table [dbo].[EventsUsers]    Script Date: 23/09/2025 21.38.42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -69,10 +69,15 @@ CREATE TABLE [dbo].[EventsUsers](
 	[UserId] [int] NOT NULL,
 	[Invited] [datetime] NULL,
 	[Accepted] [datetime] NULL,
-	[Declined] [datetime] NULL
+	[Declined] [datetime] NULL,
+ CONSTRAINT [PK_EventsUsers] PRIMARY KEY CLUSTERED 
+(
+	[EventId] ASC,
+	[UserId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Games]    Script Date: 23/09/2025 16.21.45 ******/
+/****** Object:  Table [dbo].[Games]    Script Date: 23/09/2025 21.38.42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -87,7 +92,7 @@ CREATE TABLE [dbo].[Games](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[GameServers]    Script Date: 23/09/2025 16.21.45 ******/
+/****** Object:  Table [dbo].[GameServers]    Script Date: 23/09/2025 21.38.42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -103,7 +108,7 @@ CREATE TABLE [dbo].[GameServers](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[UsersGames]    Script Date: 23/09/2025 16.21.45 ******/
+/****** Object:  Table [dbo].[UsersGames]    Script Date: 23/09/2025 21.38.42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -111,10 +116,15 @@ GO
 CREATE TABLE [dbo].[UsersGames](
 	[GameId] [int] NOT NULL,
 	[UserId] [int] NOT NULL,
-	[InGameName] [nvarchar](255) NOT NULL
+	[InGameName] [nvarchar](255) NOT NULL,
+ CONSTRAINT [PK_UsersGames] PRIMARY KEY CLUSTERED 
+(
+	[GameId] ASC,
+	[UserId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [log].[NLog]    Script Date: 23/09/2025 16.21.45 ******/
+/****** Object:  Table [log].[NLog]    Script Date: 23/09/2025 21.38.42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -177,7 +187,7 @@ REFERENCES [auth].[Users] ([Id])
 GO
 ALTER TABLE [dbo].[UsersGames] CHECK CONSTRAINT [FK_UsersGames_Users]
 GO
-/****** Object:  StoredProcedure [log].[NLogAddEntry]    Script Date: 23/09/2025 16.21.45 ******/
+/****** Object:  StoredProcedure [log].[NLogAddEntry]    Script Date: 23/09/2025 21.38.42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON

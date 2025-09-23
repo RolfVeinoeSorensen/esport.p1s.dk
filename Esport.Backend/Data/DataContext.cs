@@ -39,6 +39,7 @@ namespace Esport.Backend.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasAnnotation("Relational:Collation", "Latin1_General_CI_AS");
+            base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<Event>(entity =>
             {
@@ -58,18 +59,18 @@ namespace Esport.Backend.Data
 
             modelBuilder.Entity<EventsUser>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => new { e.EventId, e.UserId });
 
                 entity.Property(e => e.Accepted).HasColumnType("datetime");
                 entity.Property(e => e.Declined).HasColumnType("datetime");
                 entity.Property(e => e.Invited).HasColumnType("datetime");
 
-                entity.HasOne(d => d.Event).WithMany()
+                entity.HasOne(d => d.Event).WithMany(p => p.EventsUsers)
                     .HasForeignKey(d => d.EventId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_EventsUsers_Events");
 
-                entity.HasOne(d => d.User).WithMany()
+                entity.HasOne(d => d.User).WithMany(p => p.EventsUsers)
                     .HasForeignKey(d => d.UserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_EventsUsers_Users");
@@ -137,18 +138,18 @@ namespace Esport.Backend.Data
 
             modelBuilder.Entity<UsersGame>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => new { e.GameId, e.UserId });
 
                 entity.Property(e => e.InGameName)
                     .IsRequired()
                     .HasMaxLength(255);
 
-                entity.HasOne(d => d.Game).WithMany()
+                entity.HasOne(d => d.Game).WithMany(p => p.UsersGames)
                     .HasForeignKey(d => d.GameId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_UsersGames_Games");
 
-                entity.HasOne(d => d.User).WithMany()
+                entity.HasOne(d => d.User).WithMany(p => p.UsersGames)
                     .HasForeignKey(d => d.UserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_UsersGames_Users");

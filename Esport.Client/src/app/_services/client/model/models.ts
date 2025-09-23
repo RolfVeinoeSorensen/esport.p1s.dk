@@ -7,3 +7,4 @@ export * from './holidayWeekendWorkdayDto';
 export * from './registerRequest';
 export * from './user';
 export * from './userRole';
+export * from './usersGame';

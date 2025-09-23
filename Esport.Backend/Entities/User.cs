@@ -49,11 +49,14 @@ namespace Esport.Backend.Entities
 
         public bool CanBringPlaystation { get; set; }
 
-        [JsonIgnore]
         public virtual ICollection<Event> Events { get; set; } = new List<Event>();
-        [JsonIgnore]
+
+        public virtual ICollection<EventsUser> EventsUsers { get; set; } = new List<EventsUser>();
+
         public virtual ICollection<User> InverseParent { get; set; } = new List<User>();
-        [JsonIgnore]
+
         public virtual User Parent { get; set; }
+
+        public virtual ICollection<UsersGame> UsersGames { get; set; } = new List<UsersGame>();
     }
 }
