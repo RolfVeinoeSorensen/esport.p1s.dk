@@ -2,12 +2,12 @@ namespace Esport.Backend.Dtos
 {
   public class HolidayWeekendWorkdayDto
   {
-    public DateTime date { get; set; }
-    public bool isHoliday { get; set; }
-    public bool isWeekend { get; set; }
-    public bool isWorkDay { get; set; }
-    public string? title { get; set; }
-    public string? shortWeekDayName { get; set; }
+    public DateTime Date { get; set; }
+    public bool IsHoliday { get; set; }
+    public bool IsWeekend { get; set; }
+    public bool IsWorkDay { get; set; }
+    public string? Title { get; set; }
+    public string? ShortWeekDayName { get; set; }
 
     public HolidayWeekendWorkdayDto() { }
     public HolidayWeekendWorkdayDto(
@@ -19,12 +19,12 @@ namespace Esport.Backend.Dtos
         string ShortWeekDayName
         )
     {
-      date = Date;
-      isHoliday = IsHoliday;
-      isWeekend = IsWeekend;
-      isWorkDay = IsWorkDay;
-      title = Title;
-      shortWeekDayName = ShortWeekDayName;
+      this.Date = Date;
+      this.IsHoliday = IsHoliday;
+      this.IsWeekend = IsWeekend;
+      this.IsWorkDay = IsWorkDay;
+      this.Title = Title;
+      this.ShortWeekDayName = ShortWeekDayName;
     }
   }
 }

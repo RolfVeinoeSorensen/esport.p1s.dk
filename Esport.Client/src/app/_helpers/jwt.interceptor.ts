@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor } from '@angular/common/http';
+import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { environment } from './../../environments/environment';
@@ -14,6 +14,7 @@ export class JwtInterceptor implements HttpInterceptor {
         const user = this.authenticationService.userValue;
         const isLoggedIn = user && user.token;
         const isApiUrl = request.url.startsWith(environment.apiUrl);
+        console.log(request.url, isLoggedIn, isApiUrl, user);
         if (isLoggedIn && isApiUrl) {
             request = request.clone({
                 setHeaders: {
@@ -25,3 +26,5 @@ export class JwtInterceptor implements HttpInterceptor {
         return next.handle(request);
     }
 }
+
+export const jwtInterceptorProviders = [{ provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }];

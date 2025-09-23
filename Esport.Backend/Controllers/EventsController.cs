@@ -1,4 +1,5 @@
 using Esport.Backend.Authorization;
+using Esport.Backend.Dtos;
 using Esport.Backend.Entities;
 using Esport.Backend.Enums;
 using Esport.Backend.Services;
@@ -19,9 +20,9 @@ namespace Esport.Backend.Controllers
 
         [Authorize([UserRole.Admin, UserRole.MemberAdult, UserRole.MemberKid])]
         [HttpGet("[action]")]
-        public ActionResult<IEnumerable<Event>> GetAllEvents(DateTime startDateTime, DateTime endDateTime)
+        public ActionResult<Dictionary<DateTime, EventDto>> GetAllEvents(int month, int year)
         {
-            var events = eventService.GetAllEvents(startDateTime, endDateTime);
+            var events = eventService.GetAllEvents(month, year);
             return Ok(events);
         }
 

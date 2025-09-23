@@ -59,92 +59,92 @@ namespace Esport.Backend.Extensions
         DateTime date = GetAscensionDay(year);
         holidays.Add(new HolidayWeekendWorkdayDto
         {
-          date = date,
-          isHoliday = true,
-          isWeekend = date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday,
-          isWorkDay = false,
-          title = "Kristi himmelfartsdag", //"AscensionDay",
-          shortWeekDayName = date.ToString("ddd", new CultureInfo(culture))
+          Date = date,
+          IsHoliday = true,
+          IsWeekend = date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday,
+          IsWorkDay = false,
+          Title = "Kristi himmelfartsdag", //"AscensionDay",
+          ShortWeekDayName = date.ToString("ddd", new CultureInfo(culture))
         });
         date = GetAshWednesday(year);
         holidays.Add(new HolidayWeekendWorkdayDto
         {
-          date = date,
-          isHoliday = true,
-          isWeekend = date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday,
-          isWorkDay = false,
-          title = "Askeonsdag", //"AshWednesday",
-          shortWeekDayName = date.ToString("ddd", new CultureInfo(culture))
+          Date = date,
+          IsHoliday = true,
+          IsWeekend = date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday,
+          IsWorkDay = false,
+          Title = "Askeonsdag", //"AshWednesday",
+          ShortWeekDayName = date.ToString("ddd", new CultureInfo(culture))
         });
         date = GetEasterMonday(year);
         holidays.Add(new HolidayWeekendWorkdayDto
         {
-          date = date,
-          isHoliday = true,
-          isWeekend = date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday,
-          isWorkDay = false,
-          title = "2. påskedag", //"EasterMonday",
-          shortWeekDayName = date.ToString("ddd", new CultureInfo(culture))
+          Date = date,
+          IsHoliday = true,
+          IsWeekend = date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday,
+          IsWorkDay = false,
+          Title = "2. påskedag", //"EasterMonday",
+          ShortWeekDayName = date.ToString("ddd", new CultureInfo(culture))
         });
         date = GetGoodFriday(year);
         holidays.Add(new HolidayWeekendWorkdayDto
         {
-          date = date,
-          isHoliday = true,
-          isWeekend = date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday,
-          isWorkDay = false,
-          title = "Langfredag", //"GoodFriday",
-          shortWeekDayName = date.ToString("ddd", new CultureInfo(culture))
+          Date = date,
+          IsHoliday = true,
+          IsWeekend = date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday,
+          IsWorkDay = false,
+          Title = "Langfredag", //"GoodFriday",
+          ShortWeekDayName = date.ToString("ddd", new CultureInfo(culture))
         });
         date = GetGreatPrayerDay(year);
         holidays.Add(new HolidayWeekendWorkdayDto
         {
-          date = date,
-          isHoliday = true,
-          isWeekend = date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday,
-          isWorkDay = false,
-          title = "Store bededag", //"GreatPrayerDay",
-          shortWeekDayName = date.ToString("ddd", new CultureInfo(culture))
+          Date = date,
+          IsHoliday = true,
+          IsWeekend = date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday,
+          IsWorkDay = false,
+          Title = "Store bededag", //"GreatPrayerDay",
+          ShortWeekDayName = date.ToString("ddd", new CultureInfo(culture))
         });
         date = GetMaundyThursday(year);
         holidays.Add(new HolidayWeekendWorkdayDto
         {
-          date = date,
-          isHoliday = true,
-          isWeekend = date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday,
-          isWorkDay = false,
-          title = "Skærtorsdag", //"MaundyThursday",
-          shortWeekDayName = date.ToString("ddd", new CultureInfo(culture))
+          Date = date,
+          IsHoliday = true,
+          IsWeekend = date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday,
+          IsWorkDay = false,
+          Title = "Skærtorsdag", //"MaundyThursday",
+          ShortWeekDayName = date.ToString("ddd", new CultureInfo(culture))
         });
         date = GetPalmSunday(year);
         holidays.Add(new HolidayWeekendWorkdayDto
         {
-          date = date,
-          isHoliday = true,
-          isWeekend = date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday,
-          isWorkDay = false,
-          title = "Palmesøndag", //"PalmSunday",
-          shortWeekDayName = date.ToString("ddd", new CultureInfo(culture))
+          Date = date,
+          IsHoliday = true,
+          IsWeekend = date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday,
+          IsWorkDay = false,
+          Title = "Palmesøndag", //"PalmSunday",
+          ShortWeekDayName = date.ToString("ddd", new CultureInfo(culture))
         });
         date = GetWhitMonday(year);
         holidays.Add(new HolidayWeekendWorkdayDto
         {
-          date = date,
-          isHoliday = true,
-          isWeekend = date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday,
-          isWorkDay = false,
-          title = "2. Pinsedag", //"WhitMonday",
-          shortWeekDayName = date.ToString("ddd", new CultureInfo(culture))
+          Date = date,
+          IsHoliday = true,
+          IsWeekend = date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday,
+          IsWorkDay = false,
+          Title = "2. Pinsedag", //"WhitMonday",
+          ShortWeekDayName = date.ToString("ddd", new CultureInfo(culture))
         });
         date = GetWhitSunday(year);
         holidays.Add(new HolidayWeekendWorkdayDto
         {
-          date = date,
-          isHoliday = true,
-          isWeekend = date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday,
-          isWorkDay = false,
-          title = "Pinsedag", //"WhitSunday",
-          shortWeekDayName = date.ToString("ddd", new CultureInfo(culture))
+          Date = date,
+          IsHoliday = true,
+          IsWeekend = date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday,
+          IsWorkDay = false,
+          Title = "Pinsedag", //"WhitSunday",
+          ShortWeekDayName = date.ToString("ddd", new CultureInfo(culture))
         });
 
         //Danish holidays
@@ -153,52 +153,52 @@ namespace Esport.Backend.Extensions
           date = new DateTime(year, 1, 1);
           holidays.Add(new HolidayWeekendWorkdayDto
           {
-            date = date,
-            isHoliday = true,
-            isWeekend = date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday,
-            isWorkDay = false,
-            title = "Nytårsdag", //"NewYearsDay",
-            shortWeekDayName = date.ToString("ddd", new CultureInfo(culture))
+            Date = date,
+            IsHoliday = true,
+            IsWeekend = date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday,
+            IsWorkDay = false,
+            Title = "Nytårsdag", //"NewYearsDay",
+            ShortWeekDayName = date.ToString("ddd", new CultureInfo(culture))
           });
           date = new DateTime(year, 6, 5);
           holidays.Add(new HolidayWeekendWorkdayDto
           {
-            date = date,
-            isHoliday = true,
-            isWeekend = date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday,
-            isWorkDay = false,
-            title = "Grundlovsdag", //"ConstitutionDay",
-            shortWeekDayName = date.ToString("ddd", new CultureInfo(culture))
+            Date = date,
+            IsHoliday = true,
+            IsWeekend = date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday,
+            IsWorkDay = false,
+            Title = "Grundlovsdag", //"ConstitutionDay",
+            ShortWeekDayName = date.ToString("ddd", new CultureInfo(culture))
           });
           date = new DateTime(year, 12, 24);
           holidays.Add(new HolidayWeekendWorkdayDto
           {
-            date = date,
-            isHoliday = true,
-            isWeekend = date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday,
-            isWorkDay = false,
-            title = "Juleaften", //"ChristmasEve",
-            shortWeekDayName = date.ToString("ddd", new CultureInfo(culture))
+            Date = date,
+            IsHoliday = true,
+            IsWeekend = date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday,
+            IsWorkDay = false,
+            Title = "Juleaften", //"ChristmasEve",
+            ShortWeekDayName = date.ToString("ddd", new CultureInfo(culture))
           });
           date = new DateTime(year, 12, 25);
           holidays.Add(new HolidayWeekendWorkdayDto
           {
-            date = date,
-            isHoliday = true,
-            isWeekend = date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday,
-            isWorkDay = false,
-            title = "1. Juledag", //"FirstChristmasDay",
-            shortWeekDayName = date.ToString("ddd", new CultureInfo(culture))
+            Date = date,
+            IsHoliday = true,
+            IsWeekend = date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday,
+            IsWorkDay = false,
+            Title = "1. Juledag", //"FirstChristmasDay",
+            ShortWeekDayName = date.ToString("ddd", new CultureInfo(culture))
           });
           date = new DateTime(year, 12, 26);
           holidays.Add(new HolidayWeekendWorkdayDto
           {
-            date = date,
-            isHoliday = true,
-            isWeekend = date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday,
-            isWorkDay = false,
-            title = "2. Juledag", //"SecondChristmasDay",
-            shortWeekDayName = date.ToString("ddd", new CultureInfo(culture))
+            Date = date,
+            IsHoliday = true,
+            IsWeekend = date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday,
+            IsWorkDay = false,
+            Title = "2. Juledag", //"SecondChristmasDay",
+            ShortWeekDayName = date.ToString("ddd", new CultureInfo(culture))
           });
         }
 
@@ -206,7 +206,7 @@ namespace Esport.Backend.Extensions
       List<HolidayWeekendWorkdayDto> result = new List<HolidayWeekendWorkdayDto>();
       foreach (var date in dates)
       {
-        HolidayWeekendWorkdayDto holiday = holidays.FirstOrDefault(x => x.date == date);
+        HolidayWeekendWorkdayDto holiday = holidays.FirstOrDefault(x => x.Date == date);
         if (holiday != null)
         {
           result.Add(holiday);
@@ -216,12 +216,12 @@ namespace Esport.Backend.Extensions
           bool isWeekend = isWeekend = date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday;
           result.Add(new HolidayWeekendWorkdayDto
           {
-            date = date,
-            isHoliday = false,
-            isWeekend = isWeekend,
-            isWorkDay = isWeekend == true ? false : true,
-            title = string.Empty,
-            shortWeekDayName = date.ToString("ddd", new CultureInfo(culture))
+            Date = date,
+            IsHoliday = false,
+            IsWeekend = isWeekend,
+            IsWorkDay = isWeekend == true ? false : true,
+            Title = string.Empty,
+            ShortWeekDayName = date.ToString("ddd", new CultureInfo(culture))
           });
         }
 

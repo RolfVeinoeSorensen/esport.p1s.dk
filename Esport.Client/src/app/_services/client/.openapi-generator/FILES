@@ -1,5 +1,4 @@
 .gitignore
-.openapi-generator-ignore
 README.md
 api.base.service.ts
 api.module.ts
@@ -13,7 +12,9 @@ index.ts
 model/authenticateRequest.ts
 model/authenticateResponse.ts
 model/event.ts
+model/eventDto.ts
 model/eventsUser.ts
+model/holidayWeekendWorkdayDto.ts
 model/models.ts
 model/registerRequest.ts
 model/user.ts

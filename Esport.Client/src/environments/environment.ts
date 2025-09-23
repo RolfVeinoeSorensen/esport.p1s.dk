@@ -4,9 +4,9 @@
 
 export const environment = {
   site: 'https://localhost:4300',
-  sitename: 'esport.p1s.dk',
+  sitename: 'p1s.dk',
   sitemode: 'dev',
-  apiUrl: 'https://api.p1s.dk',
+  apiUrl: 'http://localhost:4302',
 };
 
 /*

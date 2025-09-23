@@ -13,6 +13,7 @@
  * 
  */
 export const UserRole = {
+    Pending: 'Pending',
     Admin: 'Admin',
     Family: 'Family',
     Friend: 'Friend',

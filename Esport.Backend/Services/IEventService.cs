@@ -1,10 +1,11 @@
+using Esport.Backend.Dtos;
 using Esport.Backend.Entities;
 
 namespace Esport.Backend.Services
 {
     public interface IEventService
     {
-        IEnumerable<Event> GetAllEvents(DateTime startDateTime, DateTime endDateTime);
+        Dictionary<DateTime, EventDto> GetAllEvents(int month, int year);
         Event GetEventById(int id);
         Event CreateOrUpdateEvent(Event ev);
         void DeleteEvent(int id);

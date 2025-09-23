@@ -19,6 +19,8 @@ import { Observable }                                        from 'rxjs';
 // @ts-ignore
 import { Event } from '../model/event';
 // @ts-ignore
+import { EventDto } from '../model/eventDto';
+// @ts-ignore
 import { EventsUser } from '../model/eventsUser';
 
 // @ts-ignore
@@ -289,21 +291,21 @@ export class EventsService extends BaseService {
     }
 
     /**
-     * @param startDateTime 
-     * @param endDateTime 
+     * @param month 
+     * @param year 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public eventsGetAllEvents(startDateTime?: string, endDateTime?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<Array<Event>>;
-    public eventsGetAllEvents(startDateTime?: string, endDateTime?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<Array<Event>>>;
-    public eventsGetAllEvents(startDateTime?: string, endDateTime?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<Array<Event>>>;
-    public eventsGetAllEvents(startDateTime?: string, endDateTime?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public eventsGetAllEvents(month?: number, year?: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<{ [key: string]: EventDto; }>;
+    public eventsGetAllEvents(month?: number, year?: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<{ [key: string]: EventDto; }>>;
+    public eventsGetAllEvents(month?: number, year?: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<{ [key: string]: EventDto; }>>;
+    public eventsGetAllEvents(month?: number, year?: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
         localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
-          <any>startDateTime, 'startDateTime');
+          <any>month, 'month');
         localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
-          <any>endDateTime, 'endDateTime');
+          <any>year, 'year');
 
         let localVarHeaders = this.defaultHeaders;
 
@@ -334,7 +336,7 @@ export class EventsService extends BaseService {
 
         let localVarPath = `/GetAllEvents`;
         const { basePath, withCredentials } = this.configuration;
-        return this.httpClient.request<Array<Event>>('get', `${basePath}${localVarPath}`,
+        return this.httpClient.request<{ [key: string]: EventDto; }>('get', `${basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
                 params: localVarQueryParameters,

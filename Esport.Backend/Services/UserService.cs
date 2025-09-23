@@ -70,11 +70,16 @@ namespace Esport.Backend.Services
             if(userExist != null) return false;
             var user = new User
             {
-                Username= model.Username,
+                Username = model.Username,
                 PasswordHash = BCryptNet.HashPassword(model.Password),
-                CreatedUtc = System.DateTime.UtcNow,
-                Role = Enums.UserRole.User
+                FirstName = model.Firstname,
+                LastName = model.Lastname,
+                CreatedUtc = DateTime.UtcNow,
+                Role = Enums.UserRole.Pending,
+                PasswordResetToken = BCryptNet.HashPassword(Guid.NewGuid().ToString(), BCryptNet.GenerateSalt()).Replace("/", ""),
+                PasswordResetTokenExpiration = DateTime.UtcNow.AddDays(1)
             };
+            logger.LogInformation($"{user.Username} registered as new user at {DateTime.UtcNow}");
             await db.Users.AddAsync(user);
             await db.SaveChangesAsync();
             return true;
@@ -86,7 +91,7 @@ namespace Esport.Backend.Services
             if(user == null) return;
             logger.LogInformation($"{user.Username} requested new password at {DateTime.UtcNow}");
             user.PasswordResetToken = BCryptNet.HashPassword(Guid.NewGuid().ToString(), BCryptNet.GenerateSalt()).Replace("/","");
-            user.PasswordResetTokenExpiration = DateTime.UtcNow.AddHours(1);
+            user.PasswordResetTokenExpiration = DateTime.UtcNow.AddDays(1);
             db.Update(user);
             await db.SaveChangesAsync();
             await notificationService.SendForgotPasswordMail(user);

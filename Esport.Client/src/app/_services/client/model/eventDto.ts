@@ -7,12 +7,12 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { HolidayWeekendWorkdayDto } from './holidayWeekendWorkdayDto';
+import { Event } from './event';
 
 
-export interface RegisterRequest { 
-    username: string;
-    password: string;
-    firstname: string;
-    lastname: string;
+export interface EventDto { 
+    events: Array<Event>;
+    weekendWorkday: HolidayWeekendWorkdayDto;
 }
 

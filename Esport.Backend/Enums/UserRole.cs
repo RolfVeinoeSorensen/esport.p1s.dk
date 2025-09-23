@@ -2,6 +2,7 @@ namespace Esport.Backend.Enums
 {
     public enum UserRole
     {
+        Pending = 0,
         Admin = 1,
         Family = 2,
         Friend = 3,

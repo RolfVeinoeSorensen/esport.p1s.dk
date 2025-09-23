@@ -9,10 +9,12 @@
  */
 
 
-export interface RegisterRequest { 
-    username: string;
-    password: string;
-    firstname: string;
-    lastname: string;
+export interface HolidayWeekendWorkdayDto { 
+    date: string;
+    isHoliday: boolean;
+    isWeekend: boolean;
+    isWorkDay: boolean;
+    title?: string;
+    shortWeekDayName?: string;
 }
 

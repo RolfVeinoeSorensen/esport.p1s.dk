@@ -1,6 +1,7 @@
 using Esport.Backend.Entities;
 using Esport.Backend.Data;
 using Microsoft.EntityFrameworkCore;
+using Esport.Backend.Dtos;
 
 namespace Esport.Backend.Services
 {
@@ -58,9 +59,23 @@ namespace Esport.Backend.Services
             return GetEventById(eventId);
         }
 
-        public IEnumerable<Event> GetAllEvents(DateTime startDateTime, DateTime endDateTime)
+        public Dictionary<DateTime, EventDto> GetAllEvents(int month, int year)
         {
-            return [.. db.Events.Include(e => e.EventsUsers).ThenInclude(eu => eu.User).Where(ev=> ev.StartDateTime >= startDateTime && ev.EndDateTime <= endDateTime)];
+            var firstDayOfMonth = new DateTime(year, month, 1);
+            var lastDayOfMonth = firstDayOfMonth.AddMonths(1).AddDays(-1);
+            var datesWithInfo = Extensions.Date.GetMonthYear(month, year);
+            var events = db.Events.Include(e => e.EventsUsers).ThenInclude(eu => eu.User).Where(ev => (ev.StartDateTime.Date >= firstDayOfMonth.Date && ev.EndDateTime.Date <= lastDayOfMonth.Date) || (ev.StartDateTime.Date <= lastDayOfMonth.Date && ev.EndDateTime.Date >= lastDayOfMonth.Date)).ToList();
+            Dictionary<DateTime, EventDto> result = [];
+            foreach (var dt in datesWithInfo)
+            {
+                var dto = new EventDto
+                {
+                    Events = events.Where(ev => (ev.StartDateTime.Date >= firstDayOfMonth.Date && ev.EndDateTime.Date <= lastDayOfMonth.Date) || (ev.StartDateTime.Date <= lastDayOfMonth.Date && ev.EndDateTime.Date >= lastDayOfMonth.Date)).ToList(),
+                    WeekendWorkday = dt
+                };
+                result.Add(dt.Date, dto);
+            }
+            return result;
         }
 
         public Event GetEventById(int id)

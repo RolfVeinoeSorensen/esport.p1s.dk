@@ -13,13 +13,13 @@ import {
   provideClientHydration,
   withEventReplay,
 } from '@angular/platform-browser';
-import { HTTP_INTERCEPTORS, provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import {
   BASE_PATH as ClientBasePath,
   ApiModule as ClientModule,
 } from '@services/client';
-import { JwtInterceptor } from '@helpers/jwt.interceptor';
-import { ErrorInterceptor } from '@helpers/error.interceptor';
+import { jwtInterceptorProviders } from '@helpers/jwt.interceptor';
+import { errorInterceptorProviders } from '@helpers/error.interceptor';
 import {
   BrowserAnimationsModule,
   provideAnimations,
@@ -57,10 +57,10 @@ export const appConfig: ApplicationConfig = {
         },
       },
     }),
-    provideHttpClient(),
+    jwtInterceptorProviders,
+    errorInterceptorProviders,
+    provideHttpClient(withInterceptorsFromDi()),
     { provide: LOCALE_ID, useValue: 'da-DK' },
-    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     { provide: ClientBasePath, useValue: environment.apiUrl },
     ScrollerModule,
     ScrollTopModule,

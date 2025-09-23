@@ -11,8 +11,8 @@ namespace Esport.Backend.Services.Message
         {
             var mailMessage = new MimeMessage();
             mailMessage.To.Add(new MailboxAddress(mail.To, mail.To));
-            mailMessage.Bcc.Add(new MailboxAddress("mail@hourplanner.com", "mail@hourplanner.com"));
-            mailMessage.From.Add(new MailboxAddress("Hourplanner.com", "mail@hourplanner.com"));
+            mailMessage.Bcc.Add(new MailboxAddress("mail@p1s.dk", "mail@p1s.dk"));
+            mailMessage.From.Add(new MailboxAddress("p1s.dk", "mail@p1s.dk"));
             mailMessage.Subject = mail.Subject;
 
             // now create the multipart/mixed container to hold the message text and the
@@ -42,13 +42,13 @@ namespace Esport.Backend.Services.Message
             mailMessage.Body = multipart;
             using var client = new SmtpClient();
             var useSSL = MailKit.Security.SecureSocketOptions.StartTls;
-            await client.ConnectAsync("mail.hourplanner.com", 587, useSSL);
+            await client.ConnectAsync("mail.p1s.dk", 587, useSSL);
 
             // Note: since we don't have an OAuth2 token, disable
             // the XOAUTH2 authentication mechanism.
             client.AuthenticationMechanisms.Remove("XOAUTH2");
 
-            await client.AuthenticateAsync("mail@hourplanner.com", "xqfLBcFv4ishRp");
+            await client.AuthenticateAsync("mail@p1s.dk", "xqfLBcFv4ishRp");
             await client.SendAsync(mailMessage);
             await client.DisconnectAsync(true);
         }

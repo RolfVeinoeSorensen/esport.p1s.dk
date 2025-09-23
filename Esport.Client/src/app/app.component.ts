@@ -69,7 +69,7 @@ export class AppComponent implements OnInit, OnDestroy {
     AuthenticationService
   );
   userSubscription!: Subscription;
-  title = 'esport.p1s.dk';
+  title = 'p1s.dk';
   items: MenuItem[] | undefined;
   private locale = inject(LOCALE_ID);
   private meta = inject(Meta);
@@ -114,7 +114,7 @@ export class AppComponent implements OnInit, OnDestroy {
     //base tags are handled by router events
     this.meta.addTags([
       { name: 'robots', content: 'index. follow' },
-      { name: 'author', content: 'Hourplanner APS' },
+      { name: 'author', content: 'Ea APS' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       {
         name: 'date',

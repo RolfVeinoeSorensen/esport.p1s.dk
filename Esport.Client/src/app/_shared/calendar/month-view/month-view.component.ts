@@ -50,9 +50,7 @@ export class MonthViewComponent implements OnInit {
     loadEvents() {
         const y = this.selectedDate != null ? this.selectedDate.getFullYear() : new Date().getFullYear();
         const m = this.selectedDate != null ? this.selectedDate.getMonth() : new Date().getMonth();
-        var firstDay = new Date(y, m, 1, 23,59,59,599);
-        var lastDay = new Date(y, m + 1, 0,0,0,0,0);
-        this.eventsService.eventsGetAllEvents(firstDay.toISOString(), lastDay.toISOString()).subscribe(events =>{
+        this.eventsService.eventsGetAllEvents(m, y).subscribe(events =>{
             console.log(events)
         });
         this.days.forEach((day) => {

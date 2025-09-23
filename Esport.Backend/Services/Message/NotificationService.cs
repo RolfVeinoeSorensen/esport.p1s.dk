@@ -45,5 +45,26 @@ namespace Esport.Backend.Services.Message
                 _logger.LogError(ex.InnerException.ToString());
             }
         }
+
+        public async Task SendRegisterNewUserConfirmMail(User user)
+        {
+            try
+            {
+
+                var html = await _razorViewToStringRenderer.RenderViewToStringAsync("Templates/EmailConfirmUserRegistration.cshtml", user);
+                var email = new MailDto
+                {
+                    To = user.Username,
+                    Body = html,
+                    Subject = "esport.p1s.dk - Reset password"
+                };
+                await _emailSender.SendEmailAsync(email);
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.InnerException.ToString());
+            }
+        }
     }
 }

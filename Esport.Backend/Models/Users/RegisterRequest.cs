@@ -10,5 +10,11 @@ namespace Esport.Backend.Models.Users
         [Required]
         public string Password { get; set; }
 
+        [Required]
+        public string Firstname { get; set; }
+
+        [Required]
+        public string Lastname { get; set; }
+
     }
 }
