@@ -6,9 +6,9 @@ namespace Esport.Backend.Services
     public interface IUserService
     {
         AuthenticateResponse Authenticate(AuthenticateRequest model);
-        IEnumerable<User> GetAll();
-        User GetById(int id);
-        Task<bool> Register(RegisterRequest model);
+        IEnumerable<User> GetAllUsers();
+        User GetUserById(int id);
+        Task<bool> RegisterUser(RegisterRequest model);
         Task ForgotPasswordAsync(string email);
         Task<bool> ChangePassword(string token, string password);
     }

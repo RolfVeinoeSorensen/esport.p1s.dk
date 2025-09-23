@@ -12,13 +12,25 @@ import { UserRole } from './userRole';
 
 export interface User { 
     id: number;
+    parentId?: number;
     firstName?: string;
     lastName?: string;
     username?: string;
     role: UserRole;
     createdUtc: string;
+    passwordHash?: string;
     passwordResetToken?: string;
     passwordResetTokenExpiration: string;
+    addressStreet?: string;
+    addressStreetNumber?: number;
+    addressFloor?: string;
+    addressSide?: string;
+    addressPostalCode?: string;
+    addressCity?: string;
+    mobile?: string;
+    consentShowImages: boolean;
+    inverseParent?: Array<User>;
+    parent?: User;
 }
 export namespace User {
 }

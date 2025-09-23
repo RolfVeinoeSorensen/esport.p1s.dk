@@ -16,4 +16,6 @@ public partial class Event
     public DateTime StartDateTime { get; set; }
 
     public DateTime EndDateTime { get; set; }
+
+    public virtual ICollection<EventsUser> EventsUsers { get; set; } = new List<EventsUser>();
 }

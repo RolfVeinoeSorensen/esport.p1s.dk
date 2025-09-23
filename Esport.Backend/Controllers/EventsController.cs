@@ -1,0 +1,72 @@
+using Esport.Backend.Authorization;
+using Esport.Backend.Entities;
+using Esport.Backend.Enums;
+using Esport.Backend.Services;
+using Microsoft.AspNetCore.Mvc;
+
+namespace Esport.Backend.Controllers
+{
+    public class EventsController(IEventService eventService) : ControllerBase
+    {
+        private readonly IEventService eventService = eventService;
+
+        [Authorize([UserRole.Admin, UserRole.MemberAdult, UserRole.MemberKid])]
+        [HttpGet("[action]")]
+        public ActionResult<IEnumerable<Event>> GetAllEvents()
+        {
+            var events = eventService.GetAllEvents();
+            return Ok(events);
+        }
+
+        [Authorize([UserRole.Admin, UserRole.MemberAdult, UserRole.MemberKid])]
+        [HttpGet("[action]/{id:int}")]
+        public ActionResult<Event> GetById(int id)
+        {
+            var eventResult = eventService.GetEventById(id);
+            return Ok(eventResult);
+        }
+
+        [Authorize([UserRole.Admin, UserRole.MemberAdult, UserRole.MemberKid])]
+        [HttpPost("[action]")]
+        public ActionResult<Event> CreateOrUpdateEvent(Event ev)
+        {
+            if (HttpContext.Items["User"] is not User currentUser || (currentUser.Role != UserRole.Admin))
+                return Unauthorized(new { message = "Unauthorized" });
+
+            var eventResult = eventService.CreateOrUpdateEvent(ev);
+            return Ok(eventResult);
+        }
+        [Authorize([UserRole.Admin, UserRole.MemberAdult, UserRole.MemberKid])]
+        [HttpDelete("[action]")]
+        public ActionResult<Event> DeleteEvent(int id)
+        {
+            if (HttpContext.Items["User"] is not User currentUser || (currentUser.Role != UserRole.Admin))
+                return Unauthorized(new { message = "Unauthorized" });
+
+            eventService.DeleteEvent(id);
+            return Ok();
+        }
+
+        [Authorize([UserRole.Admin, UserRole.MemberAdult, UserRole.MemberKid])]
+        [HttpPost("[action]")]
+        public ActionResult<Event> CreateOrUpdateUserToEvent(int eventId, int userId, DateTime? Invited, DateTime? Accepted, DateTime? Declined)
+        {
+            if (HttpContext.Items["User"] is not User currentUser || (currentUser.Role != UserRole.Admin))
+                return Unauthorized(new { message = "Unauthorized" });
+
+            var eventResult = eventService.CreateOrUpdateUserToEvent(eventId, userId, Invited, Accepted, Declined);
+            return Ok(eventResult);
+        }
+
+        [Authorize([UserRole.Admin, UserRole.MemberAdult, UserRole.MemberKid])]
+        [HttpDelete("[action]")]
+        public ActionResult<Event> DeleteUserFromEvent(int eventId, int userId)
+        {
+            if (HttpContext.Items["User"] is not User currentUser || (currentUser.Role != UserRole.Admin))
+                return Unauthorized(new { message = "Unauthorized" });
+
+            var eventResult = eventService.DeleteUserFromEvent(eventId, userId);
+            return Ok(eventResult);
+        }
+    }
+}

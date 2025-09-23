@@ -52,19 +52,19 @@ namespace Esport.Backend.Services
             return new AuthenticateResponse(user, jwtToken);
         }
 
-        public IEnumerable<User> GetAll()
+        public IEnumerable<User> GetAllUsers()
         {
             return db.Users;
         }
 
-        public User GetById(int id) 
+        public User GetUserById(int id) 
         {
             var user = db.Users.Find(id);
             if (user == null) throw new KeyNotFoundException("User not found");
             return user;
         }
 
-        public async Task<bool> Register(RegisterRequest model)
+        public async Task<bool> RegisterUser(RegisterRequest model)
         {
             var userExist = await db.Users.FirstOrDefaultAsync(x=>x.Username.Equals(model.Username));
             if(userExist != null) return false;

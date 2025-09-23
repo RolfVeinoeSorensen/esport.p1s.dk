@@ -4,21 +4,15 @@ using Esport.Backend.Entities;
 using Esport.Backend.Enums;
 using Esport.Backend.Models.Users;
 using Esport.Backend.Services;
-using Esport.Backend.Services.Message;
 
 namespace Esport.Backend.Controllers
 {
     [Authorize]
     [ApiController]
     [Route("[controller]")]
-    public class UsersController : ControllerBase
+    public class UsersController(IUserService userService) : ControllerBase
     {
-        private readonly IUserService userService;
-
-        public UsersController(IUserService userService, INotificationService notificationService)
-        {
-            this.userService = userService;
-        }
+        private readonly IUserService userService = userService;
 
         [AllowAnonymous]
         [HttpPost("[action]")]
@@ -30,29 +24,29 @@ namespace Esport.Backend.Controllers
         }
 
         [Authorize(UserRole.Admin)]
-        [HttpGet]
-        public ActionResult<IEnumerable<User>> GetAll()
+        [HttpGet("[action]")]
+        public ActionResult<IEnumerable<User>> GetAllUsers()
         {
-            var users = userService.GetAll();
+            var users = userService.GetAllUsers();
             return Ok(users);
         }
 
-        [HttpGet("{id:int}")]
-        public ActionResult<AuthenticateResponse> GetById(int id)
+        [HttpGet("[action]/{id:int}")]
+        public ActionResult<AuthenticateResponse> GetUserById(int id)
         {
             // only admins can access other user records
             if (HttpContext.Items["User"] is not User currentUser || (id != currentUser.Id && currentUser.Role != UserRole.Admin))
                 return Unauthorized(new { message = "Unauthorized" });
 
-            var user =  userService.GetById(id);
+            var user =  userService.GetUserById(id);
             return Ok(user);
         }
 
         [AllowAnonymous]
         [HttpPost("[action]")]
-        public async Task<ActionResult<bool>> Register(RegisterRequest model)
+        public async Task<ActionResult<bool>> RegisterUser(RegisterRequest model)
         {
-            var response = await userService.Register(model);
+            var response = await userService.RegisterUser(model);
             return Ok(response);
         }
 
