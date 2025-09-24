@@ -55,8 +55,14 @@ namespace Esport.Backend.Entities
 
         public virtual ICollection<User> InverseParent { get; set; } = new List<User>();
 
+        public virtual ICollection<News> NewsCreatedByNavigations { get; set; } = new List<News>();
+
+        public virtual ICollection<News> NewsUpdatedByNavigations { get; set; } = new List<News>();
+
         public virtual User Parent { get; set; }
 
         public virtual ICollection<UsersGame> UsersGames { get; set; } = new List<UsersGame>();
+
+        public virtual ICollection<UsersTeam> UsersTeams { get; set; } = new List<UsersTeam>();
     }
 }

@@ -1,5 +1,6 @@
-using Microsoft.EntityFrameworkCore;
 using Esport.Backend.Entities;
+using Microsoft.EntityFrameworkCore;
+using YamlDotNet.Core.Tokens;
 
 namespace Esport.Backend.Data
 {
@@ -18,15 +19,27 @@ namespace Esport.Backend.Data
 
         public virtual DbSet<EventsUser> EventsUsers { get; set; }
 
+        public virtual DbSet<Entities.File> Files { get; set; }
+
         public virtual DbSet<Game> Games { get; set; }
 
         public virtual DbSet<GameServer> GameServers { get; set; }
 
+        public virtual DbSet<News> News { get; set; }
+
+        public virtual DbSet<NewsTag> NewsTags { get; set; }
+
         public virtual DbSet<Log> Logs { get; set; }
+
+        public virtual DbSet<Entities.Tag> Tags { get; set; }
+
+        public virtual DbSet<Team> Teams { get; set; }
 
         public virtual DbSet<User> Users { get; set; }
 
         public virtual DbSet<UsersGame> UsersGames { get; set; }
+
+        public virtual DbSet<UsersTeam> UsersTeams { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -38,8 +51,7 @@ namespace Esport.Backend.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.HasAnnotation("Relational:Collation", "Latin1_General_CI_AS");
-            base.OnModelCreating(modelBuilder);
+            modelBuilder.UseCollation("Latin1_General_100_CS_AS_SC");
 
             modelBuilder.Entity<Event>(entity =>
             {
@@ -76,8 +88,20 @@ namespace Esport.Backend.Data
                     .HasConstraintName("FK_EventsUsers_Users");
             });
 
+            modelBuilder.Entity<Entities.File>(entity =>
+            {
+                entity.HasKey(e => e.Id).HasName("PK_File");
+
+                entity.Property(e => e.Filename)
+                    .IsRequired()
+                    .HasMaxLength(10)
+                    .IsFixedLength();
+                entity.Property(e => e.Title).HasMaxLength(255);
+            });
+
             modelBuilder.Entity<Game>(entity =>
             {
+                entity.Property(e => e.Logo).HasMaxLength(255);
                 entity.Property(e => e.Name)
                     .IsRequired()
                     .HasMaxLength(255);
@@ -85,8 +109,6 @@ namespace Esport.Backend.Data
 
             modelBuilder.Entity<GameServer>(entity =>
             {
-                entity.Property(e => e.Id).ValueGeneratedOnAdd();
-                entity.Property(e => e.GameId).ValueGeneratedNever();
                 entity.Property(e => e.Server)
                     .IsRequired()
                     .HasMaxLength(255);
@@ -95,6 +117,45 @@ namespace Esport.Backend.Data
                     .HasForeignKey(d => d.GameId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_GameServers_Games");
+            });
+
+            modelBuilder.Entity<News>(entity =>
+            {
+                entity.Property(e => e.CreatedAt).HasColumnType("datetime");
+                entity.Property(e => e.IsPublished).HasAnnotation("Relational:DefaultConstraintName", "DF_News_IsPublished");
+                entity.Property(e => e.MetaDescription).HasMaxLength(160);
+                entity.Property(e => e.Title)
+                    .IsRequired()
+                    .HasMaxLength(255);
+                entity.Property(e => e.UpdatedAt).HasColumnType("datetime");
+                entity.Property(e => e.UrlSlug)
+                    .IsRequired()
+                    .HasMaxLength(255);
+
+                entity.HasOne(d => d.CreatedByNavigation).WithMany(p => p.NewsCreatedByNavigations)
+                    .HasForeignKey(d => d.CreatedBy)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_News_Users");
+
+                entity.HasOne(d => d.UpdatedByNavigation).WithMany(p => p.NewsUpdatedByNavigations)
+                    .HasForeignKey(d => d.UpdatedBy)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_News_Users1");
+            });
+
+            modelBuilder.Entity<NewsTag>(entity =>
+            {
+                entity.HasKey(e => new { e.NewsId, e.TagId });
+
+                entity.HasOne(d => d.News).WithMany(p => p.NewsTags)
+                    .HasForeignKey(d => d.NewsId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_NewsTags_News");
+
+                entity.HasOne(d => d.Tag).WithMany(p => p.NewsTags)
+                    .HasForeignKey(d => d.TagId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_NewsTags_Tags");
             });
 
             modelBuilder.Entity<Log>(entity =>
@@ -112,6 +173,22 @@ namespace Esport.Backend.Data
                 entity.Property(e => e.Callsite)
                 .IsRequired()
                 .HasMaxLength(300);
+            });
+
+            modelBuilder.Entity<Entities.Tag>(entity =>
+            {
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(255);
+            });
+
+            modelBuilder.Entity<Team>(entity =>
+            {
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(255);
+                entity.Property(e => e.ValidFrom).HasColumnType("datetime");
+                entity.Property(e => e.ValidTo).HasColumnType("datetime");
             });
 
             modelBuilder.Entity<User>(entity =>
@@ -154,6 +231,22 @@ namespace Esport.Backend.Data
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_UsersGames_Users");
             });
+
+            modelBuilder.Entity<UsersTeam>(entity =>
+            {
+                entity.HasKey(e => new { e.TeamId, e.MemberId });
+
+                entity.HasOne(d => d.Member).WithMany(p => p.UsersTeams)
+                    .HasForeignKey(d => d.MemberId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_UsersTeams_Users");
+
+                entity.HasOne(d => d.Team).WithMany(p => p.UsersTeams)
+                    .HasForeignKey(d => d.TeamId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_UsersTeams_Teams");
+            });
+            OnModelCreatingPartial(modelBuilder);
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);

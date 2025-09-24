@@ -2,11 +2,10 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
-using System.Text.Json.Serialization;
 
 namespace Esport.Backend.Entities;
 
-public partial class Game
+public partial class Team
 {
     public int Id { get; set; }
 
@@ -14,10 +13,9 @@ public partial class Game
 
     public string Description { get; set; }
 
-    public string Logo { get; set; }
+    public DateTime ValidFrom { get; set; }
 
-    [JsonIgnore]
-    public virtual ICollection<GameServer> GameServers { get; set; } = new List<GameServer>();
-    [JsonIgnore]
-    public virtual ICollection<UsersGame> UsersGames { get; set; } = new List<UsersGame>();
+    public DateTime? ValidTo { get; set; }
+
+    public virtual ICollection<UsersTeam> UsersTeams { get; set; } = new List<UsersTeam>();
 }

@@ -1,13 +1,13 @@
 ALTER DATABASE [Esport]
     COLLATE Latin1_General_100_CS_AS_SC;
 GO
-/****** Object:  Schema [auth]    Script Date: 23/09/2025 21.38.42 ******/
+/****** Object:  Schema [auth]    Script Date: 24/09/2025 22.49.22 ******/
 CREATE SCHEMA [auth]
 GO
-/****** Object:  Schema [log]    Script Date: 23/09/2025 21.38.42 ******/
+/****** Object:  Schema [log]    Script Date: 24/09/2025 22.49.22 ******/
 CREATE SCHEMA [log]
 GO
-/****** Object:  Table [auth].[Users]    Script Date: 23/09/2025 21.38.42 ******/
+/****** Object:  Table [auth].[Users]    Script Date: 24/09/2025 22.49.22 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -40,7 +40,7 @@ CREATE TABLE [auth].[Users](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Events]    Script Date: 23/09/2025 21.38.42 ******/
+/****** Object:  Table [dbo].[Events]    Script Date: 24/09/2025 22.49.22 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -59,7 +59,7 @@ CREATE TABLE [dbo].[Events](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[EventsUsers]    Script Date: 23/09/2025 21.38.42 ******/
+/****** Object:  Table [dbo].[EventsUsers]    Script Date: 24/09/2025 22.49.22 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -77,7 +77,23 @@ CREATE TABLE [dbo].[EventsUsers](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Games]    Script Date: 23/09/2025 21.38.42 ******/
+/****** Object:  Table [dbo].[Files]    Script Date: 24/09/2025 22.49.22 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Files](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Title] [nvarchar](255) NULL,
+	[Filename] [nchar](10) NOT NULL,
+	[Type] [int] NOT NULL,
+ CONSTRAINT [PK_File] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Games]    Script Date: 24/09/2025 22.49.22 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -86,13 +102,14 @@ CREATE TABLE [dbo].[Games](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
 	[Name] [nvarchar](255) NOT NULL,
 	[Description] [nvarchar](max) NULL,
+	[Logo] [nvarchar](255) NULL,
  CONSTRAINT [PK_Games] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[GameServers]    Script Date: 23/09/2025 21.38.42 ******/
+/****** Object:  Table [dbo].[GameServers]    Script Date: 24/09/2025 22.49.22 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -108,7 +125,77 @@ CREATE TABLE [dbo].[GameServers](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[UsersGames]    Script Date: 23/09/2025 21.38.42 ******/
+/****** Object:  Table [dbo].[News]    Script Date: 24/09/2025 22.49.22 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[News](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Title] [nvarchar](255) NOT NULL,
+	[MetaDescription] [nvarchar](160) NULL,
+	[UrlSlug] [nvarchar](255) NOT NULL,
+	[Content] [nvarchar](max) NULL,
+	[ImageId] [int] NULL,
+	[CategoryId] [int] NULL,
+	[CreatedBy] [int] NOT NULL,
+	[UpdatedBy] [int] NOT NULL,
+	[CreatedAt] [datetime] NOT NULL,
+	[UpdatedAt] [datetime] NOT NULL,
+	[IsPublished] [bit] NOT NULL,
+ CONSTRAINT [PK_News] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[NewsTags]    Script Date: 24/09/2025 22.49.22 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[NewsTags](
+	[NewsId] [int] NOT NULL,
+	[TagId] [int] NOT NULL,
+ CONSTRAINT [PK_NewsTags] PRIMARY KEY CLUSTERED 
+(
+	[NewsId] ASC,
+	[TagId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Tags]    Script Date: 24/09/2025 22.49.22 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Tags](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [nvarchar](255) NOT NULL,
+ CONSTRAINT [PK_Tags] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Teams]    Script Date: 24/09/2025 22.49.22 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Teams](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [nvarchar](255) NOT NULL,
+	[Description] [nvarchar](max) NULL,
+	[ValidFrom] [datetime] NOT NULL,
+	[ValidTo] [datetime] NULL,
+ CONSTRAINT [PK_Teams] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[UsersGames]    Script Date: 24/09/2025 22.49.22 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -124,7 +211,22 @@ CREATE TABLE [dbo].[UsersGames](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [log].[NLog]    Script Date: 23/09/2025 21.38.42 ******/
+/****** Object:  Table [dbo].[UsersTeams]    Script Date: 24/09/2025 22.49.22 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[UsersTeams](
+	[TeamId] [int] NOT NULL,
+	[MemberId] [int] NOT NULL,
+ CONSTRAINT [PK_UsersTeams] PRIMARY KEY CLUSTERED 
+(
+	[TeamId] ASC,
+	[MemberId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [log].[NLog]    Script Date: 24/09/2025 22.49.22 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -152,6 +254,8 @@ ALTER TABLE [auth].[Users] ADD  CONSTRAINT [DF_Users_CanBringStationaryPc]  DEFA
 GO
 ALTER TABLE [auth].[Users] ADD  CONSTRAINT [DF_Users_CanBringPlaystation]  DEFAULT ((0)) FOR [CanBringPlaystation]
 GO
+ALTER TABLE [dbo].[News] ADD  CONSTRAINT [DF_News_IsPublished]  DEFAULT ((0)) FOR [IsPublished]
+GO
 ALTER TABLE [auth].[Users]  WITH CHECK ADD  CONSTRAINT [FK_Users_Parent] FOREIGN KEY([ParentId])
 REFERENCES [auth].[Users] ([Id])
 GO
@@ -177,6 +281,26 @@ REFERENCES [dbo].[Games] ([Id])
 GO
 ALTER TABLE [dbo].[GameServers] CHECK CONSTRAINT [FK_GameServers_Games]
 GO
+ALTER TABLE [dbo].[News]  WITH CHECK ADD  CONSTRAINT [FK_News_Users] FOREIGN KEY([CreatedBy])
+REFERENCES [auth].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[News] CHECK CONSTRAINT [FK_News_Users]
+GO
+ALTER TABLE [dbo].[News]  WITH CHECK ADD  CONSTRAINT [FK_News_Users1] FOREIGN KEY([UpdatedBy])
+REFERENCES [auth].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[News] CHECK CONSTRAINT [FK_News_Users1]
+GO
+ALTER TABLE [dbo].[NewsTags]  WITH CHECK ADD  CONSTRAINT [FK_NewsTags_News] FOREIGN KEY([NewsId])
+REFERENCES [dbo].[News] ([Id])
+GO
+ALTER TABLE [dbo].[NewsTags] CHECK CONSTRAINT [FK_NewsTags_News]
+GO
+ALTER TABLE [dbo].[NewsTags]  WITH CHECK ADD  CONSTRAINT [FK_NewsTags_Tags] FOREIGN KEY([TagId])
+REFERENCES [dbo].[Tags] ([Id])
+GO
+ALTER TABLE [dbo].[NewsTags] CHECK CONSTRAINT [FK_NewsTags_Tags]
+GO
 ALTER TABLE [dbo].[UsersGames]  WITH CHECK ADD  CONSTRAINT [FK_UsersGames_Games] FOREIGN KEY([GameId])
 REFERENCES [dbo].[Games] ([Id])
 GO
@@ -187,7 +311,17 @@ REFERENCES [auth].[Users] ([Id])
 GO
 ALTER TABLE [dbo].[UsersGames] CHECK CONSTRAINT [FK_UsersGames_Users]
 GO
-/****** Object:  StoredProcedure [log].[NLogAddEntry]    Script Date: 23/09/2025 21.38.42 ******/
+ALTER TABLE [dbo].[UsersTeams]  WITH CHECK ADD  CONSTRAINT [FK_UsersTeams_Teams] FOREIGN KEY([TeamId])
+REFERENCES [dbo].[Teams] ([Id])
+GO
+ALTER TABLE [dbo].[UsersTeams] CHECK CONSTRAINT [FK_UsersTeams_Teams]
+GO
+ALTER TABLE [dbo].[UsersTeams]  WITH CHECK ADD  CONSTRAINT [FK_UsersTeams_Users] FOREIGN KEY([MemberId])
+REFERENCES [auth].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[UsersTeams] CHECK CONSTRAINT [FK_UsersTeams_Users]
+GO
+/****** Object:  StoredProcedure [log].[NLogAddEntry]    Script Date: 24/09/2025 22.49.22 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
