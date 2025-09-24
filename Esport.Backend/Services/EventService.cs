@@ -90,5 +90,17 @@ namespace Esport.Backend.Services
                 .FirstOrDefault(e => e.Id == id) ?? throw new KeyNotFoundException("Event not found");
             return ev;
         }
+
+        public IEnumerable<EventUserDto> GetUserEventsByUserId(int userId, int month, int year)
+        {
+            IEnumerable<EventUserDto> result = [];
+            return db.EventsUsers
+                .Include(eu => eu.User)
+                .Include(e => e.Event)
+                .Where(eu => eu.UserId == userId && ((eu.Event.StartDateTime.Year >= year && eu.Event.StartDateTime.Month <= month) ||
+                    (eu.Event.EndDateTime.Year >= year && eu.Event.EndDateTime.Month >= month)))
+                .OrderByDescending(o => o.Event.StartDateTime)
+                .Take(10).Select(r => new EventUserDto{ Event = r.Event, EventsUser = r }).ToList();
+        }
     }
 }

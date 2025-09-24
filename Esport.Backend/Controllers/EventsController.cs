@@ -36,7 +36,7 @@ namespace Esport.Backend.Controllers
 
         [Authorize([UserRole.Admin, UserRole.MemberAdult, UserRole.MemberKid])]
         [HttpPost("[action]")]
-        public ActionResult<Event> CreateOrUpdateEvent([FromBody]Event ev)
+        public ActionResult<Event> CreateOrUpdateEvent([FromBody] Event ev)
         {
             if (HttpContext.Items["User"] is not User currentUser || (currentUser.Role != UserRole.Admin))
                 return Unauthorized(new { message = "Unauthorized" });
@@ -57,7 +57,7 @@ namespace Esport.Backend.Controllers
 
         [Authorize([UserRole.Admin, UserRole.MemberAdult, UserRole.MemberKid])]
         [HttpPost("[action]")]
-        public ActionResult<Event> CreateOrUpdateUserToEvent([FromBody]EventsUser eventsUser)
+        public ActionResult<Event> CreateOrUpdateUserToEvent([FromBody] EventsUser eventsUser)
         {
             if (HttpContext.Items["User"] is not User currentUser || currentUser.Role != UserRole.Admin || currentUser.Id != eventsUser.UserId)
                 return Unauthorized(new { message = "Unauthorized" });
@@ -75,6 +75,16 @@ namespace Esport.Backend.Controllers
 
             var eventResult = eventService.DeleteUserFromEvent(eventId, userId);
             return Ok(eventResult);
+        }
+
+        [Authorize([UserRole.Admin, UserRole.MemberAdult, UserRole.MemberKid])]
+        [HttpGet("[action]")]
+        public ActionResult<IEnumerable<EventUserDto>> GetUserEventsByUserId(int month, int year)
+        {
+            if (HttpContext.Items["User"] is not User currentUser)
+                return Unauthorized(new { message = "Unauthorized" });
+            var events = eventService.GetUserEventsByUserId(currentUser.Id, month, year);
+            return Ok(events);
         }
     }
 }

@@ -38,6 +38,7 @@ try
     builder.Services.AddScoped<IJwtUtils, JwtUtils>();
     builder.Services.AddScoped<IUserService, UserService>();
     builder.Services.AddScoped<IEventService, EventService>();
+    builder.Services.AddScoped<IGamesService, GamesService>();
 
     builder.Services.AddHttpContextAccessor();
     builder.Services.AddScoped<IWebHelper, WebHelper>();

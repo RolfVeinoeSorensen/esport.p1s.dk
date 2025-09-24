@@ -4,6 +4,7 @@ api.base.service.ts
 api.module.ts
 api/api.ts
 api/events.service.ts
+api/games.service.ts
 api/users.service.ts
 configuration.ts
 encoder.ts
@@ -13,7 +14,11 @@ model/authenticateRequest.ts
 model/authenticateResponse.ts
 model/event.ts
 model/eventDto.ts
+model/eventUserDto.ts
 model/eventsUser.ts
+model/game.ts
+model/gameServer.ts
+model/gameServerDto.ts
 model/holidayWeekendWorkdayDto.ts
 model/models.ts
 model/registerRequest.ts

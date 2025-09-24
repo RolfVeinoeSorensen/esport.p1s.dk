@@ -98,10 +98,10 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[GameServers](
-	[Id] [int] NOT NULL,
+	[Id] [int] IDENTITY(1,1) NOT NULL,
 	[Server] [nvarchar](255) NOT NULL,
 	[Port] [int] NOT NULL,
-	[GameId] [int] IDENTITY(1,1) NOT NULL,
+	[GameId] [int] NOT NULL,
  CONSTRAINT [PK_GameServers] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC

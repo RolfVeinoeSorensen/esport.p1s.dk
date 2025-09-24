@@ -85,8 +85,8 @@ namespace Esport.Backend.Data
 
             modelBuilder.Entity<GameServer>(entity =>
             {
-                entity.Property(e => e.Id).ValueGeneratedNever();
-                entity.Property(e => e.GameId).ValueGeneratedOnAdd();
+                entity.Property(e => e.Id).ValueGeneratedOnAdd();
+                entity.Property(e => e.GameId).ValueGeneratedNever();
                 entity.Property(e => e.Server)
                     .IsRequired()
                     .HasMaxLength(255);

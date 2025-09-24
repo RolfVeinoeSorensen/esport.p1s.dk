@@ -9,8 +9,8 @@ namespace Esport.Backend.Services
         Event GetEventById(int id);
         Event CreateOrUpdateEvent(Event ev);
         void DeleteEvent(int id);
-
         Event CreateOrUpdateUserToEvent(EventsUser eventsUser);
         Event DeleteUserFromEvent(int eventId, int userId);
+        IEnumerable<EventUserDto> GetUserEventsByUserId(int userId, int month, int year);
     }
 }
