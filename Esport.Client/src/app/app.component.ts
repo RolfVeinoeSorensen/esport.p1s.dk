@@ -152,7 +152,28 @@ export class AppComponent implements OnInit, OnDestroy {
     this.refreshMenu();
   }
   refreshMenu() {
-    this.items = [
+    let items: MenuItem[] | undefined = [];
+    if (this.user.role === UserRole.Admin) {
+      items.push({
+        label: 'Administration',
+      });
+    }
+    if (this.isLoggedIn) {
+      items.push({
+        label: 'Mine ting',
+        items: [
+          {
+            label: "Overblik",
+            routerLink: "my-stuff"
+          },
+          {
+            label: 'Kalender',
+            routerLink: "my-stuff/team-calendar",
+          },
+        ],
+      });
+    }
+    let itemsPublic: MenuItem[] | undefined = [
       {
         label: 'Nyheder',
       },
@@ -184,26 +205,7 @@ export class AppComponent implements OnInit, OnDestroy {
         ]
       },
     ];
-    if (this.isLoggedIn) {
-      this.items.push({
-        label: 'Mine ting',
-        items: [
-          {
-            label: "Overblik",
-            routerLink: "my-stuff"
-          },
-          {
-            label: 'Kalender',
-            routerLink: "my-stuff/team-calendar",
-          },
-        ],
-      });
-    }
-    if (this.user.role === UserRole.Admin) {
-      this.items.push({
-        label: 'Administration',
-      });
-    }
+    this.items = items.concat(itemsPublic);
   }
   getAnimationData(outlet: RouterOutlet) {
     return (
