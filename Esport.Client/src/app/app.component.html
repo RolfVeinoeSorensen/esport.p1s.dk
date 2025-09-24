@@ -1,4 +1,4 @@
-<header class="main-bg w-full sticky top-0 pl-20 z-40">
+<header class="main-bg w-full sticky top-0 pl-0 md:pl-20 z-40">
   <p-menubar [model]="items">
     <ng-template #start>
       <a [routerLink]="'/'" class="brand-logo-link">
@@ -21,17 +21,14 @@
           icon="pi pi-moon"
           [rounded]="true"
           [text]="true"
-          severity="info"
           [title]="'Toggle Dark Mode'"
           (onClick)="toggleDarkMode()"
         />
         <p-button
-          (click)="isLoggedIn === true ? visibleLogin = false : visibleLogin = true"
-          icon="pi pi-user"
+          [icon]="isLoggedIn === true ? 'pi pi-sign-out' : 'pi pi-sign-in'"
           [rounded]="true"
           [text]="true"
-          [label]="isLoggedIn === true ? 'Hej, ' + user.firstName : 'Log ind'"
-          severity="info"
+          (click)="onSigninOrSignoutClick()"
         />
         <form [formGroup]="loginForm" (ngSubmit)="signIn()">
         <p-dialog

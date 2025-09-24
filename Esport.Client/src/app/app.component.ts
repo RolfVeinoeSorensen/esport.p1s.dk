@@ -216,6 +216,16 @@ export class AppComponent implements OnInit, OnDestroy {
     const element = document.querySelector('html');
     if (element) element.classList.toggle('dark');
   }
+  onSigninOrSignoutClick() {
+    if (this.isLoggedIn) {
+      this.authenticationService.logout();
+      this.isLoggedIn = false;
+      this.refreshMenu();
+      this.router.navigate(['/']);
+    } else {
+      this.visibleLogin = true;
+    }
+  }
   signIn() {
     // stop here if form is invalid
     if (this.loginForm.invalid) {

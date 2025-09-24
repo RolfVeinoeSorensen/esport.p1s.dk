@@ -10,22 +10,6 @@ body {
 .dark body {
   background-color: #161618;
 }
-.main {
-  min-height: calc(100vh - 250px);
-  padding-bottom: 2rem;
-}
-.main-bg,
-.dark .main-bg {
-  background-color: #212124;
-}
-.brand-logo-link {
-  position: fixed;
-  top: 4px;
-  left: 4px;
-}
-.brand-logo-img {
-  height: 96px;
-}
 h1,
 h2,
 h3 {
@@ -60,4 +44,32 @@ h6 {
 p {
   display: block;
   padding-bottom: 0.5rem;
+}
+/* Top menu */
+.main {
+  min-height: calc(100vh - 250px);
+  padding-bottom: 2rem;
+}
+.main-bg,
+.dark .main-bg {
+  background-color: #212124;
+}
+.brand-logo-link {
+  position: fixed;
+  top: 4px;
+  left: 4px;
+}
+.brand-logo-img {
+  height: 96px;
+}
+@media  (max-width: 640px) {
+  .brand-logo-link {
+    position: fixed;
+    top: 4px;
+    left: calc(50% - 32px);
+  }
+  .brand-logo-img {
+    height: 64px;
+  }
+  
 }
