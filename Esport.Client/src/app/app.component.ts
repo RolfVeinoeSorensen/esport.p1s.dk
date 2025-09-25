@@ -124,10 +124,6 @@ export class AppComponent implements OnInit, OnDestroy {
           url: event['ogUrl'] ?? this.router.url,
         });
       });
-    this.loginForm = this.formBuilder.group({
-      username: ['', [Validators.required, Validators.email, Validators.maxLength(255)]],
-      password: ['', Validators.required],
-    });
     this.refreshMenu();
   }
   refreshMenu() {

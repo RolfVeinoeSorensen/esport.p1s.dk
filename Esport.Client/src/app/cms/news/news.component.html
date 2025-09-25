@@ -1,1 +1,8 @@
-<p>news works!</p>
+<h1>Nyheder</h1>
+@for(newsItem of news; track news){
+    <div class="mb-4">
+        <h2>{{newsItem.title}}</h2>
+        <p>{{newsItem.content}}</p>
+        <small>Udgivet: {{newsItem.updatedAt | date}}</small>
+    </div>
+}

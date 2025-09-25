@@ -15,9 +15,9 @@ GO
 CREATE TABLE [auth].[Users](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
 	[ParentId] [int] NULL,
-	[FirstName] [nvarchar](max) NULL,
-	[LastName] [nvarchar](max) NULL,
-	[Username] [nvarchar](max) NOT NULL,
+	[FirstName] [nvarchar](255) NULL,
+	[LastName] [nvarchar](255) NULL,
+	[Username] [nvarchar](255) NOT NULL,
 	[Role] [int] NOT NULL,
 	[CreatedUtc] [datetime2](7) NOT NULL,
 	[PasswordHash] [nvarchar](max) NOT NULL,

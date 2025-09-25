@@ -11,7 +11,7 @@ namespace Esport.Backend.Controllers
         private readonly INewsService newsService = newsService;
 
         [HttpGet("[action]")]
-        public ActionResult<IEnumerable<Game>> GetNews(int page, int pageSize)
+        public ActionResult<IEnumerable<News>> GetNews(int page, int pageSize)
         {
             var news = newsService.GetNews(page, pageSize);
             return Ok(news);
