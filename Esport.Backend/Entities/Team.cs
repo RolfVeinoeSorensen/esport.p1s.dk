@@ -17,5 +17,7 @@ public partial class Team
 
     public DateTime? ValidTo { get; set; }
 
-    public virtual ICollection<UsersTeam> UsersTeams { get; set; } = new List<UsersTeam>();
+    public virtual ICollection<Event> Events { get; set; } = new List<Event>();
+
+    public virtual ICollection<AuthUser> Members { get; set; } = new List<AuthUser>();
 }

@@ -4,10 +4,8 @@ namespace Esport.Backend.Enums
     {
         Pending = 0,
         Admin = 1,
-        Family = 2,
-        Friend = 3,
-        User = 4,
-        MemberKid = 5,
-        MemberAdult = 6
+        Editor = 2,
+        MemberKid = 3,
+        MemberAdult = 4
     }
 }

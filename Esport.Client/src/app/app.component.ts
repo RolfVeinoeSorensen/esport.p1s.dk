@@ -128,7 +128,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
   refreshMenu() {
     const items: MenuItem[] | undefined = [];
-    if (this.user.role === UserRole.Admin) {
+    if (this.user.roles.some(x=>{x.userRole  === UserRole.Admin})) {
       items.push({
         label: 'Administration',
       });

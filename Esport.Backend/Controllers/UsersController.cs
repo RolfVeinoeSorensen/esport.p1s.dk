@@ -25,7 +25,7 @@ namespace Esport.Backend.Controllers
 
         [Authorize(UserRole.Admin)]
         [HttpGet("[action]")]
-        public ActionResult<IEnumerable<User>> GetAllUsers()
+        public ActionResult<IEnumerable<AuthUser>> GetAllUsers()
         {
             var users = userService.GetAllUsers();
             return Ok(users);
@@ -35,7 +35,7 @@ namespace Esport.Backend.Controllers
         public ActionResult<AuthenticateResponse> GetUserById(int id)
         {
             // only admins can access other user records
-            if (HttpContext.Items["User"] is not User currentUser || (id != currentUser.Id && currentUser.Role != UserRole.Admin))
+            if (HttpContext.Items["User"] is not AuthUser currentUser || currentUser.Roles.Any(x => x.Role.Equals(UserRole.Admin)) == true || currentUser.Id != id)
                 return Unauthorized(new { message = "Unauthorized" });
 
             var user =  userService.GetUserById(id);

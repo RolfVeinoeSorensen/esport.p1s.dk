@@ -7,12 +7,17 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { News } from './news';
+import { User } from './user';
+import { Event } from './event';
 
 
-export interface Tag { 
+export interface Team { 
     id: number;
     name?: string;
-    news?: Array<News>;
+    description?: string;
+    validFrom: string;
+    validTo?: string;
+    events?: Array<Event>;
+    members?: Array<User>;
 }
 

@@ -15,9 +15,7 @@
 export const UserRole = {
     Pending: 'Pending',
     Admin: 'Admin',
-    Family: 'Family',
-    Friend: 'Friend',
-    User: 'User',
+    Editor: 'Editor',
     MemberKid: 'MemberKid',
     MemberAdult: 'MemberAdult'
 } as const;

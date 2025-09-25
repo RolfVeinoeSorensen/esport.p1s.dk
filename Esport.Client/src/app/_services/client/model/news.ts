@@ -7,7 +7,8 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { NewsTag } from './newsTag';
+import { User } from './user';
+import { Tag } from './tag';
 
 
 export interface News { 
@@ -23,6 +24,9 @@ export interface News {
     createdAt: string;
     updatedAt: string;
     isPublished: boolean;
-    newsTags?: Array<NewsTag>;
+    createdByNavigation?: User;
+    image?: any;
+    updatedByNavigation?: User;
+    tags?: Array<Tag>;
 }
 

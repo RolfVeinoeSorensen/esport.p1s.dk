@@ -7,9 +7,12 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { UserRole } from './userRole';
+import { Role } from './role';
+import { News } from './news';
+import { Event } from './event';
+import { Team } from './team';
+import { EventsUser } from './eventsUser';
 import { UsersGame } from './usersGame';
-import { UsersTeam } from './usersTeam';
 
 
 export interface User { 
@@ -18,7 +21,6 @@ export interface User {
     firstName?: string;
     lastName?: string;
     username?: string;
-    role: UserRole;
     createdUtc: string;
     passwordHash?: string;
     passwordResetToken?: string;
@@ -34,11 +36,14 @@ export interface User {
     canBringLaptop: boolean;
     canBringStationaryPc: boolean;
     canBringPlaystation: boolean;
+    events?: Array<Event>;
+    eventsUsers?: Array<EventsUser>;
+    inverseParent?: Array<User>;
+    newsCreatedByNavigations?: Array<News>;
+    newsUpdatedByNavigations?: Array<News>;
     parent?: User;
     usersGames?: Array<UsersGame>;
-    usersTeams?: Array<UsersTeam>;
+    roles?: Array<Role>;
+    teams?: Array<Team>;
 }
-export namespace User {
-}
-
 

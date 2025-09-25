@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 using Esport.Backend.Authorization;
-using Esport.Backend.Data;
+using Esport.Backend.Entities;
 using Esport.Backend.Extensions;
 using Esport.Backend.Helpers;
 using Esport.Backend.Services;

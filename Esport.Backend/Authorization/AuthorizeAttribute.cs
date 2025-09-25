@@ -24,9 +24,10 @@ namespace Esport.Backend.Authorization
 
             // authorization
 #pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
-            var user = (User)context.HttpContext.Items["User"];
+            var user = (AuthUser)context.HttpContext.Items["User"];
 #pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
-            if (user == null || (_roles.Any() && !_roles.Contains(user.Role)))
+            var roleMatch = user?.Roles.Select(x => x.Role).ToList().Any(u => _roles.Contains(u));
+            if (user == null || roleMatch == false)
             {
                 // not logged in or role not authorized
                 context.Result = new JsonResult(new { message = "Unauthorized" }) { StatusCode = StatusCodes.Status401Unauthorized };

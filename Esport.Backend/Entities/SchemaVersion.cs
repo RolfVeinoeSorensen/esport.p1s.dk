@@ -5,11 +5,11 @@ using System.Collections.Generic;
 
 namespace Esport.Backend.Entities;
 
-public partial class Tag
+public partial class SchemaVersion
 {
     public int Id { get; set; }
 
-    public string Name { get; set; }
+    public string ScriptName { get; set; }
 
-    public virtual ICollection<News> News { get; set; } = new List<News>();
+    public DateTime Applied { get; set; }
 }

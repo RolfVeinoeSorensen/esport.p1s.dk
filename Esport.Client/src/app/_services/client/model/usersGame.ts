@@ -7,11 +7,15 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { Game } from './game';
+import { User } from './user';
 
 
 export interface UsersGame { 
     gameId: number;
     userId: number;
     inGameName?: string;
+    game?: Game;
+    user?: User;
 }
 

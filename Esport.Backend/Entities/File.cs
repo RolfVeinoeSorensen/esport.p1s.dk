@@ -14,4 +14,6 @@ public partial class File
     public string Filename { get; set; }
 
     public int Type { get; set; }
+
+    public virtual ICollection<News> News { get; set; } = new List<News>();
 }

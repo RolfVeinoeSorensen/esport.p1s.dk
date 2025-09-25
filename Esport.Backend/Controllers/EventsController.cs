@@ -38,7 +38,7 @@ namespace Esport.Backend.Controllers
         [HttpPost("[action]")]
         public ActionResult<Event> CreateOrUpdateEvent([FromBody] Event ev)
         {
-            if (HttpContext.Items["User"] is not User currentUser || (currentUser.Role != UserRole.Admin))
+            if (HttpContext.Items["User"] is not AuthUser currentUser || currentUser.Roles.Any(x => x.Role.Equals(UserRole.Admin)) == true)
                 return Unauthorized(new { message = "Unauthorized" });
 
             var eventResult = eventService.CreateOrUpdateEvent(ev);
@@ -48,7 +48,7 @@ namespace Esport.Backend.Controllers
         [HttpDelete("[action]")]
         public ActionResult<Event> DeleteEvent(int id)
         {
-            if (HttpContext.Items["User"] as User is not User currentUser || (currentUser.Role != UserRole.Admin))
+            if (HttpContext.Items["User"] as AuthUser is not AuthUser currentUser || currentUser.Roles.Any(x => x.Role.Equals(UserRole.Admin)) == true)
                 return Unauthorized(new { message = "Unauthorized" });
 
             eventService.DeleteEvent(id);
@@ -59,7 +59,7 @@ namespace Esport.Backend.Controllers
         [HttpPost("[action]")]
         public ActionResult<Event> CreateOrUpdateUserToEvent([FromBody] EventsUser eventsUser)
         {
-            if (HttpContext.Items["User"] is not User currentUser || currentUser.Role != UserRole.Admin || currentUser.Id != eventsUser.UserId)
+            if (HttpContext.Items["User"] is not AuthUser currentUser || currentUser.Roles.Any(x => x.Role.Equals(UserRole.Admin)) == true || currentUser.Id != eventsUser.UserId)
                 return Unauthorized(new { message = "Unauthorized" });
 
             var eventResult = eventService.CreateOrUpdateUserToEvent(eventsUser);
@@ -70,7 +70,7 @@ namespace Esport.Backend.Controllers
         [HttpDelete("[action]")]
         public ActionResult<Event> DeleteUserFromEvent(int eventId, int userId)
         {
-            if (HttpContext.Items["User"] is not User currentUser || currentUser.Role != UserRole.Admin || currentUser.Id != userId)
+            if (HttpContext.Items["User"] is not AuthUser currentUser || currentUser.Roles.Any(x => x.Role.Equals(UserRole.Admin)) == true || currentUser.Id != userId)
                 return Unauthorized(new { message = "Unauthorized" });
 
             var eventResult = eventService.DeleteUserFromEvent(eventId, userId);
@@ -81,7 +81,7 @@ namespace Esport.Backend.Controllers
         [HttpGet("[action]")]
         public ActionResult<IEnumerable<EventUserDto>> GetUserEventsByUserId(int month, int year)
         {
-            if (HttpContext.Items["User"] is not User currentUser)
+            if (HttpContext.Items["User"] is not AuthUser currentUser)
                 return Unauthorized(new { message = "Unauthorized" });
             var events = eventService.GetUserEventsByUserId(currentUser.Id, month, year);
             return Ok(events);

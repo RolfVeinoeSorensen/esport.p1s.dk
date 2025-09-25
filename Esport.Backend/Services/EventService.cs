@@ -1,5 +1,4 @@
 using Esport.Backend.Entities;
-using Esport.Backend.Data;
 using Microsoft.EntityFrameworkCore;
 using Esport.Backend.Dtos;
 

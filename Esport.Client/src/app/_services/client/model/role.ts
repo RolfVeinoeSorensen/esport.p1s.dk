@@ -7,12 +7,16 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { News } from './news';
+import { User } from './user';
+import { UserRole } from './userRole';
 
 
-export interface Tag { 
+export interface Role { 
     id: number;
-    name?: string;
-    news?: Array<News>;
+    userRole: UserRole;
+    users?: Array<User>;
 }
+export namespace Role {
+}
+
 

@@ -7,7 +7,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { UserRole } from './userRole';
+import { Role } from './role';
 
 
 export interface AuthenticateResponse { 
@@ -15,10 +15,7 @@ export interface AuthenticateResponse {
     firstName: string;
     lastName: string;
     username: string;
-    role: UserRole;
+    roles: Array<Role>;
     token: string;
 }
-export namespace AuthenticateResponse {
-}
-
 

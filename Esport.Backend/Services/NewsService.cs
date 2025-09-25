@@ -1,5 +1,4 @@
 using Esport.Backend.Entities;
-using Esport.Backend.Data;
 
 namespace Esport.Backend.Services
 {

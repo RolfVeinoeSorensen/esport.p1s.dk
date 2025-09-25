@@ -7,6 +7,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { Game } from './game';
 
 
 export interface GameServer { 
@@ -14,5 +15,6 @@ export interface GameServer {
     server?: string;
     port: number;
     gameId: number;
+    game?: Game;
 }
 

@@ -4,7 +4,7 @@ namespace Esport.Backend.Services.Message
 {
     public interface INotificationService
     {
-        Task SendForgotPasswordMail(User user);
-        Task SendRegisterNewUserConfirmMail(User user);
+        Task SendForgotPasswordMail(AuthUser user);
+        Task SendRegisterNewUserConfirmMail(AuthUser user);
     }
 }

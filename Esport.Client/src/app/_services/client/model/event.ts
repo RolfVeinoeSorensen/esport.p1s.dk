@@ -7,6 +7,9 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { User } from './user';
+import { Team } from './team';
+import { EventsUser } from './eventsUser';
 
 
 export interface Event { 
@@ -17,5 +20,8 @@ export interface Event {
     endDateTime: string;
     createdBy: number;
     createdDateTime: string;
+    createdByNavigation?: User;
+    eventsUsers?: Array<EventsUser>;
+    teams?: Array<Team>;
 }
 

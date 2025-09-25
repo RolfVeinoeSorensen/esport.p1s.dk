@@ -4,7 +4,6 @@ using Esport.Backend.Authorization;
 using Esport.Backend.Entities;
 using Esport.Backend.Helpers;
 using Esport.Backend.Models.Users;
-using Esport.Backend.Data;
 using Microsoft.EntityFrameworkCore;
 using Esport.Backend.Services.Message;
 
@@ -35,7 +34,7 @@ namespace Esport.Backend.Services
 
         public AuthenticateResponse Authenticate(AuthenticateRequest model)
         {
-            var user = db.Users.SingleOrDefault(x => x.Username == model.Username);
+            var user = db.AuthUsers.Include(ur=>ur.Roles).SingleOrDefault(x => x.Username == model.Username);
 
             // validate
             if (user == null || !BCryptNet.Verify(model.Password, user.PasswordHash))
@@ -52,42 +51,43 @@ namespace Esport.Backend.Services
             return new AuthenticateResponse(user, jwtToken);
         }
 
-        public IEnumerable<User> GetAllUsers()
+        public IEnumerable<AuthUser> GetAllUsers()
         {
-            return db.Users;
+            return db.AuthUsers;
         }
 
-        public User GetUserById(int id) 
+        public AuthUser GetUserById(int id) 
         {
-            var user = db.Users.Find(id);
+            var user = db.AuthUsers.Find(id);
             if (user == null) throw new KeyNotFoundException("User not found");
             return user;
         }
 
         public async Task<bool> RegisterUser(RegisterRequest model)
         {
-            var userExist = await db.Users.FirstOrDefaultAsync(x=>x.Username.Equals(model.Username));
-            if(userExist != null) return false;
-            var user = new User
+            var userExist = await db.AuthUsers.FirstOrDefaultAsync(x=>x.Username.Equals(model.Username));
+            var pendingRole = await db.AuthRoles.FirstOrDefaultAsync(x=>x.Role.Equals(Enums.UserRole.Pending));
+            if(userExist != null || pendingRole == null) return false;
+            var user = new AuthUser
             {
                 Username = model.Username,
                 PasswordHash = BCryptNet.HashPassword(model.Password),
                 FirstName = model.Firstname,
                 LastName = model.Lastname,
                 CreatedUtc = DateTime.UtcNow,
-                Role = Enums.UserRole.Pending,
+                Roles = [pendingRole],
                 PasswordResetToken = BCryptNet.HashPassword(Guid.NewGuid().ToString(), BCryptNet.GenerateSalt()).Replace("/", ""),
                 PasswordResetTokenExpiration = DateTime.UtcNow.AddDays(1)
             };
             logger.LogInformation($"{user.Username} registered as new user at {DateTime.UtcNow}");
-            await db.Users.AddAsync(user);
+            await db.AuthUsers.AddAsync(user);
             await db.SaveChangesAsync();
             return true;
         }
 
         public async Task ForgotPasswordAsync(string email)
         {
-            var user = await db.Users.FirstOrDefaultAsync(x=>x.Username.Equals(email));
+            var user = await db.AuthUsers.FirstOrDefaultAsync(x=>x.Username.Equals(email));
             if(user == null) return;
             logger.LogInformation($"{user.Username} requested new password at {DateTime.UtcNow}");
             user.PasswordResetToken = BCryptNet.HashPassword(Guid.NewGuid().ToString(), BCryptNet.GenerateSalt()).Replace("/","");
@@ -99,7 +99,7 @@ namespace Esport.Backend.Services
 
         public async Task<bool> ChangePassword(string token, string password)
         {
-            var user = await db.Users.FirstOrDefaultAsync(x => x.PasswordResetToken.Equals(token));
+            var user = await db.AuthUsers.FirstOrDefaultAsync(x => x.PasswordResetToken.Equals(token));
             if (user == null) return false;
             if(user.PasswordResetToken != null && user.PasswordResetTokenExpiration > DateTime.UtcNow)
             {

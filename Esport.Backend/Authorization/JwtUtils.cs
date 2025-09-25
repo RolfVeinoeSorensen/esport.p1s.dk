@@ -10,7 +10,7 @@ namespace Esport.Backend.Authorization
 {
     public interface IJwtUtils
     {
-        public string GenerateJwtToken(User user);
+        public string GenerateJwtToken(AuthUser user);
         public int? ValidateJwtToken(string token);
     }
 
@@ -23,7 +23,7 @@ namespace Esport.Backend.Authorization
             _appSettings = appSettings.Value;
         }
 
-        public string GenerateJwtToken(User user)
+        public string GenerateJwtToken(AuthUser user)
         {
             // generate token that is valid for 7 days
             var tokenHandler = new JwtSecurityTokenHandler();

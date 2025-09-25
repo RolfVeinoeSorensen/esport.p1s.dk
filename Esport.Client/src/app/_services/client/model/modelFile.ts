@@ -10,9 +10,11 @@
 import { News } from './news';
 
 
-export interface Tag { 
+export interface ModelFile { 
     id: number;
-    name?: string;
+    title?: string;
+    filename?: string;
+    type: number;
     news?: Array<News>;
 }
 

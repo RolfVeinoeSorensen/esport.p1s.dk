@@ -1,5 +1,4 @@
-﻿using Esport.Backend.Data;
-using Esport.Backend.Dtos;
+﻿using Esport.Backend.Dtos;
 using Esport.Backend.Entities;
 using Esport.Backend.Extensions;
 
@@ -25,7 +24,7 @@ namespace Esport.Backend.Services.Message
             this.db = db;
         }
 
-        public async Task SendForgotPasswordMail(User user)
+        public async Task SendForgotPasswordMail(AuthUser user)
         {
             try
             {
@@ -46,7 +45,7 @@ namespace Esport.Backend.Services.Message
             }
         }
 
-        public async Task SendRegisterNewUserConfirmMail(User user)
+        public async Task SendRegisterNewUserConfirmMail(AuthUser user)
         {
             try
             {

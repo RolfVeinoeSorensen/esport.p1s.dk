@@ -7,6 +7,8 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { GameServer } from './gameServer';
+import { UsersGame } from './usersGame';
 
 
 export interface Game { 
@@ -14,5 +16,7 @@ export interface Game {
     name?: string;
     description?: string;
     logo?: string;
+    gameServers?: Array<GameServer>;
+    usersGames?: Array<UsersGame>;
 }
 

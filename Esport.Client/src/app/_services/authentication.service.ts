@@ -2,7 +2,7 @@
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { UsersService } from '@services/client';
+import { Role, UsersService } from '@services/client';
 import { User } from '../_models/user';
 import { UserRole } from '../_models/userrole';
 
@@ -34,7 +34,7 @@ export class AuthenticationService {
             user.id = res.id;
             user.firstName = res.firstName ?? '';
             user.lastName = res.lastName ?? '';
-            user.role = res.role as UserRole;
+            user.roles = res.roles as Role[] ?? [];
             user.token = res.token ?? '';
             user.username = res.username ?? '';
             localStorage.setItem('user', JSON.stringify(user));
