@@ -18,7 +18,7 @@ import { DialogModule } from 'primeng/dialog';
 import { AuthenticationService } from '@services/authentication.service';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { User } from '@models/user';
-import { UserRole } from './_models/userrole';
+import { UserRole } from './_services/client';
 
 @Component({
   selector: 'app-root',
@@ -128,7 +128,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
   refreshMenu() {
     const items: MenuItem[] | undefined = [];
-    if (this.user.roles.some(x=>{x.userRole  === UserRole.Admin})) {
+    if (this.user.roles.some(x=> x.role  === UserRole.Admin) === true) {
       items.push({
         label: 'Administration',
       });

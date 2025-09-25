@@ -1,11 +1,6 @@
 INSERT INTO [auth].[AuthRoles]
            ([Role])
      VALUES
-           (0)
-GO
-INSERT INTO [auth].[AuthRoles]
-           ([Role])
-     VALUES
            (1)
 GO
 INSERT INTO [auth].[AuthRoles]
@@ -22,6 +17,11 @@ INSERT INTO [auth].[AuthRoles]
            ([Role])
      VALUES
            (4)
+GO
+INSERT INTO [auth].[AuthRoles]
+           ([Role])
+     VALUES
+           (5)
 GO
 SET IDENTITY_INSERT [auth].[AuthUsers] ON 
 GO

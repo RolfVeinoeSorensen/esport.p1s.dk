@@ -1,3 +1,5 @@
+export * from './authRole';
+export * from './authUser';
 export * from './authenticateRequest';
 export * from './authenticateResponse';
 export * from './event';
@@ -11,9 +13,7 @@ export * from './holidayWeekendWorkdayDto';
 export * from './modelFile';
 export * from './news';
 export * from './registerRequest';
-export * from './role';
 export * from './tag';
 export * from './team';
-export * from './user';
 export * from './userRole';
 export * from './usersGame';

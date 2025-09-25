@@ -13,11 +13,11 @@
  * 
  */
 export const UserRole = {
-    Pending: 'Pending',
     Admin: 'Admin',
+    Pending: 'Pending',
     Editor: 'Editor',
-    MemberKid: 'MemberKid',
-    MemberAdult: 'MemberAdult'
+    MemberAdult: 'MemberAdult',
+    MemberKid: 'MemberKid'
 } as const;
 export type UserRole = typeof UserRole[keyof typeof UserRole];
 

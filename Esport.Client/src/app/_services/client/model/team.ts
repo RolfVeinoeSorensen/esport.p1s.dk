@@ -7,8 +7,8 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { User } from './user';
 import { Event } from './event';
+import { AuthUser } from './authUser';
 
 
 export interface Team { 
@@ -18,6 +18,6 @@ export interface Team {
     validFrom: string;
     validTo?: string;
     events?: Array<Event>;
-    members?: Array<User>;
+    members?: Array<AuthUser>;
 }
 

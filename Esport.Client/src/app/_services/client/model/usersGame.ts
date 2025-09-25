@@ -8,7 +8,7 @@
  * Do not edit the class manually.
  */
 import { Game } from './game';
-import { User } from './user';
+import { AuthUser } from './authUser';
 
 
 export interface UsersGame { 
@@ -16,6 +16,6 @@ export interface UsersGame {
     userId: number;
     inGameName?: string;
     game?: Game;
-    user?: User;
+    user?: AuthUser;
 }
 

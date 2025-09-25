@@ -2,9 +2,8 @@
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Role, UsersService } from '@services/client';
+import { AuthRole, UsersService } from '@services/client';
 import { User } from '../_models/user';
-import { UserRole } from '../_models/userrole';
 
 
 @Injectable({ providedIn: 'root' })
@@ -34,9 +33,10 @@ export class AuthenticationService {
             user.id = res.id;
             user.firstName = res.firstName ?? '';
             user.lastName = res.lastName ?? '';
-            user.roles = res.roles as Role[] ?? [];
+            user.roles = res.roles as AuthRole[] ?? [];
             user.token = res.token ?? '';
             user.username = res.username ?? '';
+            console.log(user);
             localStorage.setItem('user', JSON.stringify(user));
             this.userSubject.next(user);
             return user;

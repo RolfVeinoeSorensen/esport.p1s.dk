@@ -11,6 +11,8 @@ configuration.ts
 encoder.ts
 git_push.sh
 index.ts
+model/authRole.ts
+model/authUser.ts
 model/authenticateRequest.ts
 model/authenticateResponse.ts
 model/event.ts
@@ -25,10 +27,8 @@ model/modelFile.ts
 model/models.ts
 model/news.ts
 model/registerRequest.ts
-model/role.ts
 model/tag.ts
 model/team.ts
-model/user.ts
 model/userRole.ts
 model/usersGame.ts
 param.ts

@@ -7,15 +7,16 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { AuthRole } from './authRole';
+import { UserRole } from './userRole';
+import { AuthUser } from './authUser';
 
 
-export interface AuthenticateResponse { 
+export interface AuthRole { 
     id: number;
-    firstName: string;
-    lastName: string;
-    username: string;
-    roles: Array<AuthRole>;
-    token: string;
+    role: UserRole;
+    users?: Array<AuthUser>;
 }
+export namespace AuthRole {
+}
+
 
