@@ -1,6 +1,6 @@
 import { Component, inject, LOCALE_ID, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router, RouterOutlet, RouterLink } from '@angular/router';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { filter, first, map, mergeMap, Subscription } from 'rxjs';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { slideInAnimation } from '@app/animations';
@@ -54,6 +54,7 @@ export class AppComponent implements OnInit, OnDestroy {
   private activatedRoute = inject(ActivatedRoute);
   private ui = inject(UiService);
   private authenticationService: AuthenticationService = inject(AuthenticationService);
+  private formBuilder = inject(UntypedFormBuilder);
   userSubscription!: Subscription;
   title = 'p1s.dk';
   items: MenuItem[] | undefined;
@@ -68,7 +69,7 @@ export class AppComponent implements OnInit, OnDestroy {
     return this.loginForm.controls;
   }
 
-  constructor(private formBuilder: UntypedFormBuilder) {
+  constructor() {
     this.loginForm = this.formBuilder.group({
       username: ['', [Validators.required, Validators.email, Validators.maxLength(255)]],
       password: ['', Validators.required],
@@ -154,17 +155,18 @@ export class AppComponent implements OnInit, OnDestroy {
     const itemsPublic: MenuItem[] | undefined = [
       {
         label: 'Nyheder',
+        routerLink: 'news',
       },
       {
         label: 'Ydelser',
         items: [
           {
-            label: 'Træning',
-            shortcut: '⌘+S',
+            label: 'E-sport træning',
+            routerLink: 'services/e-sports',
           },
           {
-            label: 'LAN',
-            shortcut: '⌘+B',
+            label: 'LAN fester',
+            routerLink: 'services/lan-parties',
           },
           {
             separator: true,
@@ -176,9 +178,11 @@ export class AppComponent implements OnInit, OnDestroy {
         items: [
           {
             label: 'Om os',
+            routerLink: 'about',
           },
           {
             label: 'Mød holdet',
+            routerLink: 'meet-the-team',
           },
         ],
       },

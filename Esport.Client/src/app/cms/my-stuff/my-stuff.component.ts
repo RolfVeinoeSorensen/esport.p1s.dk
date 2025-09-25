@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { EventsService, EventUserDto, GameServerDto, GamesService } from '@app/_services/client';
 import { CardModule } from 'primeng/card';
 
@@ -10,15 +10,13 @@ import { CardModule } from 'primeng/card';
   styleUrl: './my-stuff.component.css',
 })
 export class MyStuffComponent implements OnInit {
+  private eventService = inject(EventsService);
+  private gamesService = inject(GamesService);
   currentDate = new Date();
   year = this.currentDate.getFullYear();
   month = this.currentDate.getMonth();
   userEvents: EventUserDto[] = [];
   gameServers: GameServerDto[] = [];
-  constructor(
-    private eventService: EventsService,
-    private gamesService: GamesService
-  ) {}
   ngOnInit(): void {
     this.getMyEvents();
     this.getGameServers();

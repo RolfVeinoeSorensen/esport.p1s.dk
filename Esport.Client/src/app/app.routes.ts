@@ -10,6 +10,45 @@ export const routes: Routes = [
     loadComponent: () => import('@cms/gdpr/gdpr.component').then(m => m.GdprComponent),
   },
   {
+    path: 'about',
+    loadComponent: () => import('@cms/about/about.component').then(m => m.AboutComponent),
+  },
+  {
+    path: 'faqs',
+    loadComponent: () => import('@cms/faqs/faqs.component').then(m => m.FaqsComponent),
+  },
+  {
+    path: 'meet-the-team',
+    loadComponent: () => import('@cms/meet-the-team/meet-the-team.component').then(m => m.MeetTheTeamComponent),
+  },
+  {
+    path: 'contact-us',
+    loadComponent: () => import('@cms/contact-us/contact-us.component').then(m => m.ContactUsComponent),
+  },
+  {
+    path: 'services',
+    children: [
+      {
+        path: 'e-sports',
+        loadComponent: () => import('@cms/services/e-sports/e-sports.component').then(m => m.ESportsComponent),
+      },
+      {
+        path: 'lan-parties',
+        loadComponent: () => import('@cms/services/lan-parties/lan-parties.component').then(m => m.LanPartiesComponent),
+      },
+    ],
+  },
+  {
+    path: 'news',
+    loadComponent: () => import('@cms/news/news.component').then(m => m.NewsComponent),
+    children: [
+      {
+        path: ':url_slug',
+        loadComponent: () => import('@cms/news/news-article/news-article.component').then(m => m.NewsArticleComponent),
+      },
+    ],
+  },
+  {
     path: 'forbidden',
     loadComponent: () => import('@shared/forbidden/forbidden.component').then(m => m.ForbiddenComponent),
   },

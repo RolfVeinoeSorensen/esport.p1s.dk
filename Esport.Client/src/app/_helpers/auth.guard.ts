@@ -1,13 +1,11 @@
-﻿import { Injectable } from '@angular/core';
+﻿import { inject, Injectable } from '@angular/core';
 import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Route } from '@angular/router';
 import { AuthenticationService } from '@app/_services/authentication.service';
 
 @Injectable({ providedIn: 'root' })
 export class AuthGuard implements CanActivate {
-  constructor(
-    private router: Router,
-    private authenticationService: AuthenticationService
-  ) {}
+  private router = inject(Router);
+  private authenticationService = inject(AuthenticationService);
 
   canLoad(route: Route): boolean {
     const user = this.authenticationService.userValue;
@@ -15,7 +13,9 @@ export class AuthGuard implements CanActivate {
       // check if route is restricted by role
       if (route.data?.['roles'] && route.data?.['roles'].indexOf(user.role) === -1) {
         // role not authorized so redirect to 403 page
-        this.router.navigate(['/forbidden']);
+        if (window) {
+          this.router.navigate(['/forbidden']);
+        }
         return false;
       }
 
@@ -31,7 +31,9 @@ export class AuthGuard implements CanActivate {
       // check if route is restricted by role
       if (route.data?.['roles'] && route.data?.['roles'].indexOf(user.role) === -1) {
         // role not authorised so redirect to home page
-        this.router.navigate(['/forbidden']);
+        if (window) {
+          this.router.navigate(['/forbidden']);
+        }
         return false;
       }
 
@@ -52,7 +54,9 @@ export class AuthGuard implements CanActivate {
       // check if route is restricted by role
       if (route.data?.['roles'] && route.data?.['roles'].indexOf(user.role) === -1) {
         // role not authorised so redirect to home page
-        this.router.navigate(['/forbidden']);
+        if (window) {
+          this.router.navigate(['/forbidden']);
+        }
         return false;
       }
 

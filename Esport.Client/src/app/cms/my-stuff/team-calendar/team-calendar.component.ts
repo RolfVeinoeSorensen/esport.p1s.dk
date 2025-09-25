@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
@@ -11,6 +11,7 @@ import { EventDto, EventsService } from '@app/_services/client';
   styleUrl: './team-calendar.component.css',
 })
 export class TeamCalendarComponent implements OnInit {
+  private eventsService = inject(EventsService);
   currentDate = new Date();
 
   changeMonth(offset: number) {
@@ -21,8 +22,6 @@ export class TeamCalendarComponent implements OnInit {
   events: { [key: string]: EventDto } = {};
   selectedDate: Date | null = null;
   visibleDay = false;
-
-  constructor(private eventsService: EventsService) {}
 
   ngOnInit() {
     this.loadEvents();

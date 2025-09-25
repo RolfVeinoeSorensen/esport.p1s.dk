@@ -43,9 +43,6 @@ export class LoadingComponent {
   private cdRef = inject(ChangeDetectorRef);
 
   spinnerActive: boolean = true;
-
-  /** Inserted by Angular inject() migration for backwards compatibility */
-  constructor(...args: unknown[]);
   constructor() {
     this.loadingHandler.showSpinner.subscribe(this.showSpinner.bind(this));
   }

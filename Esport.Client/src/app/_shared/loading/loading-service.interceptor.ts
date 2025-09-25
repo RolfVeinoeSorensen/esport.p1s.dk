@@ -10,11 +10,6 @@ export class LoadingInterceptor implements HttpInterceptor {
 
   skipUrls = [];
 
-  /** Inserted by Angular inject() migration for backwards compatibility */
-  constructor(...args: unknown[]);
-
-  constructor() {}
-
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     for (const skipUrl of this.skipUrls) {
       if (new RegExp(skipUrl).test(request.url)) {
