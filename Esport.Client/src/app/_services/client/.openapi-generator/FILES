@@ -21,10 +21,13 @@ model/gameServer.ts
 model/gameServerDto.ts
 model/holidayWeekendWorkdayDto.ts
 model/models.ts
+model/news.ts
+model/newsTag.ts
 model/registerRequest.ts
 model/user.ts
 model/userRole.ts
 model/usersGame.ts
+model/usersTeam.ts
 param.ts
 provide-api.ts
 variables.ts

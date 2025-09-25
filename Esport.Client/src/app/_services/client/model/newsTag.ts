@@ -9,10 +9,8 @@
  */
 
 
-export interface Game { 
-    id: number;
-    name?: string;
-    description?: string;
-    logo?: string;
+export interface NewsTag { 
+    newsId: number;
+    tagId: number;
 }
 

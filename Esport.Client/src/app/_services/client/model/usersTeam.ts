@@ -9,10 +9,8 @@
  */
 
 
-export interface Game { 
-    id: number;
-    name?: string;
-    description?: string;
-    logo?: string;
+export interface UsersTeam { 
+    teamId: number;
+    memberId: number;
 }
 
