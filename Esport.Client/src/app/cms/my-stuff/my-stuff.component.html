@@ -3,33 +3,28 @@
   <div class="md:col-span-8">
     <h2>Klubbens servere</h2>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-        @for(gs of gameServers; track gs){
+      @for (gs of gameServers; track gs) {
         <p-card>
-            <ng-template #header>
-                <div class="w-full flex justify-center p-4">
-                    <img alt="Card" class="w-full" [src]="'/games/' + gs.game.logo" />
-                </div>
-            </ng-template>
-            <p class="m-0">Server: {{ gs.gameServer.server }}</p>
-            <p class="m-0">Port: {{ gs.gameServer.port }}</p>
+          <ng-template #header>
+            <div class="w-full flex justify-center p-4">
+              <img alt="Card" class="w-full" [src]="'/games/' + gs.game.logo" />
+            </div>
+          </ng-template>
+          <p class="m-0">Server: {{ gs.gameServer.server }}</p>
+          <p class="m-0">Port: {{ gs.gameServer.port }}</p>
         </p-card>
-        }
-  </div>
+      }
+    </div>
   </div>
   <div class="md:col-span-4">
     <h2>Kalender</h2>
     <p-card header="Mine aktiviteter">
-    @for(ue of userEvents; track ue){
-        <p class="mb-2">
-            {{ ue.event.name }} - {{ ue.event.startDateTime | date : "dd. MMM yyyy HH:mm" }}
-        </p>
-    }
-    @if(userEvents.length === 0){
-        <p class="mb-0">
-            Du har ingen kommende events.
-        </p>
-    }
-
-</p-card>
+      @for (ue of userEvents; track ue) {
+        <p class="mb-2">{{ ue.event.name }} - {{ ue.event.startDateTime | date: 'dd. MMM yyyy HH:mm' }}</p>
+      }
+      @if (userEvents.length === 0) {
+        <p class="mb-0">Du har ingen kommende events.</p>
+      }
+    </p-card>
   </div>
 </div>

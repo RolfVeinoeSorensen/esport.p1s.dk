@@ -14,9 +14,7 @@ export class TeamCalendarComponent implements OnInit {
   currentDate = new Date();
 
   changeMonth(offset: number) {
-    this.currentDate = new Date(
-      this.currentDate.setMonth(this.currentDate.getMonth() + offset)
-    );
+    this.currentDate = new Date(this.currentDate.setMonth(this.currentDate.getMonth() + offset));
     this.loadEvents();
   }
   diff: string[] = [];
@@ -32,8 +30,7 @@ export class TeamCalendarComponent implements OnInit {
 
   selectDate(event: EventDto) {
     this.selectedDate = new Date(event.weekendWorkday.date);
-    if(event.events.length > 0)
-      this.visibleDay = true;
+    if (event.events.length > 0) this.visibleDay = true;
   }
   getDaysInMonth(): Date[] {
     const days = [];
@@ -49,15 +46,9 @@ export class TeamCalendarComponent implements OnInit {
   }
 
   loadEvents() {
-    const y =
-      this.currentDate != null
-        ? this.currentDate.getFullYear()
-        : new Date().getFullYear();
-    const m =
-      this.currentDate != null
-        ? this.currentDate.getMonth()
-        : new Date().getMonth();
-    this.eventsService.eventsGetAllEvents(m + 1, y).subscribe((events) => {
+    const y = this.currentDate != null ? this.currentDate.getFullYear() : new Date().getFullYear();
+    const m = this.currentDate != null ? this.currentDate.getMonth() : new Date().getMonth();
+    this.eventsService.eventsGetAllEvents(m + 1, y).subscribe(events => {
       const firstDay = new Date(y, m, 1);
       const day = firstDay.getDay();
       let diff = (day === 0 ? -6 : 1) - day;

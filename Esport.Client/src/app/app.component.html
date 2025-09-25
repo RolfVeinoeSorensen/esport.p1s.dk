@@ -2,12 +2,7 @@
   <p-menubar [model]="items">
     <ng-template #start>
       <a [routerLink]="'/'" class="brand-logo-link">
-        <img
-          class="brand-logo-img"
-          src="logos/logo.png"
-          srcset="logos/logo.svg"
-          alt="E-sport p1s.dk logo"
-        />
+        <img class="brand-logo-img" src="logos/logo.png" srcset="logos/logo.svg" alt="E-sport p1s.dk logo" />
       </a>
     </ng-template>
     <ng-template #item let-item let-root="root">
@@ -22,64 +17,50 @@
           [rounded]="true"
           [text]="true"
           [title]="'Toggle Dark Mode'"
-          (onClick)="toggleDarkMode()"
-        />
+          (onClick)="toggleDarkMode()" />
         <p-button
           [icon]="isLoggedIn === true ? 'pi pi-sign-out' : 'pi pi-sign-in'"
           [rounded]="true"
           [text]="true"
-          (click)="onSigninOrSignoutClick()"
-        />
+          (click)="onSigninOrSignoutClick()" />
         <form [formGroup]="loginForm" (ngSubmit)="signIn()">
-        <p-dialog
-          maskStyleClass="backdrop-blur-sm"
-          [(visible)]="visibleLogin"
-          styleClass="!border-0 !bg-transparent"
-        >
-          <ng-template #headless>
-            <div class="flex flex-col px-8 py-8 gap-6 rounded-2xl bg-sky-600">
-              <div class="inline-flex flex-col gap-2">
-                <label for="username" class="text-primary-50 font-semibold"
-                  >Email</label
-                >
-                <input
-                  pInputText
-                  id="username"
-                  formControlName="username"
-                  class="!bg-white/20 !border-0 !p-4 !text-primary-50 w-80"
-                />
+          <p-dialog maskStyleClass="backdrop-blur-sm" [(visible)]="visibleLogin" styleClass="!border-0 !bg-transparent">
+            <ng-template #headless>
+              <div class="flex flex-col px-8 py-8 gap-6 rounded-2xl bg-sky-600">
+                <div class="inline-flex flex-col gap-2">
+                  <label for="username" class="text-primary-50 font-semibold">Email</label>
+                  <input
+                    pInputText
+                    id="username"
+                    formControlName="username"
+                    class="!bg-white/20 !border-0 !p-4 !text-primary-50 w-80" />
+                </div>
+                <div class="inline-flex flex-col gap-2">
+                  <label for="password" class="text-primary-50 font-semibold">Password</label>
+                  <input
+                    pInputText
+                    id="password"
+                    formControlName="password"
+                    class="!bg-white/20 !border-0 !p-4 !text-primary-50 w-80"
+                    type="password" />
+                </div>
+                <div class="flex items-center gap-4">
+                  <p-button
+                    label="Fortryd"
+                    (click)="visibleLogin = false"
+                    [text]="true"
+                    styleClass="!p-4 w-full !text-primary-50 !border !border-white/30 hover:!bg-white/10"
+                    class="w-full" />
+                  <p-button
+                    label="Log ind"
+                    type="ngSubmit"
+                    [text]="true"
+                    styleClass="!p-4 w-full !text-primary-50 !border !border-white/30 hover:!bg-white/10"
+                    class="w-full" />
+                </div>
               </div>
-              <div class="inline-flex flex-col gap-2">
-                <label for="password" class="text-primary-50 font-semibold"
-                  >Password</label
-                >
-                <input
-                  pInputText
-                  id="password"
-                  formControlName="password"
-                  class="!bg-white/20 !border-0 !p-4 !text-primary-50 w-80"
-                  type="password"
-                />
-              </div>
-              <div class="flex items-center gap-4">
-                <p-button
-                  label="Fortryd"
-                  (click)="visibleLogin = false"
-                  [text]="true"
-                  styleClass="!p-4 w-full !text-primary-50 !border !border-white/30 hover:!bg-white/10"
-                  class="w-full"
-                />
-                <p-button
-                  label="Log ind"
-                  type="ngSubmit"
-                  [text]="true"
-                  styleClass="!p-4 w-full !text-primary-50 !border !border-white/30 hover:!bg-white/10"
-                  class="w-full"
-                />
-              </div>
-            </div>
-          </ng-template>
-        </p-dialog>
+            </ng-template>
+          </p-dialog>
         </form>
       </div>
     </ng-template>
@@ -87,10 +68,7 @@
 </header>
 
 <div class="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8 main pt-12">
-  <router-outlet
-    #routerOutlet="outlet"
-    [@routeAnimation]="getAnimationData(routerOutlet)"
-  ></router-outlet>
+  <router-outlet #routerOutlet="outlet" [@routeAnimation]="getAnimationData(routerOutlet)"></router-outlet>
 </div>
 <app-footer></app-footer>
 

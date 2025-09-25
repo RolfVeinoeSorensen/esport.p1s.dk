@@ -68,14 +68,14 @@ const ThemePreset = definePreset(Material, {
   },
   components: {
     button: {
-      colorScheme:{
-        dark:{
+      colorScheme: {
+        dark: {
           text: {
-            primary:{
+            primary: {
               hoverBackground: '#395570',
-              activeBackground: "1F2E3D",
+              activeBackground: '1F2E3D',
               color: '#ffffff',
-            }
+            },
           },
           root: {
             primary: {
@@ -86,8 +86,8 @@ const ThemePreset = definePreset(Material, {
               activeBackground: '#1F2E3D',
             },
           },
-        }
-      }
+        },
+      },
     },
     menubar: {
       root: {
@@ -151,7 +151,7 @@ const ThemePreset = definePreset(Material, {
     },
     card: {
       root: {
-        borderRadius: "0.5rem"
+        borderRadius: '0.5rem',
       },
       colorScheme: {
         dark: {

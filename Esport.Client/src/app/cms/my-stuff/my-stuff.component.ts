@@ -7,15 +7,18 @@ import { CardModule } from 'primeng/card';
   selector: 'app-my-stuff',
   imports: [CardModule, DatePipe],
   templateUrl: './my-stuff.component.html',
-  styleUrl: './my-stuff.component.css'
+  styleUrl: './my-stuff.component.css',
 })
 export class MyStuffComponent implements OnInit {
   currentDate = new Date();
   year = this.currentDate.getFullYear();
   month = this.currentDate.getMonth();
   userEvents: EventUserDto[] = [];
-  gameServers: GameServerDto[] = []
-  constructor(private eventService: EventsService, private gamesService: GamesService) { }
+  gameServers: GameServerDto[] = [];
+  constructor(
+    private eventService: EventsService,
+    private gamesService: GamesService
+  ) {}
   ngOnInit(): void {
     this.getMyEvents();
     this.getGameServers();
@@ -27,11 +30,10 @@ export class MyStuffComponent implements OnInit {
     });
   }
 
-  getGameServers(){
+  getGameServers() {
     this.gamesService.gamesGetAllGameServers().subscribe(gs => {
       this.gameServers = gs;
       console.log(this.gameServers);
     });
   }
-
 }

@@ -7,14 +7,15 @@ import {
 import express from 'express';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import 'localstorage-polyfill'
+import 'localstorage-polyfill';
 
 const serverDistFolder = dirname(fileURLToPath(import.meta.url));
 const browserDistFolder = resolve(serverDistFolder, '../browser');
 
 const app = express();
 const angularApp = new AngularNodeAppEngine();
-const globalAny:any = global;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const globalAny: any = global;
 globalAny['localStorage'] = localStorage;
 /**
  * Example Express Rest API endpoints can be defined here.
@@ -36,7 +37,7 @@ app.use(
     maxAge: '1y',
     index: false,
     redirect: false,
-  }),
+  })
 );
 
 /**
@@ -45,9 +46,7 @@ app.use(
 app.use('/**', (req, res, next) => {
   angularApp
     .handle(req)
-    .then((response) =>
-      response ? writeResponseToNodeResponse(response, res) : next(),
-    )
+    .then(response => (response ? writeResponseToNodeResponse(response, res) : next()))
     .catch(next);
 });
 

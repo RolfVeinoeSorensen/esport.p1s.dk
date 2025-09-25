@@ -1,11 +1,5 @@
 import { Component, inject, LOCALE_ID, OnDestroy, OnInit } from '@angular/core';
-import {
-  ActivatedRoute,
-  NavigationEnd,
-  Router,
-  RouterOutlet,
-  RouterLink
-} from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router, RouterOutlet, RouterLink } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { filter, first, map, mergeMap, Subscription } from 'rxjs';
 import { animate, style, transition, trigger } from '@angular/animations';
@@ -22,11 +16,7 @@ import { FooterComponent } from './cms/footer/footer.component';
 import { UiService } from '@services/ui.service';
 import { DialogModule } from 'primeng/dialog';
 import { AuthenticationService } from '@services/authentication.service';
-import {
-  UntypedFormBuilder,
-  UntypedFormGroup,
-  Validators,
-} from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { User } from '@models/user';
 import { UserRole } from './_models/userrole';
 
@@ -44,8 +34,8 @@ import { UserRole } from './_models/userrole';
     FooterComponent,
     DialogModule,
     ReactiveFormsModule,
-    RouterLink
-],
+    RouterLink,
+  ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
   animations: [
@@ -55,9 +45,7 @@ import { UserRole } from './_models/userrole';
         style({ transform: 'translateY(-100%)' }),
         animate('500ms ease-in', style({ transform: 'translateY(0%)' })),
       ]),
-      transition(':leave', [
-        animate('500ms ease-in', style({ transform: 'translateY(-100%)' })),
-      ]),
+      transition(':leave', [animate('500ms ease-in', style({ transform: 'translateY(-100%)' }))]),
     ]),
   ],
 })
@@ -65,9 +53,7 @@ export class AppComponent implements OnInit, OnDestroy {
   private router = inject(Router);
   private activatedRoute = inject(ActivatedRoute);
   private ui = inject(UiService);
-  private authenticationService: AuthenticationService = inject(
-    AuthenticationService
-  );
+  private authenticationService: AuthenticationService = inject(AuthenticationService);
   userSubscription!: Subscription;
   title = 'p1s.dk';
   items: MenuItem[] | undefined;
@@ -84,10 +70,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   constructor(private formBuilder: UntypedFormBuilder) {
     this.loginForm = this.formBuilder.group({
-      username: [
-        '',
-        [Validators.required, Validators.email, Validators.maxLength(255)],
-      ],
+      username: ['', [Validators.required, Validators.email, Validators.maxLength(255)]],
       password: ['', Validators.required],
     });
   }
@@ -95,15 +78,13 @@ export class AppComponent implements OnInit, OnDestroy {
     this.userSubscription.unsubscribe();
   }
   ngOnInit(): void {
-    this.userSubscription = this.authenticationService.userSubject.subscribe(
-      (user) => {
-        this.user = user;
-        if (user.username !== undefined) {
-          this.isLoggedIn = true;
-          this.refreshMenu();
-        }
+    this.userSubscription = this.authenticationService.userSubject.subscribe(user => {
+      this.user = user;
+      if (user.username !== undefined) {
+        this.isLoggedIn = true;
+        this.refreshMenu();
       }
-    );
+    });
     if (
       typeof window !== 'undefined' &&
       window.matchMedia &&
@@ -125,16 +106,16 @@ export class AppComponent implements OnInit, OnDestroy {
     ]);
     this.router.events
       .pipe(
-        filter((event) => event instanceof NavigationEnd),
+        filter(event => event instanceof NavigationEnd),
         map(() => this.activatedRoute),
-        map((route) => {
+        map(route => {
           while (route.firstChild) route = route.firstChild;
           return route;
         }),
-        filter((route) => route.outlet === 'primary'),
-        mergeMap((route) => route.data)
+        filter(route => route.outlet === 'primary'),
+        mergeMap(route => route.data)
       )
-      .subscribe((event) => {
+      .subscribe(event => {
         this.ui.setMeta({
           title: event['title'],
           description: event['description'],
@@ -143,16 +124,13 @@ export class AppComponent implements OnInit, OnDestroy {
         });
       });
     this.loginForm = this.formBuilder.group({
-      username: [
-        '',
-        [Validators.required, Validators.email, Validators.maxLength(255)],
-      ],
+      username: ['', [Validators.required, Validators.email, Validators.maxLength(255)]],
       password: ['', Validators.required],
     });
     this.refreshMenu();
   }
   refreshMenu() {
-    let items: MenuItem[] | undefined = [];
+    const items: MenuItem[] | undefined = [];
     if (this.user.role === UserRole.Admin) {
       items.push({
         label: 'Administration',
@@ -163,17 +141,17 @@ export class AppComponent implements OnInit, OnDestroy {
         label: 'Mine ting',
         items: [
           {
-            label: "Overblik",
-            routerLink: "my-stuff"
+            label: 'Overblik',
+            routerLink: 'my-stuff',
           },
           {
             label: 'Kalender',
-            routerLink: "my-stuff/team-calendar",
+            routerLink: 'my-stuff/team-calendar',
           },
         ],
       });
     }
-    let itemsPublic: MenuItem[] | undefined = [
+    const itemsPublic: MenuItem[] | undefined = [
       {
         label: 'Nyheder',
       },
@@ -197,22 +175,18 @@ export class AppComponent implements OnInit, OnDestroy {
         label: 'Klubben',
         items: [
           {
-            label: "Om os"
+            label: 'Om os',
           },
           {
-            label: "Mød holdet"
-          }
-        ]
+            label: 'Mød holdet',
+          },
+        ],
       },
     ];
     this.items = items.concat(itemsPublic);
   }
   getAnimationData(outlet: RouterOutlet) {
-    return (
-      outlet &&
-      outlet.activatedRouteData &&
-      outlet.activatedRouteData['animation']
-    );
+    return outlet && outlet.activatedRouteData && outlet.activatedRouteData['animation'];
   }
   toggleDarkMode() {
     const element = document.querySelector('html');
@@ -240,11 +214,10 @@ export class AppComponent implements OnInit, OnDestroy {
       .subscribe({
         next: () => {
           // get return url from query parameters or default to home page
-          const returnUrl =
-            this.activatedRoute.snapshot.queryParams['returnUrl'] || '/';
+          const returnUrl = this.activatedRoute.snapshot.queryParams['returnUrl'] || '/';
           this.router.navigateByUrl(returnUrl);
         },
-        error: (error) => {
+        error: error => {
           console.log(error);
           // this.error = error;
           // this.loading = false;
