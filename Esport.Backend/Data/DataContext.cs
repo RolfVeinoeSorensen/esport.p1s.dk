@@ -206,7 +206,9 @@ namespace Esport.Backend.Data
                 entity.Property(e => e.ConsentShowImages).HasAnnotation("Relational:DefaultConstraintName", "DF_Users_ConsentShowImages");
                 entity.Property(e => e.Mobile).HasMaxLength(50);
                 entity.Property(e => e.PasswordHash).IsRequired();
-                entity.Property(e => e.Username).IsRequired();
+                entity.Property(e => e.Username).IsRequired().HasMaxLength(255);
+                entity.Property(e => e.FirstName).HasMaxLength(255);
+                entity.Property(e => e.LastName).HasMaxLength(255);
 
                 entity.HasOne(d => d.Parent).WithMany(p => p.InverseParent)
                     .HasForeignKey(d => d.ParentId)
