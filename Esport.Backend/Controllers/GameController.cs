@@ -33,5 +33,20 @@ namespace Esport.Backend.Controllers
             var gameServers = gamesService.GetAllGameServers();
             return Ok(gameServers);
         }
+        [Authorize([UserRole.Admin])]
+        [HttpPost("[action]")]
+        public ActionResult<Game> CreateOrUpdateGame([FromBody] Game game)
+        {
+            var gameResult = gamesService.CreateOrUpdateGame(game);
+            return Ok(gameResult);
+        }
+
+        [Authorize([UserRole.Admin])]
+        [HttpPost("[action]")]
+        public ActionResult<GameServer> CreateOrUpdateGameServer([FromBody] GameServer gameServer)
+        {
+            var gameServers = gamesService.CreateOrUpdateGameServer(gameServer);
+            return Ok(gameServers);
+        }
     }
 }

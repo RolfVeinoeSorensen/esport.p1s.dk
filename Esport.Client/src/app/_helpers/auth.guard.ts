@@ -16,8 +16,8 @@ export class AuthGuard implements CanActivate {
         if (user) {
             // check if route is restricted by role
             if (route.data?.['roles'] && route.data?.['roles'].indexOf(user.role) === -1) {
-                // role not authorised so redirect to home page
-                this.router.navigate(['/']);
+                // role not authorised so redirect to 403 page
+                this.router.navigate(['/forbidden']);
                 return false;
             }
 
@@ -33,7 +33,7 @@ export class AuthGuard implements CanActivate {
             // check if route is restricted by role
             if (route.data?.['roles'] && route.data?.['roles'].indexOf(user.role) === -1) {
                 // role not authorised so redirect to home page
-                this.router.navigate(['/']);
+                this.router.navigate(['/forbidden']);
                 return false;
             }
 
@@ -52,7 +52,7 @@ export class AuthGuard implements CanActivate {
             // check if route is restricted by role
             if (route.data?.['roles'] && route.data?.['roles'].indexOf(user.role) === -1) {
                 // role not authorised so redirect to home page
-                this.router.navigate(['/']);
+                this.router.navigate(['/forbidden']);
                 return false;
             }
 

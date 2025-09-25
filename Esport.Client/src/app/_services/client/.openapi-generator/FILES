@@ -5,6 +5,7 @@ api.module.ts
 api/api.ts
 api/events.service.ts
 api/games.service.ts
+api/news.service.ts
 api/users.service.ts
 configuration.ts
 encoder.ts
@@ -24,6 +25,7 @@ model/models.ts
 model/news.ts
 model/newsTag.ts
 model/registerRequest.ts
+model/tag.ts
 model/user.ts
 model/userRole.ts
 model/usersGame.ts

@@ -76,7 +76,16 @@ const ThemePreset = definePreset(Material, {
               activeBackground: "1F2E3D",
               color: '#ffffff',
             }
-          }
+          },
+          root: {
+            primary: {
+              background: '#253749',
+              borderColor: '#253749',
+              color: '#ffffff',
+              hoverBackground: '#395570',
+              activeBackground: '#1F2E3D',
+            },
+          },
         }
       }
     },

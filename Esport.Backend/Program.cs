@@ -39,6 +39,7 @@ try
     builder.Services.AddScoped<IUserService, UserService>();
     builder.Services.AddScoped<IEventService, EventService>();
     builder.Services.AddScoped<IGamesService, GamesService>();
+    builder.Services.AddScoped<INewsService, NewsService>();
 
     builder.Services.AddHttpContextAccessor();
     builder.Services.AddScoped<IWebHelper, WebHelper>();

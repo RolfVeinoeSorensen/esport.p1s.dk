@@ -11,6 +11,7 @@ export * from './holidayWeekendWorkdayDto';
 export * from './news';
 export * from './newsTag';
 export * from './registerRequest';
+export * from './tag';
 export * from './user';
 export * from './userRole';
 export * from './usersGame';

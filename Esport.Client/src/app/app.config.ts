@@ -27,6 +27,7 @@ import {
 import { LOCALE_ID } from '@angular/core';
 import { registerLocaleData } from '@angular/common';
 import localeDa from '@angular/common/locales/da';
+import { loadingInterceptorService } from './_shared/loading';
 
 registerLocaleData(localeDa);
 export function getBaseUrl(): string {
@@ -59,6 +60,7 @@ export const appConfig: ApplicationConfig = {
     }),
     jwtInterceptorProviders,
     errorInterceptorProviders,
+    loadingInterceptorService,
     provideHttpClient(withInterceptorsFromDi()),
     { provide: LOCALE_ID, useValue: 'da-DK' },
     { provide: ClientBasePath, useValue: environment.apiUrl },

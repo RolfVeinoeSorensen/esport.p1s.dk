@@ -8,5 +8,7 @@ namespace Esport.Backend.Services
         IEnumerable<Game> GetAllGames();
         Game GetGameById(int id);
         IEnumerable<GameServerDto> GetAllGameServers();
+        Game CreateOrUpdateGame(Game game);
+        GameServer CreateOrUpdateGameServer(GameServer gameServer);
     }
 }
