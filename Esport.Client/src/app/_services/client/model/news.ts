@@ -7,7 +7,6 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { User } from './user';
 import { NewsTag } from './newsTag';
 
 
@@ -24,8 +23,6 @@ export interface News {
     createdAt: string;
     updatedAt: string;
     isPublished: boolean;
-    createdByNavigation?: User;
     newsTags?: Array<NewsTag>;
-    updatedByNavigation?: User;
 }
 

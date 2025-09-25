@@ -8,9 +8,6 @@
  * Do not edit the class manually.
  */
 import { UserRole } from './userRole';
-import { News } from './news';
-import { Event } from './event';
-import { EventsUser } from './eventsUser';
 import { UsersGame } from './usersGame';
 import { UsersTeam } from './usersTeam';
 
@@ -37,11 +34,6 @@ export interface User {
     canBringLaptop: boolean;
     canBringStationaryPc: boolean;
     canBringPlaystation: boolean;
-    events?: Array<Event>;
-    eventsUsers?: Array<EventsUser>;
-    inverseParent?: Array<User>;
-    newsCreatedByNavigations?: Array<News>;
-    newsUpdatedByNavigations?: Array<News>;
     parent?: User;
     usersGames?: Array<UsersGame>;
     usersTeams?: Array<UsersTeam>;

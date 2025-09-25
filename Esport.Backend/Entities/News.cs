@@ -2,6 +2,7 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace Esport.Backend.Entities;
 
@@ -31,9 +32,11 @@ public partial class News
 
     public bool IsPublished { get; set; }
 
+    [JsonIgnore]
     public virtual User CreatedByNavigation { get; set; }
 
     public virtual ICollection<NewsTag> NewsTags { get; set; } = new List<NewsTag>();
 
+    [JsonIgnore]
     public virtual User UpdatedByNavigation { get; set; }
 }

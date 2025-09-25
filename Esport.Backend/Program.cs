@@ -29,7 +29,7 @@ try
     {
         // serialize enums as strings in api responses (e.g. Role)
         x.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
-        //x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
+        x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
     });
 
     // configure strongly typed settings object
