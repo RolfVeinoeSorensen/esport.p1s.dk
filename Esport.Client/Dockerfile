@@ -15,7 +15,7 @@ COPY package.json package-lock.json ./
 RUN npm install -g @angular/cli
 RUN npm install
 COPY . ./
-#RUN npm run build
+#RUN npm run build - Does not work needs investigation
 CMD ["ng", "build", "--configuration", "production"]
 RUN cd /app/dist && find . -type f -exec brotli {} \;
 

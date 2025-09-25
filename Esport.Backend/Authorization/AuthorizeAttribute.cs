@@ -12,7 +12,7 @@ namespace Esport.Backend.Authorization
 
         public AuthorizeAttribute(params UserRole[] roles)
         {
-            _roles = roles ?? new UserRole[] { };
+            _roles = roles ?? [];
         }
 
         public void OnAuthorization(AuthorizationFilterContext context)

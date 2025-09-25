@@ -58,7 +58,7 @@ namespace Esport.Backend.Services
 
         public AuthUser GetUserById(int id) 
         {
-            var user = db.AuthUsers.Find(id);
+            var user = db.AuthUsers.Include(r=>r.Roles).FirstOrDefault(u=>u.Id.Equals(id));
             if (user == null) throw new KeyNotFoundException("User not found");
             return user;
         }

@@ -22,7 +22,7 @@
       "
       (click)="selectDate(day.value); $event.stopPropagation()" (keydown)="selectDate(day.value); $event.stopPropagation()">
       <h4 class="bg-sky-800 w-full text-center text-white rounded-t-lg p-2">
-        {{ day.key | date: 'EEEE, dd' }}
+        {{ day.value.weekendWorkday.date| date: 'EEEE, dd' }}
       </h4>
       @if (day.value.events.length > -1) {
         @for (ev of day.value.events; track ev) {
