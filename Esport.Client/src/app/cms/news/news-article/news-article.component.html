@@ -1,1 +1,9 @@
-<p>news-article works!</p>
+@if(news){
+    <h1>{{news.title}}</h1>
+    <div [innerHTML]="news.content"></div>
+    <small>Udgivet: {{news.updatedAt | date}}</small> 
+} @else {
+    <h1>Artiklen blev ikke fundet</h1>
+    <p>Den artikel du leder efter findes ikke. Måske er den blevet slettet, eller også har du skrevet en forkert adresse.</p>
+    <a [routerLink]="'/news'">Tilbage til nyheder</a>
+}

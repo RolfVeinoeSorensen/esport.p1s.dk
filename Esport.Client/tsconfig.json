@@ -25,7 +25,8 @@
       "@helpers/*": ["src/app/_helpers/*"],
       "@models/*": ["src/app/_models/*"],
       "@shared/*": ["src/app/_shared/*"],
-      "@cms/*": ["src/app/cms/*"]
+      "@cms/*": ["src/app/cms/*"],
+      "@admin/*": ["src/app/administration/*"]
     }
   },
   "angularCompilerOptions": {

@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
+import { CardModule } from 'primeng/card';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-e-sports',
-  imports: [],
+  imports: [CardModule, RouterLink],
   templateUrl: './e-sports.component.html',
-  styleUrl: './e-sports.component.css'
+  styleUrl: './e-sports.component.css',
 })
-export class ESportsComponent {
-
-}
+export class ESportsComponent {}

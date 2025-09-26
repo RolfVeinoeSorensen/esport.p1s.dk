@@ -1,5 +1,5 @@
-@import "tailwindcss";
-@import "primeicons/primeicons.css";
+@import 'tailwindcss';
+@import 'primeicons/primeicons.css';
 @custom-variant dark (&:where(.dark, .dark *));
 html,
 body {
@@ -56,13 +56,13 @@ p {
 }
 .brand-logo-link {
   position: fixed;
-  top: 4px;
-  left: 4px;
+  top: 8px;
+  left: 8px;
 }
 .brand-logo-img {
   height: 96px;
 }
-@media  (max-width: 640px) {
+@media (max-width: 640px) {
   .brand-logo-link {
     position: fixed;
     top: 4px;
@@ -71,5 +71,4 @@ p {
   .brand-logo-img {
     height: 64px;
   }
-  
 }

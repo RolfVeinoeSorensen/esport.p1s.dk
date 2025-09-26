@@ -1,1 +1,49 @@
-<p>e-sports works!</p>
+<header>
+  <h1 class="w-full text-center">E-sport Træning hos p1s.dk</h1>
+  <p class="w-full text-center">Bliv en bedre gamer – sammen med os</p>
+</header>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+        <p-card>
+            <ng-template #header>
+            <div class="w-full flex justify-center p-4">
+                <h2><i class="pi pi-bullseye" style="font-size: 1.5rem;margin-right: 0.5rem;"></i>Hvad tilbyder vi?</h2>
+            </div>
+            </ng-template>
+            <ul class="list-disc ml-4">
+                <li><strong>Struktureret træning:</strong> Ugentlige sessioner i CS2, LoL, Valorant og Fortnite med erfarne coaches.</li>
+                <li><strong>Individuel udvikling:</strong> Fokus på aim, map awareness, kommunikation og mental performance.</li>
+                <li><strong>Holdånd og samarbejde:</strong> Træning i strategi, rolleforståelse og teamwork.</li>
+                <li><strong>Turneringer og scrims:</strong> Interne og eksterne kampe med taktisk forberedelse.</li>
+            </ul>
+        </p-card>
+        <p-card>
+            <ng-template #header>
+            <div class="w-full flex justify-center p-4">
+                <h2><i class="pi pi-lightbulb" style="font-size: 1.5rem;margin-right: 0.5rem;"></i>Fokus på mental og fysisk sundhed</h2>
+            </div>
+            </ng-template>
+            <ul class="list-disc ml-4">
+                <li>Mental coaching og performance-træning</li>
+                <li>Ergonomi og fysisk aktivitet</li>
+                <li>Balance mellem gaming og skole/arbejde</li>
+            </ul>
+        </p-card>
+        <p-card>
+            <ng-template #header>
+            <div class="w-full flex justify-center p-4">
+                <h2><i class="pi pi-calendar-clock" style="font-size: 1.5rem;margin-right: 0.5rem;"></i>Træningstider</h2>
+            </div>
+            </ng-template>
+            <ul>
+                <li>Mandag 15:30-17:30 (Social Gaming)</li>
+                <li>Weekend: LAN PArties og events</li>
+            </ul>
+        </p-card>
+    </div>
+
+<section class="w-full text-center">
+  <h2><i class="pi pi-wave-pulse" style="font-size: 1.5rem;margin-right: 0.5rem;"></i>Kom i gang</h2>
+  <p>Er du klar til at tage din gaming til næste niveau?<br>
+     Tilmeld dig vores træningsprogram i dag og bliv en del af et stærkt fællesskab.</p>
+  <a [routerLink]="'/contact-us'" class="cta"><i class="pi pi-thumbs-up" style="font-size: 1rem;margin-right: 0.3rem;"></i> Kontakt os her</a>
+</section>

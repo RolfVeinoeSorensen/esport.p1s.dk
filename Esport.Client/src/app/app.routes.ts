@@ -1,4 +1,6 @@
 import { Routes } from '@angular/router';
+import { AuthGuard } from '@helpers/auth.guard';
+import { UserRole } from '@services/client';
 
 export const routes: Routes = [
   {
@@ -40,11 +42,42 @@ export const routes: Routes = [
   },
   {
     path: 'news',
-    loadComponent: () => import('@cms/news/news.component').then(m => m.NewsComponent),
     children: [
       {
-        path: ':url_slug',
+        path: '',
+        pathMatch: 'full',
+        loadComponent: () => import('@cms/news/news.component').then(m => m.NewsComponent),
+      },
+      {
+        canLoad: [AuthGuard],
+        canActivate: [AuthGuard],
+        data: { requiredRoles: [UserRole.Admin, UserRole.Editor] },
+        path: 'edit/:url_slug',
+        loadComponent: () => import('@cms/news/news-editor/news-editor.component').then(m => m.NewsEditorComponent),
+      },
+      {
+        canLoad: [AuthGuard],
+        canActivate: [AuthGuard],
+        data: { requiredRoles: [UserRole.Admin, UserRole.Editor] },
+        path: 'create',
+        loadComponent: () => import('@cms/news/news-editor/news-editor.component').then(m => m.NewsEditorComponent),
+      },
+      {
+        path: 'read-article/:url_slug',
         loadComponent: () => import('@cms/news/news-article/news-article.component').then(m => m.NewsArticleComponent),
+      },
+    ],
+  },
+  {
+    canLoad: [AuthGuard],
+    canActivate: [AuthGuard],
+    data: { requiredRoles: [UserRole.Admin, UserRole.Editor] },
+    path: 'admin',
+    children: [
+      {
+        path: '',
+        pathMatch: 'full',
+        loadComponent: () => import('@admin/administration.component').then(m => m.AdministrationComponent),
       },
     ],
   },
@@ -57,6 +90,10 @@ export const routes: Routes = [
     loadComponent: () => import('@shared/page-not-found/page-not-found.component').then(m => m.PageNotFoundComponent),
   },
   {
+    canLoad: [AuthGuard],
+    canActivate: [AuthGuard],
+    canActivateChild: [AuthGuard],
+    data: { requiredRoles: [UserRole.Admin, UserRole.Editor] },
     path: 'my-stuff',
     children: [
       {
