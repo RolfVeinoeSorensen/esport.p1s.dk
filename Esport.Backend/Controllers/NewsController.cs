@@ -37,6 +37,11 @@ namespace Esport.Backend.Controllers
         {
             var tags = newsService.CreateOrUpdateTag(tag);
             return Ok(tags);
-        }   
+        }
+        [HttpGet("[action]")]
+        public ActionResult<IEnumerable<string>> GetAllUrlSlugs()
+        {
+            return Ok(newsService.GetAllUrlSlugs());
+        }
     }
 }

@@ -58,5 +58,10 @@ namespace Esport.Backend.Services
             db.SaveChanges();
             return tag;
         }
+
+        public IEnumerable<string> GetAllUrlSlugs()
+        {
+            return db.News.Select(s => s.UrlSlug);
+        }
     }
 }

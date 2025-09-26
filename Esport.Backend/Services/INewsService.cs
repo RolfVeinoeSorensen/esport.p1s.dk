@@ -5,6 +5,7 @@ namespace Esport.Backend.Services
     public interface INewsService
     {
         IEnumerable<News> GetNews(int page, int pageSize);
+        IEnumerable<string> GetAllUrlSlugs();
         News GetNewsByUrl(string urlSlug);
         News CreateOrUpdateNews(News news);
         Tag CreateOrUpdateTag(Tag tags);
