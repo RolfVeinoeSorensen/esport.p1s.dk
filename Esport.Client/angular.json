@@ -75,8 +75,8 @@
             },
             "development": {
               "ssl": true,
-              "sslKey": "ssl/localhost/localhost.decrypted.key",
-              "sslCert": "ssl/localhost/localhost.crt",
+              "sslKey": "ssl/server.key",
+              "sslCert": "ssl/server.crt",
               "buildTarget": "Esport.Client:build:development"
             }
           },
