@@ -13,6 +13,17 @@
             }
         </div>
         <div class="flex flex-col gap-1">
+            <input pInputText
+                formControlName="url_slug"
+                [invalid]="isInvalid('url_slug')"
+                placeholder="URL"
+                type="text"
+                size="50"/>
+            @if (isInvalid('url_slug')) {
+                <p-message severity="error" size="small" variant="simple">URL skal udfyldes og være mindre end 255 karakterer.</p-message>
+            }
+        </div>
+        <div class="flex flex-col gap-1">
             <p-editor formControlName="content" [invalid]="isInvalid('content')" [style]="{ height: '320px' }">
                 <ng-template pTemplate="header">
                 <span class="ql-formats">
@@ -43,6 +54,6 @@
                 <p-message severity="error" size="small" variant="simple">Du skal skrive noget indhold i nyhedsartiklen.</p-message>
             }
         </div>
-        <p-button type="submit" label="Gem" icon="pi pi-save" />
+        <p-button type="submit" [label]="isNewPage === true ? 'Opdater' : 'Opret'" icon="pi pi-save" />
     </form>
 </div>

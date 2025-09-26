@@ -166,7 +166,7 @@ export class AppComponent implements OnInit, OnDestroy {
             routerLink: 'services/e-sports',
           },
           {
-            label: 'LAN fester',
+            label: 'LAN parties',
             routerLink: 'services/lan-parties',
           },
           {
