@@ -6,3 +6,5 @@
 /.vs
 /Esport.Backend/bin
 /Esport.Database/bin
+Esport.Client/ssl/server.crt
+Esport.Client/ssl/server.key
