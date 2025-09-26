@@ -64,6 +64,7 @@ export class AppComponent implements OnInit, OnDestroy {
   loginForm: UntypedFormGroup;
   isLoggedIn = false;
   user!: User;
+  returnUrl: string = '/';
   // convenience getter for easy access to form fields
   get f() {
     return this.loginForm.controls;
@@ -117,6 +118,9 @@ export class AppComponent implements OnInit, OnDestroy {
         mergeMap(route => route.data)
       )
       .subscribe(event => {
+        console.log('router.events', this.activatedRoute.snapshot.queryParams['logIn']);
+        this.returnUrl = this.activatedRoute.snapshot.queryParams['returnUrl'] ?? '/';
+        this.visibleLogin = (this.activatedRoute.snapshot.queryParams['logIn'] as boolean) ?? false;
         this.ui.setMeta({
           title: event['title'],
           description: event['description'],
@@ -128,9 +132,10 @@ export class AppComponent implements OnInit, OnDestroy {
   }
   refreshMenu() {
     const items: MenuItem[] | undefined = [];
-    if (this.user.roles.some(x=> x.role  === UserRole.Admin) === true) {
+    if (this.user.roles.some(x => x.role === UserRole.Admin) === true) {
       items.push({
         label: 'Administration',
+        routerLink: 'admin',
       });
     }
     if (this.isLoggedIn) {
@@ -213,9 +218,7 @@ export class AppComponent implements OnInit, OnDestroy {
       .pipe(first())
       .subscribe({
         next: () => {
-          // get return url from query parameters or default to home page
-          const returnUrl = this.activatedRoute.snapshot.queryParams['returnUrl'] || '/';
-          this.router.navigateByUrl(returnUrl);
+          this.router.navigateByUrl(this.returnUrl);
         },
         error: error => {
           console.log(error);

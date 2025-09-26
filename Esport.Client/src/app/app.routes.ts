@@ -1,4 +1,6 @@
 import { Routes } from '@angular/router';
+import { AuthGuard } from '@helpers/auth.guard';
+import { UserRole } from '@services/client';
 
 export const routes: Routes = [
   {
@@ -49,6 +51,19 @@ export const routes: Routes = [
     ],
   },
   {
+    canLoad: [AuthGuard],
+    canActivate: [AuthGuard],
+    data: { requiredRoles: [UserRole.Admin, UserRole.Editor] },
+    path: 'admin',
+    children: [
+      {
+        path: '',
+        pathMatch: 'full',
+        loadComponent: () => import('@admin/administration.component').then(m => m.AdministrationComponent),
+      },
+    ],
+  },
+  {
     path: 'forbidden',
     loadComponent: () => import('@shared/forbidden/forbidden.component').then(m => m.ForbiddenComponent),
   },
@@ -57,6 +72,10 @@ export const routes: Routes = [
     loadComponent: () => import('@shared/page-not-found/page-not-found.component').then(m => m.PageNotFoundComponent),
   },
   {
+    canLoad: [AuthGuard],
+    canActivate: [AuthGuard],
+    canActivateChild: [AuthGuard],
+    data: { requiredRoles: [UserRole.Admin, UserRole.Editor] },
     path: 'my-stuff',
     children: [
       {
