@@ -1,19 +1,19 @@
 ALTER DATABASE [Esport]
     COLLATE Latin1_General_100_CS_AS_SC;
 GO
-/****** Object:  Schema [auth]    Script Date: 25/09/2025 19.15.17 ******/
+/****** Object:  Schema [auth]    Script Date: 27/09/2025 09.42.13 ******/
 CREATE SCHEMA [auth]
 GO
-/****** Object:  Schema [club]    Script Date: 25/09/2025 19.15.17 ******/
+/****** Object:  Schema [club]    Script Date: 27/09/2025 09.42.13 ******/
 CREATE SCHEMA [club]
 GO
-/****** Object:  Schema [cms]    Script Date: 25/09/2025 19.15.17 ******/
+/****** Object:  Schema [cms]    Script Date: 27/09/2025 09.42.13 ******/
 CREATE SCHEMA [cms]
 GO
-/****** Object:  Schema [log]    Script Date: 25/09/2025 19.15.17 ******/
+/****** Object:  Schema [log]    Script Date: 27/09/2025 09.42.13 ******/
 CREATE SCHEMA [log]
 GO
-/****** Object:  Table [auth].[AuthRoles]    Script Date: 25/09/2025 19.15.17 ******/
+/****** Object:  Table [auth].[AuthRoles]    Script Date: 27/09/2025 09.42.13 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -27,7 +27,7 @@ CREATE TABLE [auth].[AuthRoles](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [auth].[AuthUsers]    Script Date: 25/09/2025 19.15.17 ******/
+/****** Object:  Table [auth].[AuthUsers]    Script Date: 27/09/2025 09.42.13 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -53,13 +53,17 @@ CREATE TABLE [auth].[AuthUsers](
 	[CanBringLaptop] [bit] NOT NULL,
 	[CanBringStationaryPc] [bit] NOT NULL,
 	[CanBringPlaystation] [bit] NOT NULL,
+	[ActivateAccountToken] [nvarchar](max) NULL,
+	[ActivateAccountTokenExpiration] [datetime2](7) NULL,
+	[IsActivated] [bit] NOT NULL,
+	[ImageId] [int] NULL,
  CONSTRAINT [PK_Users] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [auth].[AuthUsersRoles]    Script Date: 25/09/2025 19.15.17 ******/
+/****** Object:  Table [auth].[AuthUsersRoles]    Script Date: 27/09/2025 09.42.13 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -74,7 +78,7 @@ CREATE TABLE [auth].[AuthUsersRoles](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [club].[Events]    Script Date: 25/09/2025 19.15.17 ******/
+/****** Object:  Table [club].[Events]    Script Date: 27/09/2025 09.42.13 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -93,7 +97,7 @@ CREATE TABLE [club].[Events](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [club].[EventsTeams]    Script Date: 25/09/2025 19.15.17 ******/
+/****** Object:  Table [club].[EventsTeams]    Script Date: 27/09/2025 09.42.13 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -108,7 +112,7 @@ CREATE TABLE [club].[EventsTeams](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [club].[EventsUsers]    Script Date: 25/09/2025 19.15.17 ******/
+/****** Object:  Table [club].[EventsUsers]    Script Date: 27/09/2025 09.42.13 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -126,7 +130,7 @@ CREATE TABLE [club].[EventsUsers](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [club].[Games]    Script Date: 25/09/2025 19.15.17 ******/
+/****** Object:  Table [club].[Games]    Script Date: 27/09/2025 09.42.13 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -142,7 +146,7 @@ CREATE TABLE [club].[Games](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [club].[GameServers]    Script Date: 25/09/2025 19.15.17 ******/
+/****** Object:  Table [club].[GameServers]    Script Date: 27/09/2025 09.42.13 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -158,7 +162,7 @@ CREATE TABLE [club].[GameServers](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [club].[Teams]    Script Date: 25/09/2025 19.15.17 ******/
+/****** Object:  Table [club].[Teams]    Script Date: 27/09/2025 09.42.13 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -175,7 +179,7 @@ CREATE TABLE [club].[Teams](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [club].[UsersGames]    Script Date: 25/09/2025 19.15.17 ******/
+/****** Object:  Table [club].[UsersGames]    Script Date: 27/09/2025 09.42.13 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -191,7 +195,7 @@ CREATE TABLE [club].[UsersGames](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [club].[UsersTeams]    Script Date: 25/09/2025 19.15.17 ******/
+/****** Object:  Table [club].[UsersTeams]    Script Date: 27/09/2025 09.42.13 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -206,7 +210,7 @@ CREATE TABLE [club].[UsersTeams](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [cms].[Files]    Script Date: 25/09/2025 19.15.17 ******/
+/****** Object:  Table [cms].[Files]    Script Date: 27/09/2025 09.42.13 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -222,7 +226,37 @@ CREATE TABLE [cms].[Files](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [cms].[News]    Script Date: 25/09/2025 19.15.17 ******/
+/****** Object:  Table [cms].[Galleries]    Script Date: 27/09/2025 09.42.13 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [cms].[Galleries](
+	[Id] [int] NOT NULL,
+	[Title] [nvarchar](255) NOT NULL,
+	[Description] [nvarchar](max) NULL,
+ CONSTRAINT [PK_Galleries] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [cms].[GalleriesImages]    Script Date: 27/09/2025 09.42.13 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [cms].[GalleriesImages](
+	[GalleryId] [int] NOT NULL,
+	[ImageId] [int] NOT NULL,
+ CONSTRAINT [PK_GalleriesImages] PRIMARY KEY CLUSTERED 
+(
+	[GalleryId] ASC,
+	[ImageId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [cms].[News]    Script Date: 27/09/2025 09.42.13 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -246,7 +280,7 @@ CREATE TABLE [cms].[News](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [cms].[NewsTags]    Script Date: 25/09/2025 19.15.17 ******/
+/****** Object:  Table [cms].[NewsTags]    Script Date: 27/09/2025 09.42.13 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -261,7 +295,7 @@ CREATE TABLE [cms].[NewsTags](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [cms].[Tags]    Script Date: 25/09/2025 19.15.17 ******/
+/****** Object:  Table [cms].[Tags]    Script Date: 27/09/2025 09.42.13 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -275,7 +309,7 @@ CREATE TABLE [cms].[Tags](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [log].[NLog]    Script Date: 25/09/2025 19.15.17 ******/
+/****** Object:  Table [log].[NLog]    Script Date: 27/09/2025 09.42.13 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -303,7 +337,14 @@ ALTER TABLE [auth].[AuthUsers] ADD  CONSTRAINT [DF_Users_CanBringStationaryPc]  
 GO
 ALTER TABLE [auth].[AuthUsers] ADD  CONSTRAINT [DF_Users_CanBringPlaystation]  DEFAULT ((0)) FOR [CanBringPlaystation]
 GO
+ALTER TABLE [auth].[AuthUsers] ADD  CONSTRAINT [DF_AuthUsers_IsActivated]  DEFAULT ((0)) FOR [IsActivated]
+GO
 ALTER TABLE [cms].[News] ADD  CONSTRAINT [DF_News_IsPublished]  DEFAULT ((0)) FOR [IsPublished]
+GO
+ALTER TABLE [auth].[AuthUsers]  WITH CHECK ADD  CONSTRAINT [FK_AuthUsers_Files] FOREIGN KEY([ImageId])
+REFERENCES [cms].[Files] ([Id])
+GO
+ALTER TABLE [auth].[AuthUsers] CHECK CONSTRAINT [FK_AuthUsers_Files]
 GO
 ALTER TABLE [auth].[AuthUsers]  WITH CHECK ADD  CONSTRAINT [FK_Users_Parent] FOREIGN KEY([ParentId])
 REFERENCES [auth].[AuthUsers] ([Id])
@@ -370,6 +411,16 @@ REFERENCES [auth].[AuthUsers] ([Id])
 GO
 ALTER TABLE [club].[UsersTeams] CHECK CONSTRAINT [FK_UsersTeams_Users]
 GO
+ALTER TABLE [cms].[GalleriesImages]  WITH CHECK ADD  CONSTRAINT [FK_GalleriesImages_Files] FOREIGN KEY([ImageId])
+REFERENCES [cms].[Files] ([Id])
+GO
+ALTER TABLE [cms].[GalleriesImages] CHECK CONSTRAINT [FK_GalleriesImages_Files]
+GO
+ALTER TABLE [cms].[GalleriesImages]  WITH CHECK ADD  CONSTRAINT [FK_GalleriesImages_Galleries] FOREIGN KEY([GalleryId])
+REFERENCES [cms].[Galleries] ([Id])
+GO
+ALTER TABLE [cms].[GalleriesImages] CHECK CONSTRAINT [FK_GalleriesImages_Galleries]
+GO
 ALTER TABLE [cms].[News]  WITH CHECK ADD  CONSTRAINT [FK_News_Files] FOREIGN KEY([ImageId])
 REFERENCES [cms].[Files] ([Id])
 GO
@@ -395,7 +446,7 @@ REFERENCES [cms].[Tags] ([Id])
 GO
 ALTER TABLE [cms].[NewsTags] CHECK CONSTRAINT [FK_NewsTags_Tags]
 GO
-/****** Object:  StoredProcedure [log].[NLogAddEntry]    Script Date: 25/09/2025 19.15.17 ******/
+/****** Object:  StoredProcedure [log].[NLogAddEntry]    Script Date: 27/09/2025 09.42.13 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON

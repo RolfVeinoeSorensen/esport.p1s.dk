@@ -1,4 +1,0 @@
-2025-09-25 20:49:26.1839 Info Registered target NLog.Targets.DatabaseTarget(Name=db)
-2025-09-25 20:49:26.1921 Info NLog, Version=6.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 6.0.1.4190. Product version: 6.0.1+45ae3f006d8a374de96397578a2c85ba31b9aad7. GlobalAssemblyCache: False
-2025-09-25 20:49:26.1921 Info AutoReload Config File Monitor starting
-2025-09-25 20:49:26.2565 Info Configuration initialized.
