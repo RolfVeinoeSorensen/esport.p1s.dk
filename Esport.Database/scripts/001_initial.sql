@@ -214,7 +214,7 @@ GO
 CREATE TABLE [cms].[Files](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
 	[Title] [nvarchar](255) NULL,
-	[Filename] [nchar](10) NOT NULL,
+	[Filename] [nvarchar](255) NOT NULL,
 	[Type] [int] NOT NULL,
  CONSTRAINT [PK_File] PRIMARY KEY CLUSTERED 
 (

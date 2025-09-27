@@ -22,6 +22,8 @@ services:
         condition: service_completed_successfully
     ports:
       - 4302:8080
+    volumes:
+      - ./Esport.Backend/uploads:/var/opt/uploads
   esport_database:
     build:
       context: ./Esport.Database

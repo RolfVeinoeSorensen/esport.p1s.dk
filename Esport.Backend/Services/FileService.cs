@@ -12,7 +12,7 @@ namespace Esport.Backend.Services
         DataContext context) : IFileService
     {
         private readonly DataContext db = context;
-        private const string basePath = @"C:\Git\socksNjocks\src\Client\public\images\";
+        private const string basePath = "/var/opt/uploads/";
         private readonly List<int> sizes =
         [
             1000,
@@ -37,7 +37,7 @@ namespace Esport.Backend.Services
                 return;
             }
             await db.SaveChangesAsync();
-            var uploadFolder = basePath + uploadType + @"\" + entityId + @"\";
+            var uploadFolder = $@"{basePath}{uploadType}/{entityId}/";
             var fileNameWithPath = Path.Combine(uploadFolder, fileName);
             var fileInfo = new FileInfo(fileNameWithPath);
             foreach (var size in sizes)
@@ -86,7 +86,7 @@ namespace Esport.Backend.Services
             }
 
             //Save file here
-            var uploadFolder = basePath + uploadType + @"\" + entityId + @"\";
+            var uploadFolder = $"{basePath}{uploadType}/{entityId}/";
             var directory = new DirectoryInfo(uploadFolder);
             if (!directory.Exists)
             {
@@ -143,7 +143,7 @@ namespace Esport.Backend.Services
 
         private static void CreateThumbnail(string uploadType, int entityId, string imageName, int size)
         {
-            var uploadFolder = basePath + uploadType + @"\" + entityId.ToString() + @"\";
+            var uploadFolder = $"{basePath}{uploadType}/{entityId}/";
             var inStream = uploadFolder + imageName;
             var outStream = uploadFolder + "thumbnail-" + size.ToString() + "-" + imageName;
 

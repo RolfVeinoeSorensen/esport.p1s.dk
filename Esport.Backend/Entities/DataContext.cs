@@ -159,8 +159,7 @@ public partial class DataContext : DbContext
 
             entity.Property(e => e.Filename)
                 .IsRequired()
-                .HasMaxLength(10)
-                .IsFixedLength();
+                .HasMaxLength(255);
             entity.Property(e => e.Title).HasMaxLength(255);
         });
 
