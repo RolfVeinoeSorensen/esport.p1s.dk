@@ -10,6 +10,8 @@ services:
     container_name: "esport_client"
     ports:
       - 4301:80
+    volumes:
+      - ./Esport.Client/public/uploads:/usr/share/nginx/html/uploads
   esport_backend:
     build:
       context: ./Esport.Backend
