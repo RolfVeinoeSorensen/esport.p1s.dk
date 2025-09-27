@@ -4,6 +4,7 @@ using Esport.Backend.Enums;
 using Microsoft.EntityFrameworkCore;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Formats.Jpeg;
+using SixLabors.ImageSharp.Formats.Png;
 using SixLabors.ImageSharp.Processing;
 
 namespace Esport.Backend.Services
@@ -148,21 +149,37 @@ namespace Esport.Backend.Services
             var outStream = uploadFolder + "thumbnail-" + size.ToString() + "-" + imageName;
 
 
-            using SixLabors.ImageSharp.Image image = Image.Load(inStream);
+            using Image image = Image.Load(inStream);
             // Resize the given image in place and return it for chaining.
             // 'x' signifies the current image processing context.
-            image.Mutate(x => x.Resize(new ResizeOptions
+            using Image clone = image.Clone(x => x.Resize(new ResizeOptions
             {
-                Size = new SixLabors.ImageSharp.Size(int.MaxValue, size),
+                Size = new Size(int.MaxValue, size),
                 Mode = ResizeMode.Max,
-                Sampler = KnownResamplers.Lanczos3
+                Sampler = KnownResamplers.Lanczos3,
             }));
 
-            image.Save(outStream, new JpegEncoder
+            if (Path.GetExtension(inStream) == ".png")
             {
-                Quality = 75,
-                ColorType = JpegEncodingColor.YCbCrRatio444
-            });
+                PngMetadata s = clone.Metadata.GetPngMetadata();
+                PngMetadata m = clone.Metadata.GetPngMetadata();
+                m.ColorType = PngColorType.RgbWithAlpha;
+                m.TransparentColor = s.TransparentColor;
+                image.Save(outStream, new PngEncoder
+                {
+                    BitDepth = s.BitDepth,
+                    TransparentColorMode = PngTransparentColorMode.Preserve
+                });
+            } else
+            {
+                image.Save(outStream, new JpegEncoder
+                {
+                    Quality = 75,
+                    ColorType = JpegEncodingColor.YCbCrRatio444
+                });
+            }
+
+
             // Dispose - releasing memory into a memory pool ready for the next image you wish to process.
             //return outStream;
         }
