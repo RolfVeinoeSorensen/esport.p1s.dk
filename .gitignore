@@ -5,6 +5,7 @@
 /Esport.Database/obj
 /.vs
 /Esport.Backend/bin
+/Esport.Backend/temp
 /Esport.Database/bin
 Esport.Client/ssl/server.crt
 Esport.Client/ssl/server.key
