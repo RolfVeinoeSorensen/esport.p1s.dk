@@ -23,6 +23,8 @@ public partial class DataContext : DbContext
 
     public virtual DbSet<File> Files { get; set; }
 
+    public virtual DbSet<Gallery> Galleries { get; set; }
+
     public virtual DbSet<Game> Games { get; set; }
 
     public virtual DbSet<GameServer> GameServers { get; set; }
@@ -161,6 +163,33 @@ public partial class DataContext : DbContext
                 .IsRequired()
                 .HasMaxLength(255);
             entity.Property(e => e.Title).HasMaxLength(255);
+        });
+
+        modelBuilder.Entity<Gallery>(entity =>
+        {
+            entity.ToTable("Galleries", "cms");
+
+            entity.Property(e => e.Id).ValueGeneratedNever();
+            entity.Property(e => e.Title)
+                .IsRequired()
+                .HasMaxLength(255);
+
+            entity.HasMany(d => d.Images).WithMany(p => p.Galleries)
+                .UsingEntity<Dictionary<string, object>>(
+                    "GalleriesImage",
+                    r => r.HasOne<File>().WithMany()
+                        .HasForeignKey("ImageId")
+                        .OnDelete(DeleteBehavior.ClientSetNull)
+                        .HasConstraintName("FK_GalleriesImages_Files"),
+                    l => l.HasOne<Gallery>().WithMany()
+                        .HasForeignKey("GalleryId")
+                        .OnDelete(DeleteBehavior.ClientSetNull)
+                        .HasConstraintName("FK_GalleriesImages_Galleries"),
+                    j =>
+                    {
+                        j.HasKey("GalleryId", "ImageId");
+                        j.ToTable("GalleriesImages", "cms");
+                    });
         });
 
         modelBuilder.Entity<Game>(entity =>

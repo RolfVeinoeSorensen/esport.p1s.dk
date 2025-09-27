@@ -17,4 +17,6 @@ public partial class File
     public FileType Type { get; set; }
 
     public virtual ICollection<News> News { get; set; } = new List<News>();
+
+    public virtual ICollection<Gallery> Galleries { get; set; } = new List<Gallery>();
 }

@@ -64,6 +64,14 @@
          "ObjectType": 0
       },
       {
+         "Name": "[cms].[Galleries]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[cms].[GalleriesImages]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[cms].[News]",
          "ObjectType": 0
       },

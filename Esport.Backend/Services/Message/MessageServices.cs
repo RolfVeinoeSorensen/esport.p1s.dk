@@ -48,7 +48,7 @@ namespace Esport.Backend.Services.Message
             // the XOAUTH2 authentication mechanism.
             client.AuthenticationMechanisms.Remove("XOAUTH2");
 
-            await client.AuthenticateAsync("mail@p1s.dk", "xqfLBcFv4ishRp");
+            await client.AuthenticateAsync("mail@p1s.dk", "WOrose,%,87");
             await client.SendAsync(mailMessage);
             await client.DisconnectAsync(true);
         }
