@@ -7,14 +7,22 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { FileType } from './fileType';
+import { Gallery } from './gallery';
 import { News } from './news';
+import { AuthUser } from './authUser';
 
 
 export interface ModelFile { 
     id: number;
     title?: string;
     filename?: string;
-    type: number;
+    type: FileType;
+    authUsers?: Array<AuthUser>;
     news?: Array<News>;
+    galleries?: Array<Gallery>;
 }
+export namespace ModelFile {
+}
+
 

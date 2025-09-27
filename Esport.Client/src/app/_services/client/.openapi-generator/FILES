@@ -3,7 +3,9 @@ README.md
 api.base.service.ts
 api.module.ts
 api/api.ts
+api/captcha.service.ts
 api/events.service.ts
+api/file.service.ts
 api/games.service.ts
 api/news.service.ts
 api/users.service.ts
@@ -19,6 +21,11 @@ model/event.ts
 model/eventDto.ts
 model/eventUserDto.ts
 model/eventsUser.ts
+model/fileResponseDto.ts
+model/fileState.ts
+model/fileType.ts
+model/fileUploadType.ts
+model/gallery.ts
 model/game.ts
 model/gameServer.ts
 model/gameServerDto.ts

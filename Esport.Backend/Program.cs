@@ -30,10 +30,12 @@ try
         // serialize enums as strings in api responses (e.g. Role)
         x.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
         x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+        x.JsonSerializerOptions.PropertyNamingPolicy = null;
     });
 
     // configure strongly typed settings object
     builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
+    builder.Services.AddMemoryCache();
     // configure DI for application services
     builder.Services.AddScoped<IJwtUtils, JwtUtils>();
     builder.Services.AddScoped<IUserService, UserService>();

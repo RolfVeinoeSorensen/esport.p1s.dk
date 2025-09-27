@@ -36,8 +36,13 @@ export interface AuthUser {
     canBringLaptop: boolean;
     canBringStationaryPc: boolean;
     canBringPlaystation: boolean;
+    activateAccountToken?: string;
+    activateAccountTokenExpiration?: string;
+    isActivated: boolean;
+    imageId?: number;
     events?: Array<Event>;
     eventsUsers?: Array<EventsUser>;
+    image?: any;
     inverseParent?: Array<AuthUser>;
     newsCreatedByNavigations?: Array<News>;
     newsUpdatedByNavigations?: Array<News>;

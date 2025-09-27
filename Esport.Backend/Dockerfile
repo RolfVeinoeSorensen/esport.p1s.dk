@@ -15,6 +15,17 @@ RUN dotnet publish -c Release -o /app/out
 # Step 2: Run Image
 FROM mcr.microsoft.com/dotnet/aspnet:9.0
 
+# Install font packages
+RUN echo "deb http://deb.debian.org/debian/ bookworm main contrib" > /etc/apt/sources.list && \
+    echo "deb-src http://deb.debian.org/debian/ bookworm main contrib" >> /etc/apt/sources.list && \
+    echo "deb http://security.debian.org/ bookworm-security main contrib" >> /etc/apt/sources.list && \
+    echo "deb-src http://security.debian.org/ bookworm-security main contrib" >> /etc/apt/sources.list
+RUN sed -i'.bak' 's/$/ contrib/' /etc/apt/sources.list
+RUN apt-get update; apt-get install -y ttf-mscorefonts-installer fontconfig
+
+# Refresh font cache
+RUN fc-cache -f -v
+
 # Sets the working directory
 WORKDIR /app
 

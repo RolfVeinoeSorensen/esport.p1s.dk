@@ -8,6 +8,7 @@ namespace Esport.Backend.Controllers
     public class FileController(IFileService fileService) : ControllerBase
     {
         private readonly IFileService fileService = fileService;
+
         [HttpPost]
         [Route("uploadfile")]
         public async Task<FileResponseDto> SaveFile(FileUploadType uploadType, int entityId, IFormFile file, string title)
