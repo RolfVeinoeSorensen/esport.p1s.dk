@@ -20,18 +20,39 @@ namespace Esport.Backend.Services
             500,
             200
         ];
-        public async Task DeleteFile(string uploadType, int entityId, int imageId)
+        public async Task DeleteFile(FileUploadType uploadType, int entityId, int imageId)
         {
             string fileName = string.Empty;
-            if (uploadType == "news")
+            if (uploadType == FileUploadType.News)
             {
                 var item = await db.News.SingleOrDefaultAsync(x=>x.ImageId.Equals(imageId) && x.Id.Equals(entityId));
                 if (item == null) return;
                 var image = await db.Files.FirstOrDefaultAsync(x => x.Id.Equals(imageId));
                 if (image == null) return;
-                db.Remove(item);
+                item.ImageId = null;
+                db.Update(item);
                 db.Remove(image);
                 
+            }
+            else if (uploadType == FileUploadType.User)
+            {
+                var item = await db.AuthUsers.SingleOrDefaultAsync(x => x.ImageId.Equals(imageId) && x.Id.Equals(entityId));
+                if (item == null) return;
+                var image = await db.Files.FirstOrDefaultAsync(x => x.Id.Equals(imageId));
+                if (image == null) return;
+                item.ImageId = null;
+                db.Update(item);
+                db.Remove(image);
+
+            } else if (uploadType == FileUploadType.Gallery)
+            {
+                var item = await db.Galleries.Include(x=>x.Images).SingleOrDefaultAsync(x => x.Images.Equals(imageId) && x.Id.Equals(entityId));
+                if (item == null) return;
+                var image = await db.Files.FirstOrDefaultAsync(x => x.Id.Equals(imageId));
+                if (image == null) return;
+                item.Images.Remove(image);
+                db.Remove(image);
+
             }
             else
             {
@@ -51,10 +72,10 @@ namespace Esport.Backend.Services
             return;            
         }
 
-        public async Task<IEnumerable<FileResponseDto>> GetFiles(string uploadType, int entityId)
+        public async Task<IEnumerable<FileResponseDto>> GetFiles(FileUploadType uploadType, int entityId)
         {
             var res = new List<FileResponseDto>();
-            if(uploadType == "news")
+            if(uploadType == FileUploadType.News)
             {
                 foreach (var item in await db.Files.Include(f => f.News).Where(n => n.News != null).ToListAsync())
                 {
@@ -66,10 +87,38 @@ namespace Esport.Backend.Services
                     res.Add(f);
                 }
             }
+            else if (uploadType == FileUploadType.User)
+            {
+                foreach (var item in await db.Files.Include(f => f.AuthUsers).Where(n => n.AuthUsers != null).ToListAsync())
+                {
+                    var f = new FileResponseDto
+                    {
+                        FileName = item.Filename,
+                        FileState = FileState.Success,
+                    };
+                    res.Add(f);
+                }
+            }
+            else if (uploadType == FileUploadType.User)
+            {
+                foreach (var item in await db.Galleries.Include(f => f.Images).Where(n => n.Images != null).Select(i => i.Images).ToListAsync())
+                {
+                    foreach(var img in item.ToList())
+                    {
+                        var f = new FileResponseDto
+                        {
+                            FileName = img.Filename,
+                            FileState = FileState.Success,
+                        };
+                        res.Add(f);
+                    }
+
+                }
+            }
             return res;
         }
 
-        public async Task<FileResponseDto> SaveFile(string uploadType, int entityId, IFormFile file, string title)
+        public async Task<FileResponseDto> SaveFile(FileUploadType uploadType, int entityId, IFormFile file, string title)
         {
             var result = new FileResponseDto { FileName = file.FileName.Replace(" ", "-") , FileState = FileState.Failed};
             result.FileName = file.FileName.Replace(" ", "-");
@@ -77,12 +126,6 @@ namespace Esport.Backend.Services
             {
                 result.FileState = FileState.Failed;
                 result.ErrorMessage = "File size was 0. Nothing uploaded";
-                return result;
-            }
-            else if(uploadType != "news")
-            {
-                result.FileState = FileState.Failed;
-                result.ErrorMessage = "File upload type was not valid. Nothing uploaded";
                 return result;
             }
 
@@ -119,7 +162,7 @@ namespace Esport.Backend.Services
             await db.SaveChangesAsync();
 
             //Save in DB
-            if (uploadType == "news")
+            if (uploadType == FileUploadType.News)
             {
                 var news = db.News.FirstOrDefault(x => x.Id == entityId);
                 if (news != null) {
@@ -133,7 +176,7 @@ namespace Esport.Backend.Services
             return result;
         }
 
-        private async Task CreateThumbnails(string uploadType, int entityId, string imageName)
+        private async Task CreateThumbnails(FileUploadType uploadType, int entityId, string imageName)
         {
             foreach(var size in sizes)
             {
@@ -142,7 +185,7 @@ namespace Esport.Backend.Services
         }
 
 
-        private static void CreateThumbnail(string uploadType, int entityId, string imageName, int size)
+        private static void CreateThumbnail(FileUploadType uploadType, int entityId, string imageName, int size)
         {
             var uploadFolder = $"{basePath}{uploadType}/{entityId}/";
             var inStream = uploadFolder + imageName;
