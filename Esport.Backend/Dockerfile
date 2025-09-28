@@ -31,6 +31,8 @@ WORKDIR /app
 
 # Copies files from the build step to the final image
 COPY --from=build-env /app/out .
+# Copies views for email from the main source to the final image
+COPY ./Views ./Views
 
 # Exposes the port used by the application
 EXPOSE 80

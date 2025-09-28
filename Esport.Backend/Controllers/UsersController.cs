@@ -1,10 +1,12 @@
-using Microsoft.AspNetCore.Mvc;
+using Azure;
 using Esport.Backend.Authorization;
 using Esport.Backend.Entities;
 using Esport.Backend.Enums;
+using Esport.Backend.Models;
 using Esport.Backend.Models.Users;
 using Esport.Backend.Services;
-using Esport.Backend.Models;
+using Microsoft.AspNetCore.Mvc;
+using System.Threading.Channels;
 
 namespace Esport.Backend.Controllers
 {
@@ -55,23 +57,25 @@ namespace Esport.Backend.Controllers
         [HttpPost("[action]")]
         public async Task<ActionResult<SubmitResponse>> ForgotPassword([FromBody]ForgotPasswordRequest req)
         {
-            await userService.ForgotPasswordAsync(req);
-            return Ok(true);
+            var response = await userService.ForgotPasswordAsync(req);
+            return Ok(response);
         }
 
         [AllowAnonymous]
         [HttpPost("[action]")]
-        public async Task<ActionResult<bool>> ChangePassword([FromBody] ChangePasswordRequest req)
+        public async Task<ActionResult<SubmitResponse>> ChangePassword([FromBody] ChangePasswordRequest req)
         {
-            var res = await userService.ChangePassword(req.Token,req.Password);
-            return Ok(res);
+            var changed = await userService.ChangePassword(req.Token,req.Password);
+            var response = new SubmitResponse { Ok = changed, Message = changed == true ? "Password blev skiftet" : "Password blev ikke skiftet" };
+            return Ok(response);
         }
         [AllowAnonymous]
         [HttpPost("[action]")]
-        public async Task<ActionResult<bool>> ActivateUser(string token)
+        public async Task<ActionResult<SubmitResponse>> ActivateUser(string token)
         {
-            var res = await userService.ActivateUser(token);
-            return Ok(res);
+            var activated = await userService.ActivateUser(token);
+            var response = new SubmitResponse { Ok = activated, Message = activated == true ? "Din bruger er aktiveret" : "Din bruger kunne ikke aktiveres" };
+            return Ok(response);
         }
     }
 }

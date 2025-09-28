@@ -34,7 +34,7 @@ namespace Esport.Backend.Services.Message
                 {
                     To = user.Username,
                     Body = html,
-                    Subject = "esport.p1s.dk - Reset password"
+                    Subject = "esport.p1s.dk - nulstil dit password"
                 };
                 await _emailSender.SendEmailAsync(email);
 
@@ -50,12 +50,12 @@ namespace Esport.Backend.Services.Message
             try
             {
 
-                var html = await _razorViewToStringRenderer.RenderViewToStringAsync("Templates/EmailConfirmUserRegistration.cshtml", user);
+                var html = await _razorViewToStringRenderer.RenderViewToStringAsync("Templates/EmailConfirmUserRegistration", user);
                 var email = new MailDto
                 {
                     To = user.Username,
                     Body = html,
-                    Subject = "esport.p1s.dk - Reset password"
+                    Subject = "esport.p1s.dk - Velkommen som ny bruger"
                 };
                 await _emailSender.SendEmailAsync(email);
 

@@ -56,14 +56,11 @@ export class UserPasswordChangeComponent implements OnInit {
       const req: ChangePasswordRequest = { password: this.changePasswordForm.value.password, token: this.token };
       this.userService.usersChangePassword(req).subscribe(response => {
         this.its.addMessage({
-          id: 'resetPassword',
-          icon: response === true ? 'fal fa-check' : 'fal fa-exclamation',
-          summary: 'Scripts synchronized',
-          detail:
-            response === true
-              ? 'Du har nu skiftet dit password.'
-              : 'Der opstod en fejl og dit password blev IKKE skiftet.',
-          severity: response === true ? 'success' : 'error',
+          id: 'usersChangePassword',
+          icon: response.ok === true ? 'pi pi-check-circle' : 'pi pi-exclamation-triangle',
+          summary: 'Password ændring',
+          detail: response.message,
+          severity: response.ok === true ? 'success' : 'error',
         });
         this.changePasswordForm.reset();
       });

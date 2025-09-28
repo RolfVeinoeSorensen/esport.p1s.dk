@@ -62,8 +62,8 @@ export class UserPasswordResetComponent implements OnInit {
         }
         this.its.addMessage({
           id: 'resetPassword',
-          icon: response.ok === true ? 'fal fa-check' : 'fal fa-exclamation',
-          summary: 'Scripts synchronized',
+          icon: response.ok === true ? 'pi pi-check-circle' : 'pi pi-exclamation-triangle',
+          summary: 'Password nulstilling',
           detail: response.message,
           severity: response.ok === true ? 'success' : 'error',
         });

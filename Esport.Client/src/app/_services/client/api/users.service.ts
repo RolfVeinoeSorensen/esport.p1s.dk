@@ -52,9 +52,9 @@ export class UsersService extends BaseService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public usersActivateUser(token?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<boolean>;
-    public usersActivateUser(token?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<boolean>>;
-    public usersActivateUser(token?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<boolean>>;
+    public usersActivateUser(token?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<SubmitResponse>;
+    public usersActivateUser(token?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<SubmitResponse>>;
+    public usersActivateUser(token?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<SubmitResponse>>;
     public usersActivateUser(token?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
@@ -90,7 +90,7 @@ export class UsersService extends BaseService {
 
         let localVarPath = `/Users/ActivateUser`;
         const { basePath, withCredentials } = this.configuration;
-        return this.httpClient.request<boolean>('post', `${basePath}${localVarPath}`,
+        return this.httpClient.request<SubmitResponse>('post', `${basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
                 params: localVarQueryParameters,
@@ -176,9 +176,9 @@ export class UsersService extends BaseService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public usersChangePassword(req: ChangePasswordRequest, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<boolean>;
-    public usersChangePassword(req: ChangePasswordRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<boolean>>;
-    public usersChangePassword(req: ChangePasswordRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<boolean>>;
+    public usersChangePassword(req: ChangePasswordRequest, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<SubmitResponse>;
+    public usersChangePassword(req: ChangePasswordRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<SubmitResponse>>;
+    public usersChangePassword(req: ChangePasswordRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<SubmitResponse>>;
     public usersChangePassword(req: ChangePasswordRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
         if (req === null || req === undefined) {
             throw new Error('Required parameter req was null or undefined when calling usersChangePassword.');
@@ -224,7 +224,7 @@ export class UsersService extends BaseService {
 
         let localVarPath = `/Users/ChangePassword`;
         const { basePath, withCredentials } = this.configuration;
-        return this.httpClient.request<boolean>('post', `${basePath}${localVarPath}`,
+        return this.httpClient.request<SubmitResponse>('post', `${basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
                 body: req,

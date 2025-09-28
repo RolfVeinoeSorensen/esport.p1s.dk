@@ -20,6 +20,7 @@ export class UserActivateComponent implements OnInit {
       if (this.token)
         this.userService.usersActivateUser(this.token).subscribe(res => {
           console.log(res);
+          if (res.ok === true) this.isActivated;
         });
     });
   }

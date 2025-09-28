@@ -70,8 +70,8 @@ export class UserRegisterComponent implements OnInit {
         }
         this.its.addMessage({
           id: 'userRegistered',
-          icon: response.ok === true ? 'fal fa-check' : 'fal fa-exclamation',
-          summary: 'Scripts synchronized',
+          icon: response.ok === true ? 'pi pi-check-circle' : 'pi pi-exclamation-triangle',
+          summary: 'Bruger registrering',
           detail: response.message,
           severity: response.ok === true ? 'success' : 'error',
         });
