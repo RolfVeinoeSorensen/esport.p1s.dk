@@ -55,7 +55,6 @@ export class NewsEditorComponent implements OnInit {
           url_slug: this.news.urlSlug,
         });
       }
-      console.log(news);
     });
   }
   isInvalid(controlName: string) {
@@ -66,7 +65,6 @@ export class NewsEditorComponent implements OnInit {
   onSubmit() {
     this.formSubmitted = true;
     if (this.newsForm.valid) {
-      console.log(this.newsForm.value);
       this.newsService
         .newsCreateOrUpdateNews({
           title: this.newsForm.value.title,
@@ -80,7 +78,6 @@ export class NewsEditorComponent implements OnInit {
           urlSlug: this.newsForm.value.url_slug,
         })
         .subscribe(news => {
-          console.log(news);
           this.news = news;
           this.isNewPage = false;
           this.url_slug = news.urlSlug != undefined ? news.urlSlug : this.url_slug;

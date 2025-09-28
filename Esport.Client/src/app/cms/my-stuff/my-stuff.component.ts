@@ -32,7 +32,6 @@ export class MyStuffComponent implements OnInit {
   getGameServers() {
     this.gamesService.gamesGetAllGameServers().subscribe(gs => {
       this.gameServers = gs;
-      console.log(this.gameServers);
     });
   }
 }

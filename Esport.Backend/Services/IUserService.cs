@@ -1,4 +1,5 @@
 ﻿using Esport.Backend.Entities;
+using Esport.Backend.Models;
 using Esport.Backend.Models.Users;
 
 namespace Esport.Backend.Services
@@ -8,8 +9,8 @@ namespace Esport.Backend.Services
         AuthenticateResponse Authenticate(AuthenticateRequest model);
         IEnumerable<AuthUser> GetAllUsers();
         AuthUser GetUserById(int id);
-        Task<bool> RegisterUser(RegisterRequest model);
-        Task ForgotPasswordAsync(string email);
+        Task<SubmitResponse> RegisterUser(RegisterRequest model);
+        Task<SubmitResponse> ForgotPasswordAsync(ForgotPasswordRequest model);
         Task<bool> ChangePassword(string token, string password);
     }
 }

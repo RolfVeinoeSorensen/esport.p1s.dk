@@ -9,12 +9,8 @@
  */
 
 
-export interface RegisterRequest { 
-    username: string;
-    password: string;
-    passwordRepeat: string;
-    firstname: string;
-    lastname: string;
+export interface ForgotPasswordRequest { 
+    email: string;
     captchaId: string;
     captchaCode: string;
 }

@@ -5,16 +5,25 @@ namespace Esport.Backend.Models.Users
     public class RegisterRequest
     {
         [Required]
-        public string Username { get; set; }
+        public required string Username { get; set; }
 
         [Required]
-        public string Password { get; set; }
+        public required string Password { get; set; }
 
         [Required]
-        public string Firstname { get; set; }
+        public required string PasswordRepeat { get; set; }
 
         [Required]
-        public string Lastname { get; set; }
+        public required string Firstname { get; set; }
+
+        [Required]
+        public required string Lastname { get; set; }
+
+        [Required]
+        public required string CaptchaId { get; set; }
+
+        [Required]
+        public required string CaptchaCode { get; set; }
 
     }
 }

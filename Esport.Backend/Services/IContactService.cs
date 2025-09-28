@@ -4,6 +4,6 @@ namespace Esport.Backend.Services
 {
     public interface IContactService
     {
-        Task<ContactResponse> CreateContact(ContactRequest req);
+        Task<SubmitResponse> CreateContact(ContactRequest req);
     }
 }

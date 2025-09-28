@@ -7,15 +7,12 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { CaptchaDto } from './captchaDto';
 
 
-export interface RegisterRequest { 
-    username: string;
-    password: string;
-    passwordRepeat: string;
-    firstname: string;
-    lastname: string;
-    captchaId: string;
-    captchaCode: string;
+export interface SubmitResponse { 
+    ok: boolean;
+    message?: string;
+    captcha?: CaptchaDto;
 }
 

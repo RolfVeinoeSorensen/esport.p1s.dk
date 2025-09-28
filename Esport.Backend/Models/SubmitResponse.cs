@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Esport.Backend.Models
 {
-    public class ContactResponse
+    public class SubmitResponse
     {
         [Required]
         public required bool Ok { get; set; }

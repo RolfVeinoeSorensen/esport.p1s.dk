@@ -4,6 +4,7 @@ using Esport.Backend.Entities;
 using Esport.Backend.Enums;
 using Esport.Backend.Models.Users;
 using Esport.Backend.Services;
+using Esport.Backend.Models;
 
 namespace Esport.Backend.Controllers
 {
@@ -44,17 +45,17 @@ namespace Esport.Backend.Controllers
 
         [AllowAnonymous]
         [HttpPost("[action]")]
-        public async Task<ActionResult<bool>> RegisterUser([FromBody]RegisterRequest model)
+        public async Task<ActionResult<SubmitResponse>> RegisterUser([FromBody]RegisterRequest req)
         {
-            var response = await userService.RegisterUser(model);
+            var response = await userService.RegisterUser(req);
             return Ok(response);
         }
 
         [AllowAnonymous]
         [HttpGet("[action]")]
-        public async Task<ActionResult<bool>> ForgotPassword(string email)
+        public async Task<ActionResult<SubmitResponse>> ForgotPassword([FromBody]ForgotPasswordRequest req)
         {
-            await userService.ForgotPasswordAsync(email);
+            await userService.ForgotPasswordAsync(req);
             return Ok(true);
         }
 

@@ -43,6 +43,7 @@ try
     builder.Services.AddScoped<INewsService, NewsService>();
     builder.Services.AddScoped<IFileService, FileService>();
     builder.Services.AddScoped<IContactService, ContactService>();
+    builder.Services.AddScoped<ICaptchaService, CaptchaService>();
 
     builder.Services.AddHttpContextAccessor();
     builder.Services.AddScoped<IWebHelper, WebHelper>();

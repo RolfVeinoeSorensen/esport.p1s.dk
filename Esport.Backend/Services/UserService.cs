@@ -1,11 +1,14 @@
-using BCryptNet = BCrypt.Net.BCrypt;
-using Microsoft.Extensions.Options;
 using Esport.Backend.Authorization;
 using Esport.Backend.Entities;
 using Esport.Backend.Helpers;
+using Esport.Backend.Models;
 using Esport.Backend.Models.Users;
-using Microsoft.EntityFrameworkCore;
 using Esport.Backend.Services.Message;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Memory;
+using Microsoft.Extensions.Options;
+using Org.BouncyCastle.Ocsp;
+using BCryptNet = BCrypt.Net.BCrypt;
 
 namespace Esport.Backend.Services
 {
@@ -15,6 +18,8 @@ namespace Esport.Backend.Services
         private readonly DataContext db;
         private readonly IJwtUtils _jwtUtils;
         private readonly AppSettings _appSettings;
+        private IMemoryCache mc;
+        private readonly ICaptchaService cs;
         private readonly INotificationService notificationService;
 
         public UserService(
@@ -22,9 +27,13 @@ namespace Esport.Backend.Services
             DataContext context,
             IJwtUtils jwtUtils,
             IOptions<AppSettings> appSettings,
+            IMemoryCache memoryCache,
+            ICaptchaService captchaService,
             INotificationService notificationService)
         {
             db = context;
+            mc = memoryCache;
+            cs = captchaService;
             _jwtUtils = jwtUtils;
             _appSettings = appSettings.Value;
             this.notificationService = notificationService;
@@ -63,38 +72,85 @@ namespace Esport.Backend.Services
             return user;
         }
 
-        public async Task<bool> RegisterUser(RegisterRequest model)
+        public async Task<SubmitResponse> RegisterUser(RegisterRequest req)
         {
-            var userExist = await db.AuthUsers.FirstOrDefaultAsync(x=>x.Username.Equals(model.Username));
-            var pendingRole = await db.AuthRoles.FirstOrDefaultAsync(x=>x.Role.Equals(Enums.UserRole.Pending));
-            if(userExist != null || pendingRole == null) return false;
-            var user = new AuthUser
+            var response = new SubmitResponse
             {
-                Username = model.Username,
-                PasswordHash = BCryptNet.HashPassword(model.Password),
-                FirstName = model.Firstname,
-                LastName = model.Lastname,
-                CreatedUtc = DateTime.UtcNow,
-                Roles = [pendingRole],
-                PasswordResetToken = BCryptNet.HashPassword(Guid.NewGuid().ToString(), BCryptNet.GenerateSalt()).Replace("/", ""),
-                PasswordResetTokenExpiration = DateTime.UtcNow.AddDays(1)
+                Ok = true,
             };
-            logger.LogInformation($"{user.Username} registered as new user at {DateTime.UtcNow}");
-            await db.AuthUsers.AddAsync(user);
-            await db.SaveChangesAsync();
-            return true;
+            mc.TryGetValue(req.CaptchaId, out string? storedCaptchaCode);
+            if (storedCaptchaCode == null || storedCaptchaCode != req.CaptchaCode)
+            {
+                response.Ok = false;
+                response.Message = "CAPTCHA var ikke udfyldt korrekt";
+                response.Captcha = cs.GenerateCaptcha();
+            }
+            else
+            {
+                var userExist = await db.AuthUsers.FirstOrDefaultAsync(x => x.Username.Equals(req.Username));
+                var pendingRole = await db.AuthRoles.FirstOrDefaultAsync(x => x.Role.Equals(Enums.UserRole.Pending));
+                if (userExist != null || pendingRole == null){
+                    response.Ok = false;
+                    response.Message = "Kunne ikke oprette brugere. Måske findes denne email allerede i vores system.";
+                    response.Captcha = cs.RefreshCaptcha(req.CaptchaId);
+                }
+                else if(req.Password != req.PasswordRepeat)
+                {
+                    response.Ok = false;
+                    response.Message = "Password var ikke ens. Der blev ikke oprettet en bruger.";
+                    response.Captcha = cs.RefreshCaptcha(req.CaptchaId);
+                }
+                else
+                {
+                    var user = new AuthUser
+                    {
+                        Username = req.Username,
+                        PasswordHash = BCryptNet.HashPassword(req.Password),
+                        FirstName = req.Firstname,
+                        LastName = req.Lastname,
+                        CreatedUtc = DateTime.UtcNow,
+                        Roles = [pendingRole],
+                        PasswordResetToken = BCryptNet.HashPassword(Guid.NewGuid().ToString(), BCryptNet.GenerateSalt()).Replace("/", ""),
+                        PasswordResetTokenExpiration = DateTime.UtcNow.AddDays(1)
+                    };
+                    logger.LogInformation($"{user.Username} registered as new user at {DateTime.UtcNow}");
+                    await db.AuthUsers.AddAsync(user);
+                    await db.SaveChangesAsync();
+                    response.Message = "Du har registreret en ny bruger. Vi sender snart en email hvor vi beder dig aktivere din bruger.";
+                }
+            }
+            return response;
         }
 
-        public async Task ForgotPasswordAsync(string email)
+        public async Task<SubmitResponse> ForgotPasswordAsync(ForgotPasswordRequest req)
         {
-            var user = await db.AuthUsers.FirstOrDefaultAsync(x=>x.Username.Equals(email));
-            if(user == null) return;
-            logger.LogInformation($"{user.Username} requested new password at {DateTime.UtcNow}");
-            user.PasswordResetToken = BCryptNet.HashPassword(Guid.NewGuid().ToString(), BCryptNet.GenerateSalt()).Replace("/","");
-            user.PasswordResetTokenExpiration = DateTime.UtcNow.AddDays(1);
-            db.Update(user);
-            await db.SaveChangesAsync();
-            await notificationService.SendForgotPasswordMail(user);
+            var response = new SubmitResponse
+            {
+                Ok = true,
+                Message = $"Hvis {req.Email} findes i vores system vil du snart modtage et link til at skifte dit password."
+            };
+            mc.TryGetValue(req.CaptchaId, out string? storedCaptchaCode);
+            if (storedCaptchaCode == null || storedCaptchaCode != req.CaptchaCode)
+            {
+                response.Ok = false;
+                response.Message = "CAPTCHA var ikke udfyldt korrekt";
+                response.Captcha = cs.GenerateCaptcha();
+            }
+            else
+            {
+                var user = await db.AuthUsers.FirstOrDefaultAsync(x => x.Username.Equals(req.Email));
+                if (user != null)
+                {
+                    logger.LogInformation($"{user.Username} requested new password at {DateTime.UtcNow}");
+                    user.PasswordResetToken = BCryptNet.HashPassword(Guid.NewGuid().ToString(), BCryptNet.GenerateSalt()).Replace("/", "");
+                    user.PasswordResetTokenExpiration = DateTime.UtcNow.AddDays(1);
+                    db.Update(user);
+                    await db.SaveChangesAsync();
+                    await notificationService.SendForgotPasswordMail(user);
+                }
+
+            }
+            return response;
         }
 
         public async Task<bool> ChangePassword(string token, string password)

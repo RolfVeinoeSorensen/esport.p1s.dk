@@ -40,7 +40,6 @@ export class TeamCalendarComponent implements OnInit {
     for (let i = 1; i <= numDays; i++) {
       days.push(new Date(year, month, i));
     }
-    console.log(days);
     return days;
   }
 
@@ -57,9 +56,7 @@ export class TeamCalendarComponent implements OnInit {
         diffArr.push(this.addDays(firstDay, -1 - i).toDateString());
       }
       this.diff = diffArr.sort();
-      console.log('diff', new Date(y, m, 1), diff, day);
       this.events = events;
-      console.log(events);
     });
   }
   addDays(date: Date, days: number): Date {
@@ -71,7 +68,6 @@ export class TeamCalendarComponent implements OnInit {
     const event = prompt('Enter event:');
     if (event) {
       const dateString = new Date(day).toISOString().split('T')[0];
-      console.log(dateString, event);
       this.loadEvents();
     }
   }

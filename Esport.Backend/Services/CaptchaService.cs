@@ -1,4 +1,6 @@
-﻿using SixLabors.Fonts;
+﻿using Esport.Backend.Dtos;
+using Microsoft.Extensions.Caching.Memory;
+using SixLabors.Fonts;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Drawing.Processing;
 using SixLabors.ImageSharp.Formats.Png;
@@ -8,8 +10,9 @@ using System.Security.Cryptography;
 
 namespace Esport.Backend.Services
 {
-    public static class CaptchaService
+    public class CaptchaService(IMemoryCache memoryCache): ICaptchaService
     {
+        private readonly IMemoryCache mc = memoryCache;
         // Character set for captcha generation.
         // https://dotnettutorials.net/lesson/how-to-implement-captcha-in-asp-net-core/
         // Ambiguous characters like 0/O and 1/l/I are excluded to avoid confusion.
@@ -29,7 +32,7 @@ namespace Esport.Backend.Services
         // Generates a captcha image (PNG format) from the provided captcha text.
         // Includes random rotation, position, color variations, and noise lines to
         // make automated recognition more difficult while keeping it human-readable.
-        public static byte[] GenerateCaptchaImage(string captchaCode)
+        private static byte[] GenerateCaptchaImage(string captchaCode)
         {
             int width = 150;  // Overall image width in pixels
             int height = 60;  // Overall image height in pixels
@@ -83,6 +86,59 @@ namespace Esport.Backend.Services
             using var ms = new MemoryStream();
             image.Save(ms, new PngEncoder());
             return ms.ToArray();
+        }
+        public CaptchaDto GenerateCaptcha()
+        {
+            // Generate random CAPTCHA code
+            var captchaCode = CaptchaService.GenerateCaptchaCode(6);
+
+            // Create a new CaptchaId
+            var CaptchaId = Guid.NewGuid().ToString();
+
+            // Store the code in memory for 10 mins (adjust as needed)
+            mc.Set(CaptchaId, captchaCode, TimeSpan.FromMinutes(10));
+
+            // Generate the image
+            var captchaImageBytes = GenerateCaptchaImage(captchaCode);
+
+            // Convert to Base64
+            var base64Image = Convert.ToBase64String(captchaImageBytes);
+
+            // Return JSON: { CaptchaId, CaptchaImage } 
+            var dto = new CaptchaDto
+            {
+                CaptchaId = CaptchaId,
+                CaptchaImage = $"data:image/png;base64,{base64Image}"
+            };
+            return dto;
+        }
+        public CaptchaDto RefreshCaptcha(string CaptchaId)
+        {
+            if (!string.IsNullOrEmpty(CaptchaId))
+            {
+                // Remove existing captcha code from cache
+                mc.Remove(CaptchaId);
+            }
+
+            // Generate a new code
+            var newCaptchaCode = CaptchaService.GenerateCaptchaCode(6);
+
+            // Store it in memory
+            mc.Set(CaptchaId, newCaptchaCode, TimeSpan.FromMinutes(10));
+
+            // Generate the new image
+            var captchaImageBytes = CaptchaService.GenerateCaptchaImage(newCaptchaCode);
+
+            // Convert to Base64
+            var base64Image = Convert.ToBase64String(captchaImageBytes);
+
+            // Return JSON
+            var dto = new CaptchaDto
+            {
+                CaptchaId = CaptchaId,
+                CaptchaImage = $"data:image/png;base64,{base64Image}"
+            };
+            return dto;
         }
     }
 }

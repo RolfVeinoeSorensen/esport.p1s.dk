@@ -28,15 +28,15 @@ export class UserRegisterComponent {
     });
   }
   submitUser() {
-    this.userService
-      .usersRegisterUser({
-        username: 'test',
-        password: '',
-        firstname: '',
-        lastname: '',
-      })
-      .subscribe(response => {
-        console.log(response);
-      });
+    // this.userService
+    //   .usersRegisterUser({
+    //     username: 'test',
+    //     password: '',
+    //     firstname: '',
+    //     lastname: '',
+    //   })
+    //   .subscribe(response => {
+    //     console.log(response);
+    //   });
   }
 }

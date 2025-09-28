@@ -1,7 +1,7 @@
 <h1>Kontakt os</h1>
 <div class="card ">
     <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div>
+        <div class="col-span-2 md:col-span-1">
             <input pInputText
                 class="w-full"
                 formControlName="contactFrom"
@@ -12,7 +12,7 @@
                 <p-message severity="error" size="small" variant="simple">Email skal udfyldes og være mindre end 255 karakterer.</p-message>
             }
         </div>
-        <div>
+        <div class="col-span-2 md:col-span-1">
             <input pInputText
                 class="w-full"
                 formControlName="contactName"
@@ -24,7 +24,7 @@
                 <p-message severity="error" size="small" variant="simple">Navn skal udfyldes og være mindre end 255 karakterer.</p-message>
             }
         </div>
-        <div>
+        <div class="col-span-2 md:col-span-1">
             <input pInputText
                 class="w-full"
                 formControlName="subject"
@@ -36,7 +36,7 @@
                 <p-message severity="error" size="small" variant="simple">Emne skal udfyldes og være mindre end 255 karakterer.</p-message>
             }
         </div>
-        <div>
+        <div class="col-span-2 md:col-span-1">
             <input pInputText
                 class="w-full"
                 formControlName="contactMobile"

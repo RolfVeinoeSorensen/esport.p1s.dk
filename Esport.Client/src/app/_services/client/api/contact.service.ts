@@ -19,7 +19,7 @@ import { Observable }                                        from 'rxjs';
 // @ts-ignore
 import { ContactRequest } from '../model/contactRequest';
 // @ts-ignore
-import { ContactResponse } from '../model/contactResponse';
+import { SubmitResponse } from '../model/submitResponse';
 
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
@@ -42,9 +42,9 @@ export class ContactService extends BaseService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public contactCreateContact(req: ContactRequest, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<ContactResponse>;
-    public contactCreateContact(req: ContactRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<ContactResponse>>;
-    public contactCreateContact(req: ContactRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<ContactResponse>>;
+    public contactCreateContact(req: ContactRequest, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<SubmitResponse>;
+    public contactCreateContact(req: ContactRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<SubmitResponse>>;
+    public contactCreateContact(req: ContactRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<SubmitResponse>>;
     public contactCreateContact(req: ContactRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
         if (req === null || req === undefined) {
             throw new Error('Required parameter req was null or undefined when calling contactCreateContact.');
@@ -90,7 +90,7 @@ export class ContactService extends BaseService {
 
         let localVarPath = `/CreateContact`;
         const { basePath, withCredentials } = this.configuration;
-        return this.httpClient.request<ContactResponse>('post', `${basePath}${localVarPath}`,
+        return this.httpClient.request<SubmitResponse>('post', `${basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
                 body: req,

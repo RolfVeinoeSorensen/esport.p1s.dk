@@ -23,7 +23,6 @@ export class NewsArticleComponent implements OnInit {
         .map(x => x.path)
         .join('/')
         .replace('read-article/', '');
-      console.log(this.url_slug);
       if (this.url_slug === '') {
         this.router.navigate(['/404']);
       } else {

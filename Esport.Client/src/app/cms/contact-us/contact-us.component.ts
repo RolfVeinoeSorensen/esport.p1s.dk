@@ -37,7 +37,6 @@ export class ContactUsComponent implements OnInit {
   ngOnInit() {
     this.captchaService.captchaGenerateCaptcha().subscribe(captcha => {
       this.captcha = captcha;
-      console.log(captcha);
     });
   }
   isInvalid(controlName: string) {
@@ -48,7 +47,6 @@ export class ContactUsComponent implements OnInit {
   onSubmit() {
     this.formSubmitted = true;
     if (this.contactForm.valid) {
-      console.log(this.contactForm.value);
       const req: ContactRequest = {
         body: this.contactForm.value.body,
         captchaCode: this.contactForm.value.captchaCode,
@@ -59,12 +57,14 @@ export class ContactUsComponent implements OnInit {
         captchaId: this.captcha.captchaId,
       };
       this.contactService.contactCreateContact(req).subscribe(response => {
-        console.log(response);
+        if (response.ok === false && response.captcha) {
+          this.captcha = response.captcha;
+        }
+        this.contactForm.reset();
       });
-      this.contactForm.reset();
-      this.formSubmitted = false;
     } else {
       console.log('submit failed', this.contactForm.errors);
+      this.formSubmitted = false;
     }
   }
 }

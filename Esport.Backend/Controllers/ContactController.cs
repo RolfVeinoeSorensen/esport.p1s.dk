@@ -9,7 +9,7 @@ namespace Esport.Backend.Controllers
         private readonly IContactService cs = contactService;
 
         [HttpPost("[action]")]
-        public async Task<ContactResponse> CreateContact([FromBody]ContactRequest req)
+        public async Task<SubmitResponse> CreateContact([FromBody]ContactRequest req)
         {
             return await cs.CreateContact(req);
         }

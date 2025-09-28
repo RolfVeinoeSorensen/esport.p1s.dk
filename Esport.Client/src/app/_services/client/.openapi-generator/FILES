@@ -20,7 +20,6 @@ model/authenticateRequest.ts
 model/authenticateResponse.ts
 model/captchaDto.ts
 model/contactRequest.ts
-model/contactResponse.ts
 model/event.ts
 model/eventDto.ts
 model/eventUserDto.ts
@@ -29,6 +28,7 @@ model/fileResponseDto.ts
 model/fileState.ts
 model/fileType.ts
 model/fileUploadType.ts
+model/forgotPasswordRequest.ts
 model/gallery.ts
 model/game.ts
 model/gameServer.ts
@@ -38,6 +38,7 @@ model/modelFile.ts
 model/models.ts
 model/news.ts
 model/registerRequest.ts
+model/submitResponse.ts
 model/tag.ts
 model/team.ts
 model/userRole.ts
