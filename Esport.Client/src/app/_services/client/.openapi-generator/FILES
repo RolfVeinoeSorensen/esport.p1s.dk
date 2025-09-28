@@ -4,6 +4,7 @@ api.base.service.ts
 api.module.ts
 api/api.ts
 api/captcha.service.ts
+api/contact.service.ts
 api/events.service.ts
 api/file.service.ts
 api/games.service.ts
@@ -17,6 +18,9 @@ model/authRole.ts
 model/authUser.ts
 model/authenticateRequest.ts
 model/authenticateResponse.ts
+model/captchaDto.ts
+model/contactRequest.ts
+model/contactResponse.ts
 model/event.ts
 model/eventDto.ts
 model/eventUserDto.ts

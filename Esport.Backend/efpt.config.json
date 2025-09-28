@@ -60,6 +60,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[cms].[Contacts]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[cms].[Files]",
          "ObjectType": 0
       },

@@ -18,7 +18,7 @@ namespace Esport.Backend.Controllers
 
         // GET /captcha/generate
         [HttpGet("generate")]
-        public ActionResult GenerateCaptcha()
+        public ActionResult<CaptchaDto> GenerateCaptcha()
         {
             // Generate random CAPTCHA code
             var captchaCode = CaptchaService.GenerateCaptchaCode(6);
@@ -46,7 +46,7 @@ namespace Esport.Backend.Controllers
 
         // GET /captcha/refresh?CaptchaId=<your-guid-here>
         [HttpGet("refresh")]
-        public ActionResult RefreshCaptcha(string CaptchaId)
+        public ActionResult<CaptchaDto> RefreshCaptcha(string CaptchaId)
         {
             if (string.IsNullOrEmpty(CaptchaId))
             {

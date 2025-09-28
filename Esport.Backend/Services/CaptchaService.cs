@@ -35,7 +35,7 @@ namespace Esport.Backend.Services
             int height = 60;  // Overall image height in pixels
 
             // Create a blank white image
-            using var image = new Image<Rgba32>(width, height, Color.White);
+            using var image = new Image<Rgba32>(width, height, Color.Transparent);
             var random = new Random();
 
             // Choose font style and size for captcha characters

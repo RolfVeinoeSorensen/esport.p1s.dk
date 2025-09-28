@@ -17,6 +17,8 @@ public partial class DataContext : DbContext
 
     public virtual DbSet<AuthUser> AuthUsers { get; set; }
 
+    public virtual DbSet<Contact> Contacts { get; set; }
+
     public virtual DbSet<Event> Events { get; set; }
 
     public virtual DbSet<EventsUser> EventsUsers { get; set; }
@@ -100,6 +102,24 @@ public partial class DataContext : DbContext
                         j.HasKey("UserId", "RoleId").HasName("PK_UsersRoles");
                         j.ToTable("AuthUsersRoles", "auth");
                     });
+        });
+
+        modelBuilder.Entity<Contact>(entity =>
+        {
+            entity.ToTable("Contacts", "cms");
+
+            entity.Property(e => e.Id).ValueGeneratedNever();
+            entity.Property(e => e.Body).IsRequired();
+            entity.Property(e => e.ContactFrom)
+                .IsRequired()
+                .HasMaxLength(255);
+            entity.Property(e => e.ContactMobile).HasMaxLength(50);
+            entity.Property(e => e.ContactName)
+                .IsRequired()
+                .HasMaxLength(255);
+            entity.Property(e => e.Subject)
+                .IsRequired()
+                .HasMaxLength(255);
         });
 
         modelBuilder.Entity<Event>(entity =>

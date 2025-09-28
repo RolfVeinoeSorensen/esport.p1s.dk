@@ -79,9 +79,9 @@ export class FileService extends BaseService {
             }
         }
 
-        let localVarPath = `/deletefile`;
+        let localVarPath = `/DeleteFile`;
         const { basePath, withCredentials } = this.configuration;
-        return this.httpClient.request<any>('put', `${basePath}${localVarPath}`,
+        return this.httpClient.request<any>('post', `${basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
                 params: localVarQueryParameters,
@@ -139,7 +139,7 @@ export class FileService extends BaseService {
             }
         }
 
-        let localVarPath = `/getfiles`;
+        let localVarPath = `/GetFiles`;
         const { basePath, withCredentials } = this.configuration;
         return this.httpClient.request<Array<FileResponseDto>>('post', `${basePath}${localVarPath}`,
             {
@@ -225,7 +225,7 @@ export class FileService extends BaseService {
             }
         }
 
-        let localVarPath = `/uploadfile`;
+        let localVarPath = `/SaveFile`;
         const { basePath, withCredentials } = this.configuration;
         return this.httpClient.request<FileResponseDto>('post', `${basePath}${localVarPath}`,
             {

@@ -6,7 +6,6 @@ import { MessageModule } from 'primeng/message';
 import { ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { News, NewsService } from '@app/_services/client';
 import { ActivatedRoute, Router } from '@angular/router';
-import { subscribe } from 'diagnostics_channel';
 
 @Component({
   selector: 'app-news-editor',

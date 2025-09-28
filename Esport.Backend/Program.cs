@@ -30,7 +30,6 @@ try
         // serialize enums as strings in api responses (e.g. Role)
         x.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
         x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
-        x.JsonSerializerOptions.PropertyNamingPolicy = null;
     });
 
     // configure strongly typed settings object
@@ -43,6 +42,7 @@ try
     builder.Services.AddScoped<IGamesService, GamesService>();
     builder.Services.AddScoped<INewsService, NewsService>();
     builder.Services.AddScoped<IFileService, FileService>();
+    builder.Services.AddScoped<IContactService, ContactService>();
 
     builder.Services.AddHttpContextAccessor();
     builder.Services.AddScoped<IWebHelper, WebHelper>();
