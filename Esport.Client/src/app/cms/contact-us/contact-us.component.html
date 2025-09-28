@@ -2,8 +2,10 @@
 <div class="card ">
     <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div class="col-span-2 md:col-span-1">
+            <label for="Email">Email</label>
             <input pInputText
                 class="w-full"
+                if="Email"
                 formControlName="contactFrom"
                 [invalid]="isInvalid('contactFrom')"
                 placeholder="Email"
@@ -13,8 +15,10 @@
             }
         </div>
         <div class="col-span-2 md:col-span-1">
+            <label for="contactName">Navn</label>
             <input pInputText
                 class="w-full"
+                id="contactName"
                 formControlName="contactName"
                 [invalid]="isInvalid('contactName')"
                 placeholder="Navn"
@@ -25,8 +29,10 @@
             }
         </div>
         <div class="col-span-2 md:col-span-1">
+            <label for="subject">Emne</label>
             <input pInputText
                 class="w-full"
+                id="subject"
                 formControlName="subject"
                 [invalid]="isInvalid('subject')"
                 placeholder="Emne"
@@ -37,8 +43,10 @@
             }
         </div>
         <div class="col-span-2 md:col-span-1">
+            <label for="contactMobile">Mobilnummer (ikke påkrævet)</label>
             <input pInputText
                 class="w-full"
+                id="contactMobile"
                 formControlName="contactMobile"
                 [invalid]="isInvalid('contactMobile')"
                 placeholder="Mobilnummer (ikke påkrævet)"
@@ -46,7 +54,8 @@
                 size="50"/>
         </div>
         <div class="col-span-2">
-            <p-editor formControlName="body" [invalid]="isInvalid('body')" [style]="{ height: '320px' }">
+            <label for="content">Hvad har du på hjertet?</label>
+            <p-editor id="content" formControlName="body" [invalid]="isInvalid('body')" [style]="{ height: '320px' }">
                 <ng-template pTemplate="header">
                 <span class="ql-formats">
                     <select class="ql-header">
