@@ -76,6 +76,7 @@ export class UserRegisterComponent implements OnInit {
           severity: response.ok === true ? 'success' : 'error',
         });
         this.registerForm.reset();
+        this.formSubmitted = false;
       });
     } else {
       console.log('submit failed', this.registerForm.errors);

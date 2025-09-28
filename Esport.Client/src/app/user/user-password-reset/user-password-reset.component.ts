@@ -68,6 +68,7 @@ export class UserPasswordResetComponent implements OnInit {
           severity: response.ok === true ? 'success' : 'error',
         });
         this.resetForm.reset();
+        this.formSubmitted = false;
       });
     } else {
       console.log('submit failed', this.resetForm.errors);
