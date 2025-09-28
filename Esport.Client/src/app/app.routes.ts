@@ -75,11 +75,11 @@ export const routes: Routes = [
         canLoad: [AuthGuard],
         canActivate: [AuthGuard],
         data: { requiredRoles: [UserRole.Admin, UserRole.Editor, UserRole.MemberAdult, UserRole.MemberKid] },
-        path: 'edit',
+        path: 'edit-user',
         loadComponent: () => import('@user/user-edit/user-edit.component').then(m => m.UserEditComponent),
       },
       {
-        path: 'register',
+        path: 'register-user',
         loadComponent: () => import('@user/user-register/user-register.component').then(m => m.UserRegisterComponent),
       },
       {
@@ -88,7 +88,12 @@ export const routes: Routes = [
           import('@user/user-password-reset/user-password-reset.component').then(m => m.UserPasswordResetComponent),
       },
       {
-        path: 'change/:token/:email',
+        path: 'change-password/:token',
+        loadComponent: () =>
+          import('@user/user-password-change/user-password-change.component').then(m => m.UserPasswordChangeComponent),
+      },
+      {
+        path: 'activate-user/:token',
         loadComponent: () =>
           import('@user/user-password-change/user-password-change.component').then(m => m.UserPasswordChangeComponent),
       },

@@ -111,11 +111,15 @@ namespace Esport.Backend.Services
                         CreatedUtc = DateTime.UtcNow,
                         Roles = [pendingRole],
                         PasswordResetToken = BCryptNet.HashPassword(Guid.NewGuid().ToString(), BCryptNet.GenerateSalt()).Replace("/", ""),
-                        PasswordResetTokenExpiration = DateTime.UtcNow.AddDays(1)
+                        PasswordResetTokenExpiration = DateTime.UtcNow.AddDays(1),
+                        ActivateAccountToken = BCryptNet.HashPassword(Guid.NewGuid().ToString(), BCryptNet.GenerateSalt()).Replace("/", ""),
+                        ActivateAccountTokenExpiration = DateTime.UtcNow.AddDays(7),
+                        IsActivated = false,
                     };
                     logger.LogInformation($"{user.Username} registered as new user at {DateTime.UtcNow}");
                     await db.AuthUsers.AddAsync(user);
                     await db.SaveChangesAsync();
+                    await notificationService.SendRegisterNewUserConfirmMail(user);
                     response.Message = "Du har registreret en ny bruger. Vi sender snart en email hvor vi beder dig aktivere din bruger.";
                 }
             }
@@ -160,6 +164,23 @@ namespace Esport.Backend.Services
             if(user.PasswordResetToken != null && user.PasswordResetTokenExpiration > DateTime.UtcNow)
             {
                 user.PasswordHash = BCryptNet.HashPassword(password);
+                db.Update(user);
+                await db.SaveChangesAsync();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public async Task<bool> ActivateUser(string token)
+        {
+            var user = await db.AuthUsers.FirstOrDefaultAsync(x => x.ActivateAccountToken.Equals(token));
+            if (user == null) return false;
+            if (user.PasswordResetToken != null && user.ActivateAccountTokenExpiration > DateTime.UtcNow)
+            {
+                user.IsActivated = true;
                 db.Update(user);
                 await db.SaveChangesAsync();
                 return true;

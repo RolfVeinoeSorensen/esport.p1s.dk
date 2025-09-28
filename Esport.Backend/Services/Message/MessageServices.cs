@@ -42,7 +42,7 @@ namespace Esport.Backend.Services.Message
             mailMessage.Body = multipart;
             using var client = new SmtpClient();
             var useSSL = MailKit.Security.SecureSocketOptions.StartTls;
-            await client.ConnectAsync("mail.p1s.dk", 587, useSSL);
+            await client.ConnectAsync("mail.easymodules.net", 587, useSSL);
 
             // Note: since we don't have an OAuth2 token, disable
             // the XOAUTH2 authentication mechanism.

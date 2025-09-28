@@ -16,7 +16,6 @@ export class ContactUsComponent implements OnInit {
   private formBuilder = inject(UntypedFormBuilder);
   private contactService = inject(ContactService);
   private captchaService = inject(CaptchaService);
-  url_slug: string = '';
   contactForm: UntypedFormGroup;
   formSubmitted: boolean = false;
   captcha!: CaptchaDto;

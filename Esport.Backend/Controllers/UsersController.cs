@@ -66,5 +66,12 @@ namespace Esport.Backend.Controllers
             var res = await userService.ChangePassword(token,password);
             return Ok(res);
         }
+        [AllowAnonymous]
+        [HttpPost("[action]")]
+        public async Task<ActionResult<bool>> ActivateUser(string token)
+        {
+            var res = await userService.ActivateUser(token);
+            return Ok(res);
+        }
     }
 }
