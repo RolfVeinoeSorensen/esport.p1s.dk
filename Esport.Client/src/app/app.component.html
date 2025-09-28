@@ -77,5 +77,5 @@
   <router-outlet #routerOutlet="outlet" [@routeAnimation]="getAnimationData(routerOutlet)"></router-outlet>
 </div>
 <app-footer></app-footer>
-
+<p-toast key="p1s-toast" (onClose)="onToastClose($event)"></p-toast>
 <p-scrollTop></p-scrollTop>

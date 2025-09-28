@@ -4,7 +4,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { filter, first, map, mergeMap, Subscription } from 'rxjs';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { slideInAnimation } from '@app/animations';
-import { MenuItem } from 'primeng/api';
+import { MenuItem, MessageService } from 'primeng/api';
 import { MenubarModule } from 'primeng/menubar';
 import { InputTextModule } from 'primeng/inputtext';
 import { CommonModule, formatDate } from '@angular/common';
@@ -19,6 +19,8 @@ import { AuthenticationService } from '@services/authentication.service';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { User } from '@models/user';
 import { UserRole } from './_services/client';
+import { InternalToastService } from './_services/internaltoast.service';
+import { ToastCloseEvent, ToastModule } from 'primeng/toast';
 
 @Component({
   selector: 'app-root',
@@ -35,6 +37,7 @@ import { UserRole } from './_services/client';
     DialogModule,
     ReactiveFormsModule,
     RouterLink,
+    ToastModule,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
@@ -54,6 +57,8 @@ export class AppComponent implements OnInit, OnDestroy {
   private activatedRoute = inject(ActivatedRoute);
   private ui = inject(UiService);
   private authenticationService: AuthenticationService = inject(AuthenticationService);
+  private its = inject(InternalToastService);
+  private ms = inject(MessageService);
   private formBuilder = inject(UntypedFormBuilder);
   userSubscription!: Subscription;
   title = 'p1s.dk';
@@ -65,6 +70,7 @@ export class AppComponent implements OnInit, OnDestroy {
   isLoggedIn = false;
   user!: User;
   returnUrl: string = '/';
+  notificationSubscription!: Subscription;
   // convenience getter for easy access to form fields
   get f() {
     return this.loginForm.controls;
@@ -86,6 +92,10 @@ export class AppComponent implements OnInit, OnDestroy {
         this.isLoggedIn = true;
         this.refreshMenu();
       }
+    });
+    this.notificationSubscription = this.its.messages$.subscribe(messages => {
+      this.ms.clear();
+      this.ms.addAll(messages);
     });
     if (
       typeof window !== 'undefined' &&
@@ -226,5 +236,8 @@ export class AppComponent implements OnInit, OnDestroy {
           // this.loading = false;
         },
       });
+  }
+  onToastClose(event: ToastCloseEvent) {
+    this.its.removeMessage(event.message);
   }
 }
