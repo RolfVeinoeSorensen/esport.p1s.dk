@@ -56,11 +56,10 @@ export class AppComponent implements OnInit, OnDestroy {
   private router = inject(Router);
   private activatedRoute = inject(ActivatedRoute);
   private ui = inject(UiService);
-  private authenticationService: AuthenticationService = inject(AuthenticationService);
+  private as: AuthenticationService = inject(AuthenticationService);
   private its = inject(InternalToastService);
   private ms = inject(MessageService);
   private formBuilder = inject(UntypedFormBuilder);
-  userSubscription!: Subscription;
   title = 'p1s.dk';
   items: MenuItem[] | undefined;
   private locale = inject(LOCALE_ID);
@@ -68,6 +67,9 @@ export class AppComponent implements OnInit, OnDestroy {
   visibleLogin: boolean = false;
   loginForm: UntypedFormGroup;
   isLoggedIn = false;
+  isAdmin = false;
+  isEditor = false;
+  userSubscription!: Subscription;
   user!: User;
   returnUrl: string = '/';
   notificationSubscription!: Subscription;
@@ -86,10 +88,12 @@ export class AppComponent implements OnInit, OnDestroy {
     this.userSubscription.unsubscribe();
   }
   ngOnInit(): void {
-    this.userSubscription = this.authenticationService.userSubject.subscribe(user => {
+    this.userSubscription = this.as.userSubject.subscribe(user => {
       this.user = user;
       if (user.username !== undefined) {
         this.isLoggedIn = true;
+        this.isAdmin = this.as.isAdmin();
+        this.isEditor = this.as.isEditor();
         this.refreshMenu();
       }
     });
@@ -142,13 +146,13 @@ export class AppComponent implements OnInit, OnDestroy {
   }
   refreshMenu() {
     const items: MenuItem[] | undefined = [];
-    if (this.user.roles.some(x => x.role === UserRole.Admin) === true) {
+    if (this.isAdmin === true) {
       items.push({
         label: 'Administration',
         routerLink: 'admin',
       });
     }
-    if (this.isLoggedIn) {
+    if (this.isLoggedIn === true) {
       items.push({
         label: 'Mine ting',
         items: [
@@ -209,7 +213,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
   onSigninOrSignoutClick() {
     if (this.isLoggedIn) {
-      this.authenticationService.logout();
+      this.as.logout();
       this.isLoggedIn = false;
       this.refreshMenu();
       this.router.navigate(['/']);
@@ -223,7 +227,7 @@ export class AppComponent implements OnInit, OnDestroy {
       return;
     }
     this.visibleLogin = false;
-    this.authenticationService
+    this.as
       .login(this.f['username'].value, this.f['password'].value)
       .pipe(first())
       .subscribe({

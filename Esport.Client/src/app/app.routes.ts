@@ -124,7 +124,7 @@ export const routes: Routes = [
     canLoad: [AuthGuard],
     canActivate: [AuthGuard],
     canActivateChild: [AuthGuard],
-    data: { requiredRoles: [UserRole.Admin, UserRole.Editor] },
+    data: { requiredRoles: [UserRole.Admin, UserRole.Editor, UserRole.MemberAdult, UserRole.MemberKid] },
     path: 'my-stuff',
     children: [
       {

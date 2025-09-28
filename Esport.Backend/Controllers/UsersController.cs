@@ -6,18 +6,13 @@ using Esport.Backend.Models;
 using Esport.Backend.Models.Users;
 using Esport.Backend.Services;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Channels;
 
 namespace Esport.Backend.Controllers
 {
-    [Authorize]
-    [ApiController]
-    [Route("[controller]")]
     public class UsersController(IUserService userService) : ControllerBase
     {
         private readonly IUserService userService = userService;
 
-        [AllowAnonymous]
         [HttpPost("[action]")]
         public ActionResult<AuthenticateResponse> Authenticate(AuthenticateRequest model)
         {
@@ -34,18 +29,18 @@ namespace Esport.Backend.Controllers
             return Ok(users);
         }
 
+        [Authorize([UserRole.Admin, UserRole.MemberAdult, UserRole.MemberKid, UserRole.Editor])]
         [HttpGet("[action]/{id:int}")]
-        public ActionResult<AuthenticateResponse> GetUserById(int id)
+        public ActionResult<AuthUser> GetUserById(int id)
         {
             // only admins can access other user records
-            if (HttpContext.Items["User"] is not AuthUser currentUser || currentUser.Roles.Any(x => x.Role.Equals(UserRole.Admin)) == true || currentUser.Id != id)
+            if (HttpContext.Items["User"] is not AuthUser currentUser || (currentUser.Roles.Any(x => x.Role.Equals(UserRole.Admin)) == false && currentUser.Id != id))
                 return Unauthorized(new { message = "Unauthorized" });
 
             var user =  userService.GetUserById(id);
             return Ok(user);
         }
 
-        [AllowAnonymous]
         [HttpPost("[action]")]
         public async Task<ActionResult<SubmitResponse>> RegisterUser([FromBody]RegisterRequest req)
         {
@@ -53,7 +48,6 @@ namespace Esport.Backend.Controllers
             return Ok(response);
         }
 
-        [AllowAnonymous]
         [HttpPost("[action]")]
         public async Task<ActionResult<SubmitResponse>> ForgotPassword([FromBody]ForgotPasswordRequest req)
         {
@@ -61,7 +55,6 @@ namespace Esport.Backend.Controllers
             return Ok(response);
         }
 
-        [AllowAnonymous]
         [HttpPost("[action]")]
         public async Task<ActionResult<SubmitResponse>> ChangePassword([FromBody] ChangePasswordRequest req)
         {
@@ -69,7 +62,6 @@ namespace Esport.Backend.Controllers
             var response = new SubmitResponse { Ok = changed, Message = changed == true ? "Password blev skiftet" : "Password blev ikke skiftet" };
             return Ok(response);
         }
-        [AllowAnonymous]
         [HttpPost("[action]")]
         public async Task<ActionResult<SubmitResponse>> ActivateUser(string token)
         {

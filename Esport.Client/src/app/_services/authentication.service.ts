@@ -2,7 +2,7 @@
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { AuthRole, UsersService } from '@services/client';
+import { AuthRole, UserRole, UsersService } from '@services/client';
 import { User } from '../_models/user';
 
 @Injectable({ providedIn: 'root' })
@@ -25,8 +25,20 @@ export class AuthenticationService {
     return this.userSubject.value;
   }
 
+  hasRole(role: UserRole): boolean {
+    return this.userValue.roles.some(x => x.role === role);
+  }
+
+  isAdmin(): boolean {
+    return this.userValue.roles.some(x => x.role === UserRole.Admin);
+  }
+
+  isEditor(): boolean {
+    return this.userValue.roles.some(x => x.role === UserRole.Editor);
+  }
+
   login(username: string, password: string) {
-    return this.service.usersAuthenticate({ username, password }).pipe(
+    return this.service.usersAuthenticate(username, password).pipe(
       map(res => {
         let user: User = new User();
         user.id = res.id;

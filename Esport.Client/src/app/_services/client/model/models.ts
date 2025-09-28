@@ -1,6 +1,5 @@
 export * from './authRole';
 export * from './authUser';
-export * from './authenticateRequest';
 export * from './authenticateResponse';
 export * from './captchaDto';
 export * from './changePasswordRequest';

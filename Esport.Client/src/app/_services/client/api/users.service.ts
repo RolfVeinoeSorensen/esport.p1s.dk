@@ -19,8 +19,6 @@ import { Observable }                                        from 'rxjs';
 // @ts-ignore
 import { AuthUser } from '../model/authUser';
 // @ts-ignore
-import { AuthenticateRequest } from '../model/authenticateRequest';
-// @ts-ignore
 import { AuthenticateResponse } from '../model/authenticateResponse';
 // @ts-ignore
 import { ChangePasswordRequest } from '../model/changePasswordRequest';
@@ -88,7 +86,7 @@ export class UsersService extends BaseService {
             }
         }
 
-        let localVarPath = `/Users/ActivateUser`;
+        let localVarPath = `/ActivateUser`;
         const { basePath, withCredentials } = this.configuration;
         return this.httpClient.request<SubmitResponse>('post', `${basePath}${localVarPath}`,
             {
@@ -105,17 +103,21 @@ export class UsersService extends BaseService {
     }
 
     /**
-     * @param model 
+     * @param username 
+     * @param password 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public usersAuthenticate(model: AuthenticateRequest, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<AuthenticateResponse>;
-    public usersAuthenticate(model: AuthenticateRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<AuthenticateResponse>>;
-    public usersAuthenticate(model: AuthenticateRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<AuthenticateResponse>>;
-    public usersAuthenticate(model: AuthenticateRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
-        if (model === null || model === undefined) {
-            throw new Error('Required parameter model was null or undefined when calling usersAuthenticate.');
-        }
+    public usersAuthenticate(username?: string, password?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<AuthenticateResponse>;
+    public usersAuthenticate(username?: string, password?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<AuthenticateResponse>>;
+    public usersAuthenticate(username?: string, password?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<AuthenticateResponse>>;
+    public usersAuthenticate(username?: string, password?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+
+        let localVarQueryParameters = new HttpParams({encoder: this.encoder});
+        localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+          <any>username, 'Username');
+        localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+          <any>password, 'Password');
 
         let localVarHeaders = this.defaultHeaders;
 
@@ -133,17 +135,6 @@ export class UsersService extends BaseService {
         const localVarTransferCache: boolean = options?.transferCache ?? true;
 
 
-        // to determine the Content-Type header
-        const consumes: string[] = [
-            'application/json',
-            'text/json',
-            'application/*+json'
-        ];
-        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
-        if (httpContentTypeSelected !== undefined) {
-            localVarHeaders = localVarHeaders.set('Content-Type', httpContentTypeSelected);
-        }
-
         let responseType_: 'text' | 'json' | 'blob' = 'json';
         if (localVarHttpHeaderAcceptSelected) {
             if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
@@ -155,12 +146,12 @@ export class UsersService extends BaseService {
             }
         }
 
-        let localVarPath = `/Users/Authenticate`;
+        let localVarPath = `/Authenticate`;
         const { basePath, withCredentials } = this.configuration;
         return this.httpClient.request<AuthenticateResponse>('post', `${basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
-                body: model,
+                params: localVarQueryParameters,
                 responseType: <any>responseType_,
                 ...(withCredentials ? { withCredentials } : {}),
                 headers: localVarHeaders,
@@ -222,7 +213,7 @@ export class UsersService extends BaseService {
             }
         }
 
-        let localVarPath = `/Users/ChangePassword`;
+        let localVarPath = `/ChangePassword`;
         const { basePath, withCredentials } = this.configuration;
         return this.httpClient.request<SubmitResponse>('post', `${basePath}${localVarPath}`,
             {
@@ -289,7 +280,7 @@ export class UsersService extends BaseService {
             }
         }
 
-        let localVarPath = `/Users/ForgotPassword`;
+        let localVarPath = `/ForgotPassword`;
         const { basePath, withCredentials } = this.configuration;
         return this.httpClient.request<SubmitResponse>('post', `${basePath}${localVarPath}`,
             {
@@ -341,7 +332,7 @@ export class UsersService extends BaseService {
             }
         }
 
-        let localVarPath = `/Users/GetAllUsers`;
+        let localVarPath = `/GetAllUsers`;
         const { basePath, withCredentials } = this.configuration;
         return this.httpClient.request<Array<AuthUser>>('get', `${basePath}${localVarPath}`,
             {
@@ -361,9 +352,9 @@ export class UsersService extends BaseService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public usersGetUserById(id: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<AuthenticateResponse>;
-    public usersGetUserById(id: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<AuthenticateResponse>>;
-    public usersGetUserById(id: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<AuthenticateResponse>>;
+    public usersGetUserById(id: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<AuthUser>;
+    public usersGetUserById(id: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<AuthUser>>;
+    public usersGetUserById(id: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<AuthUser>>;
     public usersGetUserById(id: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling usersGetUserById.');
@@ -396,9 +387,9 @@ export class UsersService extends BaseService {
             }
         }
 
-        let localVarPath = `/Users/GetUserById/${this.configuration.encodeParam({name: "id", value: id, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: "int32"})}`;
+        let localVarPath = `/GetUserById/${this.configuration.encodeParam({name: "id", value: id, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: "int32"})}`;
         const { basePath, withCredentials } = this.configuration;
-        return this.httpClient.request<AuthenticateResponse>('get', `${basePath}${localVarPath}`,
+        return this.httpClient.request<AuthUser>('get', `${basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
                 responseType: <any>responseType_,
@@ -462,7 +453,7 @@ export class UsersService extends BaseService {
             }
         }
 
-        let localVarPath = `/Users/RegisterUser`;
+        let localVarPath = `/RegisterUser`;
         const { basePath, withCredentials } = this.configuration;
         return this.httpClient.request<SubmitResponse>('post', `${basePath}${localVarPath}`,
             {
