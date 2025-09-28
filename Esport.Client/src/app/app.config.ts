@@ -20,6 +20,7 @@ import { registerLocaleData } from '@angular/common';
 import localeDa from '@angular/common/locales/da';
 import { loadingInterceptorService } from './_shared/loading';
 import { MessageService } from 'primeng/api';
+import { InternalToastService } from './_services/internaltoast.service';
 
 registerLocaleData(localeDa);
 export function getBaseUrl(): string {
@@ -33,6 +34,7 @@ export const appConfig: ApplicationConfig = {
     BrowserAnimationsModule,
     provideAnimations(),
     MessageService,
+    InternalToastService,
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(
       routes,

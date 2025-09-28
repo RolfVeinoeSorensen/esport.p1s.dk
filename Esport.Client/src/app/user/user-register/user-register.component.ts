@@ -5,6 +5,7 @@ import { ButtonModule } from 'primeng/button';
 import { ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { MessageModule } from 'primeng/message';
 import Validation from '@app/_helpers/validation';
+import { InternalToastService } from '@app/_services/internaltoast.service';
 
 @Component({
   selector: 'app-user-register',
@@ -16,6 +17,7 @@ export class UserRegisterComponent implements OnInit {
   private userService = inject(UsersService);
   private formBuilder = inject(UntypedFormBuilder);
   private captchaService = inject(CaptchaService);
+  private its = inject(InternalToastService);
   registerForm: UntypedFormGroup;
   formSubmitted: boolean = false;
   captcha!: CaptchaDto;
@@ -66,6 +68,13 @@ export class UserRegisterComponent implements OnInit {
         if (response.ok === false && response.captcha) {
           this.captcha = response.captcha;
         }
+        this.its.addMessage({
+          id: 'preApprovalSubmitted',
+          icon: response.ok === true ? 'fal fa-check' : 'fal fa-exclamation',
+          summary: 'Scripts synchronized',
+          detail: response.message,
+          severity: response.ok === true ? 'success' : 'error',
+        });
         this.registerForm.reset();
       });
     } else {
