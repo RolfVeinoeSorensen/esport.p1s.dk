@@ -19,7 +19,6 @@
     "target": "ES2022",
     "module": "ES2022",
     "paths": {
-      "@app/*": ["src/app/*"],
       "@environments/*": ["src/environments/*"],
       "@services/*": ["src/app/_services/*"],
       "@helpers/*": ["src/app/_helpers/*"],
@@ -27,7 +26,8 @@
       "@shared/*": ["src/app/_shared/*"],
       "@cms/*": ["src/app/cms/*"],
       "@admin/*": ["src/app/administration/*"],
-      "@user/*": ["src/app/user/*"]
+      "@user/*": ["src/app/user/*"],
+      "@app/*": ["src/app/*"]
     }
   },
   "angularCompilerOptions": {

@@ -2,6 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import Validation from '@app/_helpers/validation';
 import { CaptchaDto, CaptchaService, ForgotPasswordRequest, UsersService } from '@app/_services/client';
+import { InternalToastService } from '@services/internaltoast.service';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
@@ -16,6 +17,7 @@ export class UserPasswordResetComponent implements OnInit {
   private userService = inject(UsersService);
   private formBuilder = inject(UntypedFormBuilder);
   private captchaService = inject(CaptchaService);
+  private its = inject(InternalToastService);
   resetForm: UntypedFormGroup;
   formSubmitted: boolean = false;
   captcha!: CaptchaDto;
@@ -58,6 +60,13 @@ export class UserPasswordResetComponent implements OnInit {
         if (response.ok === false && response.captcha) {
           this.captcha = response.captcha;
         }
+        this.its.addMessage({
+          id: 'resetPassword',
+          icon: response.ok === true ? 'fal fa-check' : 'fal fa-exclamation',
+          summary: 'Scripts synchronized',
+          detail: response.message,
+          severity: response.ok === true ? 'success' : 'error',
+        });
         this.resetForm.reset();
       });
     } else {

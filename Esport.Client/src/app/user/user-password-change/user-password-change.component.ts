@@ -3,6 +3,7 @@ import { ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators }
 import { ActivatedRoute } from '@angular/router';
 import Validation from '@app/_helpers/validation';
 import { UsersService } from '@app/_services/client';
+import { InternalToastService } from '@services/internaltoast.service';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
@@ -17,6 +18,7 @@ export class UserPasswordChangeComponent implements OnInit {
   private userService = inject(UsersService);
   private formBuilder = inject(UntypedFormBuilder);
   private activatedRoute = inject(ActivatedRoute);
+  private its = inject(InternalToastService);
   changePasswordForm: UntypedFormGroup;
   formSubmitted: boolean = false;
   token!: string | null;
@@ -52,9 +54,16 @@ export class UserPasswordChangeComponent implements OnInit {
     this.formSubmitted = true;
     if (this.changePasswordForm.valid && this.token) {
       this.userService.usersChangePassword(this.token, this.changePasswordForm.value.password).subscribe(response => {
-        if (response === false) {
-          //TODO show negative message
-        }
+        this.its.addMessage({
+          id: 'resetPassword',
+          icon: response === true ? 'fal fa-check' : 'fal fa-exclamation',
+          summary: 'Scripts synchronized',
+          detail:
+            response === true
+              ? 'Du har nu skiftet dit password.'
+              : 'Der opstod en fejl og dit password blev IKKE skiftet.',
+          severity: response === true ? 'success' : 'error',
+        });
         this.changePasswordForm.reset();
       });
     } else {
