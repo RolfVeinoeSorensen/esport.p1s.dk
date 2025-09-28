@@ -18,7 +18,7 @@ import { DialogModule } from 'primeng/dialog';
 import { AuthenticationService } from '@services/authentication.service';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { User } from '@models/user';
-import { UserRole } from './_services/client';
+import { LoadingComponent } from '@shared/loading/loading.component';
 import { InternalToastService } from './_services/internaltoast.service';
 import { ToastCloseEvent, ToastModule } from 'primeng/toast';
 
@@ -38,6 +38,7 @@ import { ToastCloseEvent, ToastModule } from 'primeng/toast';
     ReactiveFormsModule,
     RouterLink,
     ToastModule,
+    LoadingComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',

@@ -26,14 +26,14 @@ const leaveTrans = transition(':leave', [
   ),
 ]);
 
-const fadeLoadingIn = trigger('fadeLoadingIn', [enterTransition]);
+const fadeLoadingIn =  trigger('fadeLoadingIn', [enterTransition]);
 
 const fadeLoadingOut = trigger('fadeLoadingOut', [leaveTrans]);
 
 @Component({
   selector: 'app-loading',
   templateUrl: './loading.component.html',
-  styleUrls: ['./loading.component.scss'],
+  styleUrls: ['./loading.component.css'],
   animations: [fadeLoadingIn, fadeLoadingOut],
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [],

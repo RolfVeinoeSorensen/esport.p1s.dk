@@ -10,7 +10,7 @@ import { ScrollTopModule } from 'primeng/scrolltop';
 
 import { routes } from './app.routes';
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { provideHttpClient, withFetch, withInterceptorsFromDi } from '@angular/common/http';
 import { BASE_PATH as ClientBasePath, ApiModule as ClientModule } from '@services/client';
 import { jwtInterceptorProviders } from '@helpers/jwt.interceptor';
 import { errorInterceptorProviders } from '@helpers/error.interceptor';
@@ -56,7 +56,7 @@ export const appConfig: ApplicationConfig = {
     jwtInterceptorProviders,
     errorInterceptorProviders,
     loadingInterceptorService,
-    provideHttpClient(withInterceptorsFromDi()),
+    provideHttpClient(withInterceptorsFromDi(), withFetch()),
     { provide: LOCALE_ID, useValue: 'da-DK' },
     { provide: ClientBasePath, useValue: environment.apiUrl },
     ScrollerModule,
