@@ -52,7 +52,7 @@ namespace Esport.Backend.Controllers
         }
 
         [AllowAnonymous]
-        [HttpGet("[action]")]
+        [HttpPost("[action]")]
         public async Task<ActionResult<SubmitResponse>> ForgotPassword([FromBody]ForgotPasswordRequest req)
         {
             await userService.ForgotPasswordAsync(req);
@@ -61,9 +61,9 @@ namespace Esport.Backend.Controllers
 
         [AllowAnonymous]
         [HttpPost("[action]")]
-        public async Task<ActionResult<bool>> ChangePassword(string token, string password)
+        public async Task<ActionResult<bool>> ChangePassword([FromBody] ChangePasswordRequest req)
         {
-            var res = await userService.ChangePassword(token,password);
+            var res = await userService.ChangePassword(req.Token,req.Password);
             return Ok(res);
         }
         [AllowAnonymous]

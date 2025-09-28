@@ -3,6 +3,7 @@ export * from './authUser';
 export * from './authenticateRequest';
 export * from './authenticateResponse';
 export * from './captchaDto';
+export * from './changePasswordRequest';
 export * from './contactRequest';
 export * from './event';
 export * from './eventDto';

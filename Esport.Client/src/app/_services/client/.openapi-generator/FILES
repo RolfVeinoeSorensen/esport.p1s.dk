@@ -19,6 +19,7 @@ model/authUser.ts
 model/authenticateRequest.ts
 model/authenticateResponse.ts
 model/captchaDto.ts
+model/changePasswordRequest.ts
 model/contactRequest.ts
 model/event.ts
 model/eventDto.ts

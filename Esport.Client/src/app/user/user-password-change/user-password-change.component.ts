@@ -2,7 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import Validation from '@app/_helpers/validation';
-import { UsersService } from '@app/_services/client';
+import { ChangePasswordRequest, UsersService } from '@app/_services/client';
 import { InternalToastService } from '@services/internaltoast.service';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
@@ -53,7 +53,8 @@ export class UserPasswordChangeComponent implements OnInit {
   onSubmit() {
     this.formSubmitted = true;
     if (this.changePasswordForm.valid && this.token) {
-      this.userService.usersChangePassword(this.token, this.changePasswordForm.value.password).subscribe(response => {
+      const req: ChangePasswordRequest = { password: this.changePasswordForm.value.password, token: this.token };
+      this.userService.usersChangePassword(req).subscribe(response => {
         this.its.addMessage({
           id: 'resetPassword',
           icon: response === true ? 'fal fa-check' : 'fal fa-exclamation',

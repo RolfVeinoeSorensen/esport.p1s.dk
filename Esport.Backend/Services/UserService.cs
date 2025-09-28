@@ -117,9 +117,9 @@ namespace Esport.Backend.Services
                         IsActivated = false,
                     };
                     logger.LogInformation($"{user.Username} registered as new user at {DateTime.UtcNow}");
+                    await notificationService.SendRegisterNewUserConfirmMail(user);
                     await db.AuthUsers.AddAsync(user);
                     await db.SaveChangesAsync();
-                    await notificationService.SendRegisterNewUserConfirmMail(user);
                     response.Message = "Du har registreret en ny bruger. Vi sender snart en email hvor vi beder dig aktivere din bruger.";
                 }
             }
@@ -148,9 +148,9 @@ namespace Esport.Backend.Services
                     logger.LogInformation($"{user.Username} requested new password at {DateTime.UtcNow}");
                     user.PasswordResetToken = BCryptNet.HashPassword(Guid.NewGuid().ToString(), BCryptNet.GenerateSalt()).Replace("/", "");
                     user.PasswordResetTokenExpiration = DateTime.UtcNow.AddDays(1);
+                    await notificationService.SendForgotPasswordMail(user);
                     db.Update(user);
                     await db.SaveChangesAsync();
-                    await notificationService.SendForgotPasswordMail(user);
                 }
 
             }
