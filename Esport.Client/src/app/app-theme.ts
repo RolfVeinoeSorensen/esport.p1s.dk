@@ -142,11 +142,41 @@ const ThemePreset = definePreset(Material, {
     datatable: {
       headerCell: {
         background: '#253749',
-        hoverBackground: '##768CA0',
+        hoverBackground: '#768CA0',
         hoverColor: '#ffffff',
         borderColor: '#253749',
         color: '#ffffff',
         padding: '0.75rem 1rem',
+      },
+    },
+    editor: {
+      colorScheme: {
+        dark: {
+          content: {
+            background: '#000000',
+          },
+          toolbar: {
+            background: '#253749',
+          },
+          toolbarItem: {
+            activeColor: '#ffffff',
+            color: '#ffffff',
+            hoverColor: '#768CA0',
+          },
+        },
+        light: {
+          content: {
+            background: '#ffffff',
+          },
+          toolbar: {
+            background: '#253749',
+          },
+          toolbarItem: {
+            activeColor: '#ffffff',
+            color: '#ffffff',
+            hoverColor: '#768CA0',
+          },
+        },
       },
     },
     card: {
