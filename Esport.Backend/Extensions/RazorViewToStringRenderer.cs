@@ -13,15 +13,18 @@ namespace Esport.Backend.Extensions
         private IRazorViewEngine _viewEngine;
         private ITempDataProvider _tempDataProvider;
         private IServiceProvider _serviceProvider;
+        private ILogger<RazorViewToStringRenderer> _logger;
 
         public RazorViewToStringRenderer(
             IRazorViewEngine viewEngine,
             ITempDataProvider tempDataProvider,
-            IServiceProvider serviceProvider)
+            IServiceProvider serviceProvider,
+            ILogger<RazorViewToStringRenderer> logger)
         {
             _viewEngine = viewEngine;
             _tempDataProvider = tempDataProvider;
             _serviceProvider = serviceProvider;
+            _logger = logger;
         }
 
         public async Task<string> RenderViewToStringAsync<TModel>(string viewName, TModel model)
@@ -70,7 +73,7 @@ namespace Esport.Backend.Extensions
             var errorMessage = string.Join(
                 Environment.NewLine,
                 new[] { $"Unable to find view '{viewName}'. The following locations were searched:" }.Concat(searchedLocations)); ;
-
+            _logger.LogError(errorMessage);
             throw new InvalidOperationException(errorMessage);
         }
 
