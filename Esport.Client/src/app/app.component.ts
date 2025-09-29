@@ -2,8 +2,6 @@ import { Component, inject, LOCALE_ID, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router, RouterOutlet, RouterLink } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { filter, first, map, mergeMap, Subscription } from 'rxjs';
-import { animate, style, transition, trigger } from '@angular/animations';
-import { slideInAnimation } from '@app/animations';
 import { MenuItem, MessageService } from 'primeng/api';
 import { MenubarModule } from 'primeng/menubar';
 import { InputTextModule } from 'primeng/inputtext';
@@ -42,16 +40,6 @@ import { ToastCloseEvent, ToastModule } from 'primeng/toast';
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
-  animations: [
-    slideInAnimation,
-    trigger('slideInOut', [
-      transition(':enter', [
-        style({ transform: 'translateY(-100%)' }),
-        animate('500ms ease-in', style({ transform: 'translateY(0%)' })),
-      ]),
-      transition(':leave', [animate('500ms ease-in', style({ transform: 'translateY(-100%)' }))]),
-    ]),
-  ],
 })
 export class AppComponent implements OnInit, OnDestroy {
   private router = inject(Router);
@@ -133,7 +121,6 @@ export class AppComponent implements OnInit, OnDestroy {
         mergeMap(route => route.data)
       )
       .subscribe(event => {
-        console.log('router.events', this.activatedRoute.snapshot.queryParams['logIn']);
         this.returnUrl = this.activatedRoute.snapshot.queryParams['returnUrl'] ?? '/';
         this.visibleLogin = (this.activatedRoute.snapshot.queryParams['logIn'] as boolean) ?? false;
         this.ui.setMeta({
