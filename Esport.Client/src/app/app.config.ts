@@ -31,6 +31,7 @@ export const appConfig: ApplicationConfig = {
   providers: [
     BrowserModule,
     ClientModule,
+    // TODO: Remove once this issue is resolved https://github.com/primefaces/primeng/issues/18950
     BrowserAnimationsModule,
     provideAnimations(),
     MessageService,
