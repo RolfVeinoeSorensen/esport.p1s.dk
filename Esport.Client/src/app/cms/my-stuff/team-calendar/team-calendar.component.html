@@ -12,7 +12,7 @@
 </div>
 <div class="grid md:grid-cols-7 grid-cols-1 gap-2 mx-auto">
   @for (d of diff; track d) {
-    <div class="flex flex-col h-40"></div>
+    <div class="md:flex md:flex-col h-0 md:h-40 invisible md:visible"></div>
   }
   @for (day of events | keyvalue; track day;) {
     <button

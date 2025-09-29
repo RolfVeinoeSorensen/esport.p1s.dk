@@ -196,6 +196,20 @@ const ThemePreset = definePreset(Material, {
         },
       },
     },
+    toggleswitch: {
+      colorScheme: {
+        dark: {
+          handle: {
+            checkedBackground: '#009933',
+          },
+        },
+        light: {
+          handle: {
+            checkedBackground: '#009933',
+          },
+        },
+      },
+    },
   },
 });
 
