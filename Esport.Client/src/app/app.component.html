@@ -76,7 +76,7 @@
 }
 
 <div class="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8 main pt-12">
-  <router-outlet #routerOutlet="outlet" [@routeAnimation]="getAnimationData(routerOutlet)"></router-outlet>
+  <router-outlet #routerOutlet="outlet"></router-outlet>
 </div>
 <app-footer></app-footer>
 <p-toast key="p1s-toast" (onClose)="onToastClose($event)"></p-toast>

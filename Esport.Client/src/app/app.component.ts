@@ -192,9 +192,6 @@ export class AppComponent implements OnInit, OnDestroy {
     ];
     this.items = items.concat(itemsPublic);
   }
-  getAnimationData(outlet: RouterOutlet) {
-    return outlet && outlet.activatedRouteData && outlet.activatedRouteData['animation'];
-  }
   toggleDarkMode() {
     const element = document.querySelector('html');
     if (element) element.classList.toggle('dark');

@@ -14,6 +14,7 @@ import { provideHttpClient, withFetch, withInterceptorsFromDi } from '@angular/c
 import { BASE_PATH as ClientBasePath, ApiModule as ClientModule } from '@services/client';
 import { jwtInterceptorProviders } from '@helpers/jwt.interceptor';
 import { errorInterceptorProviders } from '@helpers/error.interceptor';
+import { BrowserAnimationsModule, provideAnimations } from '@angular/platform-browser/animations';
 import { LOCALE_ID } from '@angular/core';
 import { registerLocaleData } from '@angular/common';
 import localeDa from '@angular/common/locales/da';
@@ -30,6 +31,8 @@ export const appConfig: ApplicationConfig = {
   providers: [
     BrowserModule,
     ClientModule,
+    BrowserAnimationsModule,
+    provideAnimations(),
     MessageService,
     InternalToastService,
     provideZoneChangeDetection({ eventCoalescing: true }),
