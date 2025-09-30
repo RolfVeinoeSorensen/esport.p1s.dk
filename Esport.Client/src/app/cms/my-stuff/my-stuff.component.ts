@@ -98,6 +98,7 @@ export class MyStuffComponent implements OnInit {
         this.getMyEvents();
         break;
       case EditorType.Game:
+        this.getGameServers();
         break;
       case EditorType.GameServer:
         this.getGameServers();

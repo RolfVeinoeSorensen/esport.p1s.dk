@@ -1,8 +1,7 @@
 import { Component, EventEmitter, inject, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators, FormsModule } from '@angular/forms';
 import { EditorType } from '@models/editor-type';
-import { AuthenticationService } from '@services/authentication.service';
-import { AuthUser, FileService, Game, GameServer, GamesService } from '@services/client';
+import { AuthUser, Game, GameServer, GamesService } from '@services/client';
 import { InternalToastService } from '@services/internaltoast.service';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
@@ -18,8 +17,6 @@ import { SelectModule } from 'primeng/select';
 export class GameServersEditorComponent implements OnInit, OnChanges {
   @Input() public id: number | undefined;
   @Output() close = new EventEmitter<EditorType>();
-  private as: AuthenticationService = inject(AuthenticationService);
-  private fs = inject(FileService);
   private gs = inject(GamesService);
   private formBuilder = inject(UntypedFormBuilder);
   private its = inject(InternalToastService);
