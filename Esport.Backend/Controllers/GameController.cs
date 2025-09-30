@@ -2,6 +2,7 @@ using Esport.Backend.Authorization;
 using Esport.Backend.Dtos;
 using Esport.Backend.Entities;
 using Esport.Backend.Enums;
+using Esport.Backend.Models;
 using Esport.Backend.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -27,6 +28,14 @@ namespace Esport.Backend.Controllers
         }
 
         [Authorize([UserRole.Admin, UserRole.MemberAdult, UserRole.MemberKid])]
+        [HttpGet("[action]/{id:int}")]
+        public ActionResult<GameServer> GetGameServerById(int id)
+        {
+            var gameServer = gamesService.GetGameServerById(id);
+            return Ok(gameServer);
+        }
+
+        [Authorize([UserRole.Admin, UserRole.MemberAdult, UserRole.MemberKid])]
         [HttpGet("[action]")]
         public ActionResult<IEnumerable<GameServerDto>> GetAllGameServers()
         {
@@ -35,7 +44,7 @@ namespace Esport.Backend.Controllers
         }
         [Authorize([UserRole.Admin])]
         [HttpPost("[action]")]
-        public ActionResult<Game> CreateOrUpdateGame([FromBody] Game game)
+        public ActionResult<SubmitResponse> CreateOrUpdateGame([FromBody] Game game)
         {
             var gameResult = gamesService.CreateOrUpdateGame(game);
             return Ok(gameResult);
@@ -43,9 +52,25 @@ namespace Esport.Backend.Controllers
 
         [Authorize([UserRole.Admin])]
         [HttpPost("[action]")]
-        public ActionResult<GameServer> CreateOrUpdateGameServer([FromBody] GameServer gameServer)
+        public ActionResult<SubmitResponse> CreateOrUpdateGameServer([FromBody] GameServer gameServer)
         {
             var gameServers = gamesService.CreateOrUpdateGameServer(gameServer);
+            return Ok(gameServers);
+        }
+
+        [Authorize([UserRole.Admin])]
+        [HttpDelete("[action]")]
+        public ActionResult<SubmitResponse> RemoveGameServer(int gameServerId)
+        {
+            var gameServers = gamesService.RemoveGameServer(gameServerId);
+            return Ok(gameServers);
+        }
+
+        [Authorize([UserRole.Admin])]
+        [HttpDelete("[action]")]
+        public ActionResult<SubmitResponse> RemoveGame(int gameId)
+        {
+            var gameServers = gamesService.RemoveGame(gameId);
             return Ok(gameServers);
         }
     }

@@ -1,0 +1,42 @@
+<div class="card ">
+    <form [formGroup]="gameServerForm" (ngSubmit)="onSubmit()" class="grid grid-cols-1 gap-4">
+        <div class="col-span-1">
+            <label for="server">Server</label>
+            <input pInputText
+                class="w-full"
+                id="server"
+                formControlName="server"
+                [invalid]="isInvalid('server')"
+                placeholder="Server"
+                type="text"
+                size="255"/>
+            @if (isInvalid('server')) {
+                <p-message severity="error" size="small" variant="simple">Server skal udfyldes og være mindre end 255 karakterer.</p-message>
+            }
+        </div>
+        <div class="col-span-1">
+            <label for="port">Port</label>
+            <input pInputText
+                class="w-full"
+                id="port"
+                formControlName="port"
+                [invalid]="isInvalid('port')"
+                placeholder="Port"
+                type="number"
+                size="255"/>
+            @if (isInvalid('port')) {
+                <p-message severity="error" size="small" variant="simple">Port skal udfyldes og være et tal.</p-message>
+            }
+        </div>
+        <div class="col-span-1">
+            <label for="game">Spil</label>
+            <p-select id="game" [options]="games" [(ngModel)]="selectedGame" [ngModelOptions]="{ standalone: true }" optionLabel="name" appendTo="body" placeholder="Vælg et spil" class="w-full"  />
+        </div>
+        <div class="col-span-1 text-center">
+            @if(gameServer !== undefined){
+                <p-button type="button" severity="danger" label="Slet server" icon="pi pi-trash" (click)="onRemove(gameServer.id)" />
+            }
+            <p-button type="submit" label="Gem server" icon="pi pi-save" />
+        </div>
+    </form>
+</div>

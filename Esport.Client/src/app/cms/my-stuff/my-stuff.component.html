@@ -6,7 +6,8 @@
       <h2>Klubbens servere</h2>
       @if(isAdmin === true){
         <div class="absolute top-0 right-0">
-          <p-button icon="pi pi-plus" text="true" />
+          <p-button size="small" icon="pi pi-folder-plus" text="true" (click)="openEditor(editorType.Game, undefined)"/>
+          <p-button size="small" icon="pi pi-plus" text="true" (click)="openEditor(editorType.GameServer, undefined)" />
       </div>
       }
     </div>
@@ -24,7 +25,7 @@
             <p class="m-0">Server: {{ gs.gameServer.server }}</p>
             <p class="m-0">Port: {{ gs.gameServer.port }}</p>
             <div class="absolute bottom-0 right-0">
-              <p-button icon="pi pi-pencil" text="true" />
+              <p-button size="small" icon="pi pi-pencil" text="true" (click)="openEditor(editorType.GameServer, gs.gameServer.id)" />
           </div>
           </div>
 
@@ -33,7 +34,14 @@
     </div>
   </div>
   <div class="md:col-span-4">
-    <h2>Kalender</h2>
+    <div class="relative w-full">
+      <h2>Kalender</h2>
+      @if(isAdmin === true){
+        <div class="absolute top-0 right-0">
+          <p-button size="small" icon="pi pi-calendar-plus" text="true" (click)="openEditor(editorType.Event, undefined)" />
+      </div>
+      }
+    </div>
     <p-card header="Mine aktiviteter">
       @for (ue of userEvents; track ue) {
         <p class="text-sm text-gray-700 dark:text-gray-400">{{ ue.event.startDateTime | date: 'dd. MMM yyyy HH:mm' }} - {{ ue.event.endDateTime | date: 'HH:mm' }}</p>
@@ -59,7 +67,7 @@
         <h2>Dine informationer</h2>
       </div>
       <div class="col-span-2 md:col-span-1 text-right">
-        <p-button icon="pi pi-pencil" text="true" />
+        <p-button icon="pi pi-pencil" text="true" (click)="openEditor(editorType.User, userInfo?.id)" />
       </div>
     </div>
   </ng-template>
@@ -92,3 +100,19 @@
     </div>
   </div>
 </p-card>
+<p-dialog [header]="editorText" [modal]="true" [(visible)]="visibleEditor" [style]="{ width: '90vw' }">
+  @switch (selectedEditorType) {
+    @case (editorType.User){
+      <app-user-editor [id]="selectedId"></app-user-editor>
+    }
+    @case (editorType.Game){
+      <app-games-editor [id]="selectedId"></app-games-editor>
+    }
+    @case (editorType.GameServer){
+      <app-game-servers-editor [id]="selectedId" (close)="handleEditorSave($event)"></app-game-servers-editor>
+    }
+    @case (editorType.Event){
+      <app-event-editor [id]="selectedId"> </app-event-editor>
+    }
+  }
+</p-dialog>

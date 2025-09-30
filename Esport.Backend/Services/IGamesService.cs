@@ -1,5 +1,6 @@
 using Esport.Backend.Dtos;
 using Esport.Backend.Entities;
+using Esport.Backend.Models;
 
 namespace Esport.Backend.Services
 {
@@ -7,8 +8,11 @@ namespace Esport.Backend.Services
     {
         IEnumerable<Game> GetAllGames();
         Game GetGameById(int id);
+        GameServer GetGameServerById(int id);
         IEnumerable<GameServerDto> GetAllGameServers();
-        Game CreateOrUpdateGame(Game game);
-        GameServer CreateOrUpdateGameServer(GameServer gameServer);
+        SubmitResponse CreateOrUpdateGame(Game game);
+        SubmitResponse CreateOrUpdateGameServer(GameServer gameServer);
+        SubmitResponse RemoveGameServer(int gameServerId);
+        SubmitResponse RemoveGame(int gameId);
     }
 }

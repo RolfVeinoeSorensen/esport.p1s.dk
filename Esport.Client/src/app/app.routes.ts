@@ -72,13 +72,6 @@ export const routes: Routes = [
     path: 'user',
     children: [
       {
-        canLoad: [AuthGuard],
-        canActivate: [AuthGuard],
-        data: { requiredRoles: [UserRole.Admin, UserRole.Editor, UserRole.MemberAdult, UserRole.MemberKid] },
-        path: 'edit-user',
-        loadComponent: () => import('@user/user-edit/user-edit.component').then(m => m.UserEditComponent),
-      },
-      {
         path: 'register-user',
         loadComponent: () => import('@user/user-register/user-register.component').then(m => m.UserRegisterComponent),
       },

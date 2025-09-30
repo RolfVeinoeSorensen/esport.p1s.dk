@@ -1,0 +1,48 @@
+<div class="card ">
+    <form [formGroup]="userForm" (ngSubmit)="onSubmit()" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="col-span-2">
+            <label for="username">Email</label>
+            <input pInputText
+                class="w-full"
+                id="username"
+                formControlName="username"
+                [invalid]="isInvalid('username')"
+                placeholder="Email"
+                type="email"/>
+            @if (isInvalid('username')) {
+                <p-message severity="error" size="small" variant="simple">Email skal udfyldes og være mindre end 255 karakterer.</p-message>
+            }
+        </div>
+        <div class="col-span-2 md:col-span-1">
+            <label for="firstName">Fornavn</label>
+            <input pInputText
+                class="w-full"
+                id="firstName"
+                formControlName="firstName"
+                [invalid]="isInvalid('firstName')"
+                placeholder="Fornavn"
+                type="text"
+                size="255"/>
+            @if (isInvalid('firstName')) {
+                <p-message severity="error" size="small" variant="simple">Fornavn skal udfyldes og være mindre end 255 karakterer.</p-message>
+            }
+        </div>
+        <div class="col-span-2 md:col-span-1">
+            <label for="lastName">Efternavn</label>
+            <input pInputText
+                class="w-full"
+                id="lastName"
+                formControlName="lastName"
+                [invalid]="isInvalid('lastName')"
+                placeholder="Efternavn"
+                type="text"
+                size="255"/>
+            @if (isInvalid('lastName')) {
+                <p-message severity="error" size="small" variant="simple">Efternavn skal udfyldes og være mindre end 255 karakterer.</p-message>
+            }
+        </div>
+        <div class="col-span-2 text-center">
+            <p-button type="submit" label="Gem bruger" icon="pi pi-save" />
+        </div>
+    </form>
+</div>
