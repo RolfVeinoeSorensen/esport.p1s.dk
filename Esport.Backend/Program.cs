@@ -97,6 +97,7 @@ try
     app.UseOpenApi();
     app.UseSwaggerUi();
 
+    app.UseForwardedHeaders();
     app.UseHttpsRedirection();
 
     // global cors policy
