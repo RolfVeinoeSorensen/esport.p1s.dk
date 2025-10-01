@@ -16,12 +16,12 @@ const ThemePreset = definePreset(Material, {
       700: '{blue.700}',
       800: '{blue.800}',
       900: '{blue.900}',
-      950: '{blue.950}',
+      950: '{blue.950}'
     },
     colorScheme: {
       light: {
         content: {
-          background: '#FFFDD0',
+          background: '#FFFDD0'
         },
         surface: {
           0: '#ffffff',
@@ -35,13 +35,13 @@ const ThemePreset = definePreset(Material, {
           700: '{gray.700}',
           800: '{gray.800}',
           900: '{gray.900}',
-          950: '{gray.950}',
+          950: '{gray.950}'
         },
         primary: {
           color: '#253749',
           hoverColor: '##768CA0',
-          activeColor: '#253749',
-        },
+          activeColor: '#253749'
+        }
       },
       dark: {
         surface: {
@@ -56,15 +56,15 @@ const ThemePreset = definePreset(Material, {
           700: '{gray.700}',
           800: '{gray.800}',
           900: '{gray.900}',
-          950: '{gray.950}',
+          950: '{gray.950}'
         },
         primary: {
           color: '#253749',
           hoverColor: '##768CA0',
-          activeColor: '#253749',
-        },
-      },
-    },
+          activeColor: '#253749'
+        }
+      }
+    }
   },
   components: {
     button: {
@@ -74,8 +74,8 @@ const ThemePreset = definePreset(Material, {
             primary: {
               hoverBackground: '#395570',
               activeBackground: '1F2E3D',
-              color: '#ffffff',
-            },
+              color: '#ffffff'
+            }
           },
           root: {
             primary: {
@@ -83,18 +83,18 @@ const ThemePreset = definePreset(Material, {
               borderColor: '#253749',
               color: '#ffffff',
               hoverBackground: '#395570',
-              activeBackground: '#1F2E3D',
-            },
-          },
-        },
-      },
+              activeBackground: '#1F2E3D'
+            }
+          }
+        }
+      }
     },
     menubar: {
       root: {
         background: '#212124',
         color: '#ffffff',
         borderRadius: '0px',
-        borderColor: 'transparent',
+        borderColor: 'transparent'
       },
       item: {
         focusBackground: '#395570',
@@ -108,18 +108,18 @@ const ThemePreset = definePreset(Material, {
         icon: {
           color: '#ffffff',
           focusColor: '#ffffff',
-          activeColor: '#ffffff',
-        },
+          activeColor: '#ffffff'
+        }
       },
       submenu: {
         background: '#212124',
-        borderRadius: '0px',
+        borderRadius: '0px'
       },
       mobileButton: {
         color: '{text.muted.color}',
         hoverColor: '{text.hover.muted.color}',
-        hoverBackground: '#1F2E3D',
-      },
+        hoverBackground: '#1F2E3D'
+      }
     },
     drawer: {
       colorScheme: {
@@ -127,17 +127,17 @@ const ThemePreset = definePreset(Material, {
           root: {
             background: '#253749',
             borderColor: '#253749',
-            color: '#ffffff',
-          },
+            color: '#ffffff'
+          }
         },
         light: {
           root: {
             background: '#253749',
             borderColor: '#253749',
-            color: '#ffffff',
-          },
-        },
-      },
+            color: '#ffffff'
+          }
+        }
+      }
     },
     datatable: {
       headerCell: {
@@ -146,71 +146,71 @@ const ThemePreset = definePreset(Material, {
         hoverColor: '#ffffff',
         borderColor: '#253749',
         color: '#ffffff',
-        padding: '0.75rem 1rem',
-      },
+        padding: '0.75rem 1rem'
+      }
     },
     editor: {
       colorScheme: {
         dark: {
           content: {
-            background: '#000000',
+            background: '#000000'
           },
           toolbar: {
-            background: '#253749',
+            background: '#253749'
           },
           toolbarItem: {
             activeColor: '#ffffff',
             color: '#ffffff',
-            hoverColor: '#768CA0',
-          },
+            hoverColor: '#768CA0'
+          }
         },
         light: {
           content: {
-            background: '#ffffff',
+            background: '#ffffff'
           },
           toolbar: {
-            background: '#253749',
+            background: '#253749'
           },
           toolbarItem: {
             activeColor: '#ffffff',
             color: '#ffffff',
-            hoverColor: '#768CA0',
-          },
-        },
-      },
+            hoverColor: '#768CA0'
+          }
+        }
+      }
     },
     card: {
       root: {
-        borderRadius: '0.5rem',
+        borderRadius: '0.5rem'
       },
       colorScheme: {
         dark: {
           root: {
-            background: '#212124',
-          },
+            background: '#212124'
+          }
         },
         light: {
           root: {
-            background: '#eeeeee',
-          },
-        },
-      },
+            background: '#eeeeee'
+          }
+        }
+      }
     },
     toggleswitch: {
       colorScheme: {
         dark: {
           handle: {
-            checkedBackground: '#009933',
-          },
+            checkedBackground: '#009933'
+          }
         },
         light: {
           handle: {
-            checkedBackground: '#009933',
-          },
-        },
-      },
-    },
-  },
+            checkedBackground: '#009933'
+          }
+        }
+      }
+    }
+  }
 });
 
 export default ThemePreset;

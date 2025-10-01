@@ -6,7 +6,7 @@ import { UsersService } from '@app/_services/client';
   selector: 'app-user-activate',
   imports: [],
   templateUrl: './user-activate.component.html',
-  styleUrl: './user-activate.component.css',
+  styleUrl: './user-activate.component.css'
 })
 export class UserActivateComponent implements OnInit {
   private userService = inject(UsersService);
@@ -20,7 +20,7 @@ export class UserActivateComponent implements OnInit {
       if (this.token)
         this.userService.usersActivateUser(this.token).subscribe(res => {
           console.log(res);
-          if (res.ok === true) this.isActivated;
+          if (res.ok === true) this.isActivated = true;
         });
     });
   }

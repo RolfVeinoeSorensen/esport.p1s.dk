@@ -8,7 +8,7 @@ describe('TeamCalendarComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TeamCalendarComponent],
+      imports: [TeamCalendarComponent]
     }).compileComponents();
 
     fixture = TestBed.createComponent(TeamCalendarComponent);

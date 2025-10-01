@@ -9,8 +9,7 @@ describe('GameServersEditorComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [GameServersEditorComponent]
-    })
-    .compileComponents();
+    }).compileComponents();
 
     fixture = TestBed.createComponent(GameServersEditorComponent);
     component = fixture.componentInstance;

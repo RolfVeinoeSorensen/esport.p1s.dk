@@ -5,13 +5,13 @@ import { ButtonModule } from 'primeng/button';
 import { MessageModule } from 'primeng/message';
 import { ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { News, NewsService } from '@app/_services/client';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-news-editor',
   imports: [EditorModule, InputTextModule, ButtonModule, ReactiveFormsModule, MessageModule],
   templateUrl: './news-editor.component.html',
-  styleUrl: './news-editor.component.css',
+  styleUrl: './news-editor.component.css'
 })
 export class NewsEditorComponent implements OnInit {
   private formBuilder = inject(UntypedFormBuilder);
@@ -30,7 +30,7 @@ export class NewsEditorComponent implements OnInit {
     this.newsForm = this.formBuilder.group({
       title: ['', [Validators.required, Validators.maxLength(255)]],
       content: ['', [Validators.required]],
-      url_slug: ['', [Validators.required, Validators.maxLength(255)]],
+      url_slug: ['', [Validators.required, Validators.maxLength(255)]]
     });
   }
   ngOnInit() {
@@ -52,7 +52,7 @@ export class NewsEditorComponent implements OnInit {
         this.newsForm.patchValue({
           title: this.news.title,
           content: this.news.content,
-          url_slug: this.news.urlSlug,
+          url_slug: this.news.urlSlug
         });
       }
     });
@@ -75,7 +75,7 @@ export class NewsEditorComponent implements OnInit {
           updatedAt: new Date().toISOString(),
           createdBy: this.news ? this.news.createdBy : 1,
           updatedBy: 1,
-          urlSlug: this.newsForm.value.url_slug,
+          urlSlug: this.newsForm.value.url_slug
         })
         .subscribe(news => {
           this.news = news;

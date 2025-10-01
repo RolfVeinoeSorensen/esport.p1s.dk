@@ -8,7 +8,7 @@ import { DatePipe } from '@angular/common';
   selector: 'app-news-article',
   imports: [DatePipe, RouterLink],
   templateUrl: './news-article.component.html',
-  styleUrl: './news-article.component.css',
+  styleUrl: './news-article.component.css'
 })
 export class NewsArticleComponent implements OnInit {
   private newsService = inject(NewsService);

@@ -40,7 +40,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(
       routes,
       withInMemoryScrolling({
-        scrollPositionRestoration: 'top',
+        scrollPositionRestoration: 'top'
       })
     ),
     provideClientHydration(withEventReplay()),
@@ -50,9 +50,9 @@ export const appConfig: ApplicationConfig = {
         options: {
           prefix: 'p',
           darkModeSelector: '.dark',
-          cssLayer: false,
-        },
-      },
+          cssLayer: false
+        }
+      }
     }),
     jwtInterceptorProviders,
     errorInterceptorProviders,
@@ -61,6 +61,6 @@ export const appConfig: ApplicationConfig = {
     { provide: LOCALE_ID, useValue: 'da-DK' },
     { provide: ClientBasePath, useValue: environment.apiUrl },
     ScrollerModule,
-    ScrollTopModule,
-  ],
+    ScrollTopModule
+  ]
 };

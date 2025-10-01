@@ -10,7 +10,7 @@ import { CaptchaDto, CaptchaService, ContactRequest, ContactService } from '@app
   selector: 'app-contact-us',
   imports: [EditorModule, InputTextModule, ButtonModule, ReactiveFormsModule, MessageModule],
   templateUrl: './contact-us.component.html',
-  styleUrl: './contact-us.component.css',
+  styleUrl: './contact-us.component.css'
 })
 export class ContactUsComponent implements OnInit {
   private formBuilder = inject(UntypedFormBuilder);
@@ -26,11 +26,11 @@ export class ContactUsComponent implements OnInit {
   constructor() {
     this.contactForm = this.formBuilder.group({
       body: ['', [Validators.required]],
-      captchaCode: ['', [Validators.required, , Validators.minLength(6), Validators.maxLength(6)]],
+      captchaCode: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(6)]],
       contactFrom: ['', [Validators.required, Validators.maxLength(255)]],
       contactName: ['', [Validators.required, Validators.maxLength(255)]],
       subject: ['', [Validators.required, Validators.maxLength(255)]],
-      contactMobile: ['', [Validators.maxLength(50)]],
+      contactMobile: ['', [Validators.maxLength(50)]]
     });
   }
   ngOnInit() {
@@ -53,7 +53,7 @@ export class ContactUsComponent implements OnInit {
         contactName: this.contactForm.value.contactName,
         subject: this.contactForm.value.subject,
         contactMobile: this.contactForm.value.contactMobile,
-        captchaId: this.captcha.captchaId,
+        captchaId: this.captcha.captchaId
       };
       this.contactService.contactCreateContact(req).subscribe(response => {
         if (response.ok === false && response.captcha) {

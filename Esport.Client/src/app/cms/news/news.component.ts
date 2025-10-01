@@ -7,7 +7,7 @@ import { News, NewsService } from '@app/_services/client';
   selector: 'app-news',
   imports: [DatePipe, RouterLink],
   templateUrl: './news.component.html',
-  styleUrl: './news.component.css',
+  styleUrl: './news.component.css'
 })
 export class NewsComponent implements OnInit {
   private newsService = inject(NewsService);

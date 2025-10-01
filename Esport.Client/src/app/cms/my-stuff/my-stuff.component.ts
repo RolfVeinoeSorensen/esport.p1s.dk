@@ -6,10 +6,9 @@ import {
   AuthUser,
   EventsService,
   EventUserDto,
-  Game,
   GameServerDto,
   GamesService,
-  UsersService,
+  UsersService
 } from '@app/_services/client';
 import { User } from '@models/user';
 import { AuthenticationService } from '@services/authentication.service';
@@ -37,10 +36,10 @@ import { EventEditorComponent } from './editors/event-editor/event-editor.compon
     UserEditorComponent,
     GamesEditorComponent,
     GameServersEditorComponent,
-    EventEditorComponent,
+    EventEditorComponent
   ],
   templateUrl: './my-stuff.component.html',
-  styleUrl: './my-stuff.component.css',
+  styleUrl: './my-stuff.component.css'
 })
 export class MyStuffComponent implements OnInit {
   private es = inject(EventsService);

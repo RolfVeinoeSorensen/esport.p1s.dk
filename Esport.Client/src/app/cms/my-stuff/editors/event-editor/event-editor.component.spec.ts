@@ -9,8 +9,7 @@ describe('EventEditorComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [EventEditorComponent]
-    })
-    .compileComponents();
+    }).compileComponents();
 
     fixture = TestBed.createComponent(EventEditorComponent);
     component = fixture.componentInstance;

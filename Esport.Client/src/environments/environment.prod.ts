@@ -6,7 +6,7 @@ export const environment = {
   site: 'https://p1s.dk',
   sitename: 'esport.p1s.dk',
   sitemode: 'prod',
-  apiUrl: 'https://api.p1s.dk',
+  apiUrl: 'https://api.p1s.dk'
 };
 
 /*

@@ -1,14 +1,17 @@
 <h1>Mine ting</h1>
 <div class="grid grid-cols-1 md:grid-cols-12 gap-4 mb-4">
   <div class="md:col-span-8">
-
     <div class="relative w-full">
       <h2>Klubbens servere</h2>
-      @if(isAdmin === true){
+      @if (isAdmin === true) {
         <div class="absolute top-0 right-0">
-          <p-button size="small" icon="pi pi-folder-plus" text="true" (click)="openEditor(editorType.Game, undefined)"/>
+          <p-button
+            size="small"
+            icon="pi pi-folder-plus"
+            text="true"
+            (click)="openEditor(editorType.Game, undefined)" />
           <p-button size="small" icon="pi pi-plus" text="true" (click)="openEditor(editorType.GameServer, undefined)" />
-      </div>
+        </div>
       }
     </div>
 
@@ -25,10 +28,13 @@
             <p class="m-0">Server: {{ gs.gameServer.server }}</p>
             <p class="m-0">Port: {{ gs.gameServer.port }}</p>
             <div class="absolute bottom-0 right-0">
-              <p-button size="small" icon="pi pi-pencil" text="true" (click)="openEditor(editorType.GameServer, gs.gameServer.id)" />
+              <p-button
+                size="small"
+                icon="pi pi-pencil"
+                text="true"
+                (click)="openEditor(editorType.GameServer, gs.gameServer.id)" />
+            </div>
           </div>
-          </div>
-
         </p-card>
       }
     </div>
@@ -36,15 +42,21 @@
   <div class="md:col-span-4">
     <div class="relative w-full">
       <h2>Kalender</h2>
-      @if(isAdmin === true){
+      @if (isAdmin === true) {
         <div class="absolute top-0 right-0">
-          <p-button size="small" icon="pi pi-calendar-plus" text="true" (click)="openEditor(editorType.Event, undefined)" />
-      </div>
+          <p-button
+            size="small"
+            icon="pi pi-calendar-plus"
+            text="true"
+            (click)="openEditor(editorType.Event, undefined)" />
+        </div>
       }
     </div>
     <p-card header="Mine aktiviteter">
       @for (ue of userEvents; track ue) {
-        <p class="text-sm text-gray-700 dark:text-gray-400">{{ ue.event.startDateTime | date: 'dd. MMM yyyy HH:mm' }} - {{ ue.event.endDateTime | date: 'HH:mm' }}</p>
+        <p class="text-sm text-gray-700 dark:text-gray-400">
+          {{ ue.event.startDateTime | date: 'dd. MMM yyyy HH:mm' }} - {{ ue.event.endDateTime | date: 'HH:mm' }}
+        </p>
         <p class="mb-2">{{ ue.event.name }}</p>
       }
       @if (userEvents.length === 0) {
@@ -55,7 +67,7 @@
     <p-card header="Bliv en del af fællesskabet">
       <p>Vores Discord server er åben for alle medlemmer af klubben.</p>
       <a href="https://discord.gg/BRz85AE9zK" target="_blank" class="no-underline">
-        <p-button pButton type="button" type="text" label="Gå til Discord" icon="pi pi-discord" class="w-full"/>
+        <p-button pButton type="button" type="text" label="Gå til Discord" icon="pi pi-discord" class="w-full" />
       </a>
     </p-card>
   </div>
@@ -73,27 +85,50 @@
   </ng-template>
   <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
     <div class="col-span-3 md:col-span-1">
-      <p>{{userInfo?.firstName}} {{userInfo?.lastName}} </p>
-      <p><a href="mailto:{{userInfo?.username}}">{{userInfo?.username}}</a></p>
-      <p>{{userInfo?.mobile}}</p>
+      <p>{{ userInfo?.firstName }} {{ userInfo?.lastName }}</p>
+      <p>
+        <a href="mailto:{{ userInfo?.username }}">{{ userInfo?.username }}</a>
+      </p>
+      <p>{{ userInfo?.mobile }}</p>
     </div>
     <div class="col-span-3 md:col-span-1">
-      <p>{{userInfo?.addressStreet}} {{userInfo?.addressStreetNumber}} {{userInfo?.addressFloor}} {{userInfo?.addressSide}} </p>
-      <p>{{userInfo?.addressPostalCode}} {{userInfo?.addressCity}}</p>
+      <p>
+        {{ userInfo?.addressStreet }} {{ userInfo?.addressStreetNumber }} {{ userInfo?.addressFloor }}
+        {{ userInfo?.addressSide }}
+      </p>
+      <p>{{ userInfo?.addressPostalCode }} {{ userInfo?.addressCity }}</p>
     </div>
     <div class="col-span-3 md:col-span-1">
       <h3>Kan medbringe følgende udstyr</h3>
-      @if(userInfo){
+      @if (userInfo) {
         <p>
-          <i class="pi pi-check mr-2" [ngClass]="userInfo.canBringLaptop === true ? 'pi pi-check md:text-green-400 text-green-700' : 'pi pi-times md:text-red-400 text-red-700'"></i>
+          <i
+            class="pi pi-check mr-2"
+            [ngClass]="
+              userInfo.canBringLaptop === true
+                ? 'pi pi-check md:text-green-400 text-green-700'
+                : 'pi pi-times md:text-red-400 text-red-700'
+            "></i>
           <span>Bærbar PC</span>
         </p>
         <p>
-          <i class="pi pi-check mr-2" [ngClass]="userInfo.canBringStationaryPc === true ? 'pi pi-check md:text-green-400 text-green-700' : 'pi pi-times md:text-red-400 text-red-700'"></i>
+          <i
+            class="pi pi-check mr-2"
+            [ngClass]="
+              userInfo.canBringStationaryPc === true
+                ? 'pi pi-check md:text-green-400 text-green-700'
+                : 'pi pi-times md:text-red-400 text-red-700'
+            "></i>
           <span>Stationær PC</span>
         </p>
         <p>
-          <i class="pi pi-check mr-2" [ngClass]="userInfo.canBringPlaystation === true ? 'pi pi-check md:text-green-400 text-green-700' : 'pi pi-times md:text-red-400 text-red-700'"></i>
+          <i
+            class="pi pi-check mr-2"
+            [ngClass]="
+              userInfo.canBringPlaystation === true
+                ? 'pi pi-check md:text-green-400 text-green-700'
+                : 'pi pi-times md:text-red-400 text-red-700'
+            "></i>
           <span>Playstation</span>
         </p>
       }
@@ -102,16 +137,16 @@
 </p-card>
 <p-dialog [header]="editorText" [modal]="true" [(visible)]="visibleEditor" [style]="{ width: '90vw' }">
   @switch (selectedEditorType) {
-    @case (editorType.User){
+    @case (editorType.User) {
       <app-user-editor [id]="selectedId"></app-user-editor>
     }
-    @case (editorType.Game){
+    @case (editorType.Game) {
       <app-games-editor [id]="selectedId"></app-games-editor>
     }
-    @case (editorType.GameServer){
+    @case (editorType.GameServer) {
       <app-game-servers-editor [id]="selectedId" (close)="handleEditorSave($event)"></app-game-servers-editor>
     }
-    @case (editorType.Event){
+    @case (editorType.Event) {
       <app-event-editor [id]="selectedId"> </app-event-editor>
     }
   }

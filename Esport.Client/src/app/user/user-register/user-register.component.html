@@ -1,91 +1,108 @@
 <h1>Registrer ny bruger</h1>
-<div class="card ">
-    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div class="col-span-2">
-            <label for="username">Email</label>
-            <input pInputText
-                class="w-full"
-                id="username"
-                formControlName="username"
-                [invalid]="isInvalid('username')"
-                placeholder="Email"
-                type="email"/>
-            @if (isInvalid('username')) {
-                <p-message severity="error" size="small" variant="simple">Email skal udfyldes og være mindre end 255 karakterer.</p-message>
-            }
-        </div>
-        <div class="col-span-2 md:col-span-1">
-            <label for="firstname">Fornavn</label>
-            <input pInputText
-                class="w-full"
-                id="firstname"
-                formControlName="firstname"
-                [invalid]="isInvalid('firstname')"
-                placeholder="Fornavn"
-                type="text"
-                size="255"/>
-            @if (isInvalid('firstname')) {
-                <p-message severity="error" size="small" variant="simple">Fornavn skal udfyldes og være mindre end 255 karakterer.</p-message>
-            }
-        </div>
-        <div class="col-span-2 md:col-span-1">
-            <label for="lastname">Efternavn</label>
-            <input pInputText
-                class="w-full"
-                id="lastname"
-                formControlName="lastname"
-                [invalid]="isInvalid('lastname')"
-                placeholder="Efternavn"
-                type="text"
-                size="255"/>
-            @if (isInvalid('lastname')) {
-                <p-message severity="error" size="small" variant="simple">Efternavn skal udfyldes og være mindre end 255 karakterer.</p-message>
-            }
-        </div>
-        <div class="col-span-2 md:col-span-1">
-            <label for="password">Password</label>
-            <input pInputText
-                class="w-full"
-                id="password"
-                formControlName="password"
-                [invalid]="isInvalid('password')"
-                placeholder="Password"
-                type="password"
-                size="255"/>
-            @if (isInvalid('password')) {
-                <p-message severity="error" size="small" variant="simple">Password skal have følgende: 6-255 karakterer, mindst et lille og et stort bogstav, have et tal og en speciel karakter.</p-message>
-            }
-        </div>
-        <div class="col-span-2 md:col-span-1">
-            <label for="passwordRepeat">Gentag Password</label>
-            <input pInputText
-                class="w-full"
-                id="passwordRepeat"
-                formControlName="passwordRepeat"
-                [invalid]="isInvalid('passwordRepeat')"
-                placeholder="Gentag Password"
-                type="password"
-                size="255"/>
-            @if (isInvalid('passwordRepeat')) {
-                <p-message severity="error" size="small" variant="simple">Password skal være ens.</p-message>
-            }
-        </div>
-        @if (captcha){
-            <div class="col-span-2 justify-items-center text-center">
-                <img [src]="captcha.captchaImage" alt="captcha" width="150" height="60" />
-                <input pInputText
-                    formControlName="captchaCode"
-                    [invalid]="isInvalid('captchaCode')"
-                    placeholder=""
-                    type="text"
-                    size="10"/>
-                @if (isInvalid('captchaCode')) {
-                    <p-message styleClass="w-full text-center justify-items-center" severity="error" size="small" variant="simple">Captcha skal udfyldes og være på 6 karakterer.</p-message>
-                }
-            </div>
+<div class="card">
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div class="col-span-2">
+      <label for="username">Email</label>
+      <input
+        pInputText
+        class="w-full"
+        id="username"
+        formControlName="username"
+        [invalid]="isInvalid('username')"
+        placeholder="Email"
+        type="email" />
+      @if (isInvalid('username')) {
+        <p-message severity="error" size="small" variant="simple"
+          >Email skal udfyldes og være mindre end 255 karakterer.</p-message
+        >
+      }
+    </div>
+    <div class="col-span-2 md:col-span-1">
+      <label for="firstname">Fornavn</label>
+      <input
+        pInputText
+        class="w-full"
+        id="firstname"
+        formControlName="firstname"
+        [invalid]="isInvalid('firstname')"
+        placeholder="Fornavn"
+        type="text"
+        size="255" />
+      @if (isInvalid('firstname')) {
+        <p-message severity="error" size="small" variant="simple"
+          >Fornavn skal udfyldes og være mindre end 255 karakterer.</p-message
+        >
+      }
+    </div>
+    <div class="col-span-2 md:col-span-1">
+      <label for="lastname">Efternavn</label>
+      <input
+        pInputText
+        class="w-full"
+        id="lastname"
+        formControlName="lastname"
+        [invalid]="isInvalid('lastname')"
+        placeholder="Efternavn"
+        type="text"
+        size="255" />
+      @if (isInvalid('lastname')) {
+        <p-message severity="error" size="small" variant="simple"
+          >Efternavn skal udfyldes og være mindre end 255 karakterer.</p-message
+        >
+      }
+    </div>
+    <div class="col-span-2 md:col-span-1">
+      <label for="password">Password</label>
+      <input
+        pInputText
+        class="w-full"
+        id="password"
+        formControlName="password"
+        [invalid]="isInvalid('password')"
+        placeholder="Password"
+        type="password"
+        size="255" />
+      @if (isInvalid('password')) {
+        <p-message severity="error" size="small" variant="simple"
+          >Password skal have følgende: 6-255 karakterer, mindst et lille og et stort bogstav, have et tal og en speciel
+          karakter.</p-message
+        >
+      }
+    </div>
+    <div class="col-span-2 md:col-span-1">
+      <label for="passwordRepeat">Gentag Password</label>
+      <input
+        pInputText
+        class="w-full"
+        id="passwordRepeat"
+        formControlName="passwordRepeat"
+        [invalid]="isInvalid('passwordRepeat')"
+        placeholder="Gentag Password"
+        type="password"
+        size="255" />
+      @if (isInvalid('passwordRepeat')) {
+        <p-message severity="error" size="small" variant="simple">Password skal være ens.</p-message>
+      }
+    </div>
+    @if (captcha) {
+      <div class="col-span-2 justify-items-center text-center">
+        <img [src]="captcha.captchaImage" alt="captcha" width="150" height="60" />
+        <input
+          pInputText
+          formControlName="captchaCode"
+          [invalid]="isInvalid('captchaCode')"
+          placeholder=""
+          type="text"
+          size="10" />
+        @if (isInvalid('captchaCode')) {
+          <p-message styleClass="w-full text-center justify-items-center" severity="error" size="small" variant="simple"
+            >Captcha skal udfyldes og være på 6 karakterer.</p-message
+          >
         }
-        <div class="col-span-2 text-center">
-            <p-button type="submit" label="Opret bruger" icon="pi pi-user-plus" />
-        </div>
-    </form>
+      </div>
+    }
+    <div class="col-span-2 text-center">
+      <p-button type="submit" label="Opret bruger" icon="pi pi-user-plus" />
+    </div>
+  </form>
 </div>

@@ -12,7 +12,7 @@ import { MessageModule } from 'primeng/message';
   selector: 'app-user-password-change',
   imports: [InputTextModule, ButtonModule, ReactiveFormsModule, MessageModule],
   templateUrl: './user-password-change.component.html',
-  styleUrl: './user-password-change.component.css',
+  styleUrl: './user-password-change.component.css'
 })
 export class UserPasswordChangeComponent implements OnInit {
   private userService = inject(UsersService);
@@ -30,10 +30,10 @@ export class UserPasswordChangeComponent implements OnInit {
     this.changePasswordForm = this.formBuilder.group(
       {
         password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(255)]],
-        passwordRepeat: ['', [Validators.required]],
+        passwordRepeat: ['', [Validators.required]]
       },
       {
-        validators: [Validation.match('password', 'passwordRepeat')],
+        validators: [Validation.match('password', 'passwordRepeat')]
       }
     );
   }
@@ -60,7 +60,7 @@ export class UserPasswordChangeComponent implements OnInit {
           icon: response.ok === true ? 'pi pi-check-circle' : 'pi pi-exclamation-triangle',
           summary: 'Password ændring',
           detail: response.message,
-          severity: response.ok === true ? 'success' : 'error',
+          severity: response.ok === true ? 'success' : 'error'
         });
         this.changePasswordForm.reset();
         this.formSubmitted = false;

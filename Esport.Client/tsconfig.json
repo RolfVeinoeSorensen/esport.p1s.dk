@@ -18,6 +18,7 @@
     "importHelpers": true,
     "target": "ES2022",
     "module": "ES2022",
+    "allowSyntheticDefaultImports": true,
     "paths": {
       "@environments/*": ["src/environments/*"],
       "@services/*": ["src/app/_services/*"],

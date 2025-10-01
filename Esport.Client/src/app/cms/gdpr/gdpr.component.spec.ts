@@ -8,7 +8,7 @@ describe('GdprComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [GdprComponent],
+      imports: [GdprComponent]
     }).compileComponents();
 
     fixture = TestBed.createComponent(GdprComponent);

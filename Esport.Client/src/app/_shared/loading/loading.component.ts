@@ -6,7 +6,7 @@ import { LoadingHandlerService } from '@shared/loading/loading-handler.service';
   templateUrl: './loading.component.html',
   styleUrls: ['./loading.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [],
+  imports: []
 })
 export class LoadingComponent {
   loadingHandler = inject(LoadingHandlerService);

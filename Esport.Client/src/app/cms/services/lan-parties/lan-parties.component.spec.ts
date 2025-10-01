@@ -9,8 +9,7 @@ describe('LanPartiesComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [LanPartiesComponent]
-    })
-    .compileComponents();
+    }).compileComponents();
 
     fixture = TestBed.createComponent(LanPartiesComponent);
     component = fixture.componentInstance;

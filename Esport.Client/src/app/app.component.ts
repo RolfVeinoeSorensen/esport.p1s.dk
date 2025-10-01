@@ -36,10 +36,10 @@ import { ToastCloseEvent, ToastModule } from 'primeng/toast';
     ReactiveFormsModule,
     RouterLink,
     ToastModule,
-    LoadingComponent,
+    LoadingComponent
   ],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css',
+  styleUrl: './app.component.css'
 })
 export class AppComponent implements OnInit, OnDestroy {
   private router = inject(Router);
@@ -70,7 +70,7 @@ export class AppComponent implements OnInit, OnDestroy {
   constructor() {
     this.loginForm = this.formBuilder.group({
       username: ['', [Validators.required, Validators.email, Validators.maxLength(255)]],
-      password: ['', Validators.required],
+      password: ['', Validators.required]
     });
   }
   ngOnDestroy(): void {
@@ -105,9 +105,9 @@ export class AppComponent implements OnInit, OnDestroy {
       {
         name: 'date',
         content: formatDate(Date.now(), 'yyyy-MM-dd', this.locale),
-        scheme: 'yyyy-MM-dd',
+        scheme: 'yyyy-MM-dd'
       },
-      { charset: 'UTF-8' },
+      { charset: 'UTF-8' }
     ]);
     this.router.events
       .pipe(
@@ -127,7 +127,7 @@ export class AppComponent implements OnInit, OnDestroy {
           title: event['title'],
           description: event['description'],
           tags: event['tags'],
-          url: event['ogUrl'] ?? this.router.url,
+          url: event['ogUrl'] ?? this.router.url
         });
       });
     this.refreshMenu();
@@ -137,7 +137,7 @@ export class AppComponent implements OnInit, OnDestroy {
     if (this.isAdmin === true) {
       items.push({
         label: 'Administration',
-        routerLink: 'admin',
+        routerLink: 'admin'
       });
     }
     if (this.isLoggedIn === true) {
@@ -146,49 +146,49 @@ export class AppComponent implements OnInit, OnDestroy {
         items: [
           {
             label: 'Overblik',
-            routerLink: 'my-stuff',
+            routerLink: 'my-stuff'
           },
           {
             label: 'Kalender',
-            routerLink: 'my-stuff/team-calendar',
-          },
-        ],
+            routerLink: 'my-stuff/team-calendar'
+          }
+        ]
       });
     }
     const itemsPublic: MenuItem[] | undefined = [
       {
         label: 'Nyheder',
-        routerLink: 'news',
+        routerLink: 'news'
       },
       {
         label: 'Ydelser',
         items: [
           {
             label: 'E-sport træning',
-            routerLink: 'services/e-sports',
+            routerLink: 'services/e-sports'
           },
           {
             label: 'LAN parties',
-            routerLink: 'services/lan-parties',
+            routerLink: 'services/lan-parties'
           },
           {
-            separator: true,
-          },
-        ],
+            separator: true
+          }
+        ]
       },
       {
         label: 'Klubben',
         items: [
           {
             label: 'Om os',
-            routerLink: 'about',
+            routerLink: 'about'
           },
           {
             label: 'Mød holdet',
-            routerLink: 'meet-the-team',
-          },
-        ],
-      },
+            routerLink: 'meet-the-team'
+          }
+        ]
+      }
     ];
     this.items = items.concat(itemsPublic);
   }
@@ -223,7 +223,7 @@ export class AppComponent implements OnInit, OnDestroy {
           console.log(error);
           // this.error = error;
           // this.loading = false;
-        },
+        }
       });
   }
   onToastClose(event: ToastCloseEvent) {

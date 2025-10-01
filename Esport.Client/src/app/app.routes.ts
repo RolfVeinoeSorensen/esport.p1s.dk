@@ -5,40 +5,40 @@ import { UserRole } from '@services/client';
 export const routes: Routes = [
   {
     path: '',
-    loadComponent: () => import('@cms/home/home.component').then(m => m.HomeComponent),
+    loadComponent: () => import('@cms/home/home.component').then(m => m.HomeComponent)
   },
   {
     path: 'gdpr',
-    loadComponent: () => import('@cms/gdpr/gdpr.component').then(m => m.GdprComponent),
+    loadComponent: () => import('@cms/gdpr/gdpr.component').then(m => m.GdprComponent)
   },
   {
     path: 'about',
-    loadComponent: () => import('@cms/about/about.component').then(m => m.AboutComponent),
+    loadComponent: () => import('@cms/about/about.component').then(m => m.AboutComponent)
   },
   {
     path: 'faqs',
-    loadComponent: () => import('@cms/faqs/faqs.component').then(m => m.FaqsComponent),
+    loadComponent: () => import('@cms/faqs/faqs.component').then(m => m.FaqsComponent)
   },
   {
     path: 'meet-the-team',
-    loadComponent: () => import('@cms/meet-the-team/meet-the-team.component').then(m => m.MeetTheTeamComponent),
+    loadComponent: () => import('@cms/meet-the-team/meet-the-team.component').then(m => m.MeetTheTeamComponent)
   },
   {
     path: 'contact-us',
-    loadComponent: () => import('@cms/contact-us/contact-us.component').then(m => m.ContactUsComponent),
+    loadComponent: () => import('@cms/contact-us/contact-us.component').then(m => m.ContactUsComponent)
   },
   {
     path: 'services',
     children: [
       {
         path: 'e-sports',
-        loadComponent: () => import('@cms/services/e-sports/e-sports.component').then(m => m.ESportsComponent),
+        loadComponent: () => import('@cms/services/e-sports/e-sports.component').then(m => m.ESportsComponent)
       },
       {
         path: 'lan-parties',
-        loadComponent: () => import('@cms/services/lan-parties/lan-parties.component').then(m => m.LanPartiesComponent),
-      },
-    ],
+        loadComponent: () => import('@cms/services/lan-parties/lan-parties.component').then(m => m.LanPartiesComponent)
+      }
+    ]
   },
   {
     path: 'news',
@@ -46,51 +46,51 @@ export const routes: Routes = [
       {
         path: '',
         pathMatch: 'full',
-        loadComponent: () => import('@cms/news/news.component').then(m => m.NewsComponent),
+        loadComponent: () => import('@cms/news/news.component').then(m => m.NewsComponent)
       },
       {
         canLoad: [AuthGuard],
         canActivate: [AuthGuard],
         data: { requiredRoles: [UserRole.Admin, UserRole.Editor] },
         path: 'edit/:url_slug',
-        loadComponent: () => import('@cms/news/news-editor/news-editor.component').then(m => m.NewsEditorComponent),
+        loadComponent: () => import('@cms/news/news-editor/news-editor.component').then(m => m.NewsEditorComponent)
       },
       {
         canLoad: [AuthGuard],
         canActivate: [AuthGuard],
         data: { requiredRoles: [UserRole.Admin, UserRole.Editor] },
         path: 'create',
-        loadComponent: () => import('@cms/news/news-editor/news-editor.component').then(m => m.NewsEditorComponent),
+        loadComponent: () => import('@cms/news/news-editor/news-editor.component').then(m => m.NewsEditorComponent)
       },
       {
         path: 'read-article/:url_slug',
-        loadComponent: () => import('@cms/news/news-article/news-article.component').then(m => m.NewsArticleComponent),
-      },
-    ],
+        loadComponent: () => import('@cms/news/news-article/news-article.component').then(m => m.NewsArticleComponent)
+      }
+    ]
   },
   {
     path: 'user',
     children: [
       {
         path: 'register-user',
-        loadComponent: () => import('@user/user-register/user-register.component').then(m => m.UserRegisterComponent),
+        loadComponent: () => import('@user/user-register/user-register.component').then(m => m.UserRegisterComponent)
       },
       {
         path: 'forgot-password',
         loadComponent: () =>
-          import('@user/user-password-reset/user-password-reset.component').then(m => m.UserPasswordResetComponent),
+          import('@user/user-password-reset/user-password-reset.component').then(m => m.UserPasswordResetComponent)
       },
       {
         path: 'change-password/:token',
         loadComponent: () =>
-          import('@user/user-password-change/user-password-change.component').then(m => m.UserPasswordChangeComponent),
+          import('@user/user-password-change/user-password-change.component').then(m => m.UserPasswordChangeComponent)
       },
       {
         path: 'activate-user/:token',
         loadComponent: () =>
-          import('@user/user-password-change/user-password-change.component').then(m => m.UserPasswordChangeComponent),
-      },
-    ],
+          import('@user/user-password-change/user-password-change.component').then(m => m.UserPasswordChangeComponent)
+      }
+    ]
   },
   {
     canLoad: [AuthGuard],
@@ -101,17 +101,17 @@ export const routes: Routes = [
       {
         path: '',
         pathMatch: 'full',
-        loadComponent: () => import('@admin/administration.component').then(m => m.AdministrationComponent),
-      },
-    ],
+        loadComponent: () => import('@admin/administration.component').then(m => m.AdministrationComponent)
+      }
+    ]
   },
   {
     path: 'forbidden',
-    loadComponent: () => import('@shared/forbidden/forbidden.component').then(m => m.ForbiddenComponent),
+    loadComponent: () => import('@shared/forbidden/forbidden.component').then(m => m.ForbiddenComponent)
   },
   {
     path: '404',
-    loadComponent: () => import('@shared/page-not-found/page-not-found.component').then(m => m.PageNotFoundComponent),
+    loadComponent: () => import('@shared/page-not-found/page-not-found.component').then(m => m.PageNotFoundComponent)
   },
   {
     canLoad: [AuthGuard],
@@ -123,14 +123,14 @@ export const routes: Routes = [
       {
         path: 'team-calendar',
         loadComponent: () =>
-          import('./cms/my-stuff/team-calendar/team-calendar.component').then(m => m.TeamCalendarComponent),
+          import('./cms/my-stuff/team-calendar/team-calendar.component').then(m => m.TeamCalendarComponent)
       },
       {
         path: '',
-        loadComponent: () => import('./cms/my-stuff/my-stuff.component').then(m => m.MyStuffComponent),
-      },
-    ],
+        loadComponent: () => import('./cms/my-stuff/my-stuff.component').then(m => m.MyStuffComponent)
+      }
+    ]
   },
   // otherwise redirect to page not found
-  { path: '**', redirectTo: '/404' },
+  { path: '**', redirectTo: '/404' }
 ];

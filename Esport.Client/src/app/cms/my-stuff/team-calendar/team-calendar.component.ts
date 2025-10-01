@@ -8,7 +8,7 @@ import { EventDto, EventsService } from '@app/_services/client';
   selector: 'app-team-calendar',
   imports: [CommonModule, ButtonModule, DialogModule],
   templateUrl: './team-calendar.component.html',
-  styleUrl: './team-calendar.component.css',
+  styleUrl: './team-calendar.component.css'
 })
 export class TeamCalendarComponent implements OnInit {
   private eventsService = inject(EventsService);
@@ -68,6 +68,7 @@ export class TeamCalendarComponent implements OnInit {
     const event = prompt('Enter event:');
     if (event) {
       const dateString = new Date(day).toISOString().split('T')[0];
+      console.log(dateString);
       this.loadEvents();
     }
   }

@@ -9,8 +9,7 @@ describe('UserActivateComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [UserActivateComponent]
-    })
-    .compileComponents();
+    }).compileComponents();
 
     fixture = TestBed.createComponent(UserActivateComponent);
     component = fixture.componentInstance;

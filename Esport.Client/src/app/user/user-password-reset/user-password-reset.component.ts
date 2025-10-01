@@ -11,7 +11,7 @@ import { MessageModule } from 'primeng/message';
   selector: 'app-user-password-reset',
   imports: [InputTextModule, ButtonModule, ReactiveFormsModule, MessageModule],
   templateUrl: './user-password-reset.component.html',
-  styleUrl: './user-password-reset.component.css',
+  styleUrl: './user-password-reset.component.css'
 })
 export class UserPasswordResetComponent implements OnInit {
   private userService = inject(UsersService);
@@ -29,10 +29,10 @@ export class UserPasswordResetComponent implements OnInit {
     this.resetForm = this.formBuilder.group(
       {
         username: ['', [Validators.required, Validators.email, Validators.maxLength(255)]],
-        captchaCode: ['', [Validators.required, , Validators.minLength(6), Validators.maxLength(6)]],
+        captchaCode: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(6)]]
       },
       {
-        validators: [Validation.match('password', 'passwordRepeat')],
+        validators: [Validation.match('password', 'passwordRepeat')]
       }
     );
   }
@@ -54,7 +54,7 @@ export class UserPasswordResetComponent implements OnInit {
       const req: ForgotPasswordRequest = {
         email: this.resetForm.value.username,
         captchaId: this.captcha.captchaId,
-        captchaCode: this.resetForm.value.captchaCode,
+        captchaCode: this.resetForm.value.captchaCode
       };
       this.userService.usersForgotPassword(req).subscribe(response => {
         if (response.ok === false && response.captcha) {
@@ -65,7 +65,7 @@ export class UserPasswordResetComponent implements OnInit {
           icon: response.ok === true ? 'pi pi-check-circle' : 'pi pi-exclamation-triangle',
           summary: 'Password nulstilling',
           detail: response.message,
-          severity: response.ok === true ? 'success' : 'error',
+          severity: response.ok === true ? 'success' : 'error'
         });
         this.resetForm.reset();
         this.formSubmitted = false;

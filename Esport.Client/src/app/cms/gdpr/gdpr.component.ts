@@ -4,6 +4,6 @@ import { Component } from '@angular/core';
   selector: 'app-gdpr',
   imports: [],
   templateUrl: './gdpr.component.html',
-  styleUrl: './gdpr.component.css',
+  styleUrl: './gdpr.component.css'
 })
 export class GdprComponent {}

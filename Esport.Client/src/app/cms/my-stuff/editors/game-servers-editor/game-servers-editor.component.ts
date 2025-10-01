@@ -1,4 +1,4 @@
-import { Component, EventEmitter, inject, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, inject, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators, FormsModule } from '@angular/forms';
 import { EditorType } from '@models/editor-type';
 import { AuthUser, Game, GameServer, GamesService } from '@services/client';
@@ -12,11 +12,11 @@ import { SelectModule } from 'primeng/select';
   selector: 'app-game-servers-editor',
   imports: [InputTextModule, ButtonModule, ReactiveFormsModule, MessageModule, SelectModule, FormsModule],
   templateUrl: './game-servers-editor.component.html',
-  styleUrl: './game-servers-editor.component.css',
+  styleUrl: './game-servers-editor.component.css'
 })
 export class GameServersEditorComponent implements OnInit, OnChanges {
   @Input() public id: number | undefined;
-  @Output() close = new EventEmitter<EditorType>();
+  @Output() closeHandler = new EventEmitter<EditorType>();
   private gs = inject(GamesService);
   private formBuilder = inject(UntypedFormBuilder);
   private its = inject(InternalToastService);
@@ -30,7 +30,7 @@ export class GameServersEditorComponent implements OnInit, OnChanges {
   constructor() {
     this.gameServerForm = this.formBuilder.group({
       server: ['', [Validators.required]],
-      port: ['', [Validators.required]],
+      port: ['', [Validators.required]]
     });
   }
 
@@ -42,7 +42,7 @@ export class GameServersEditorComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     this.reset();
   }
-  ngOnChanges(changes: SimpleChanges) {
+  ngOnChanges() {
     this.reset();
   }
 
@@ -71,9 +71,9 @@ export class GameServersEditorComponent implements OnInit, OnChanges {
         icon: response.ok === true ? 'pi pi-check-circle' : 'pi pi-exclamation-triangle',
         summary: 'Spilserveren blev slettet',
         detail: response.message,
-        severity: response.ok === true ? 'success' : 'error',
+        severity: response.ok === true ? 'success' : 'error'
       });
-      this.close.emit(EditorType.GameServer);
+      this.closeHandler.emit(EditorType.GameServer);
     });
   }
   onSubmit() {
@@ -84,7 +84,7 @@ export class GameServersEditorComponent implements OnInit, OnChanges {
           gameId: this.selectedGame.id,
           port: this.gameServerForm.value.port,
           server: this.gameServerForm.value.server,
-          id: this.gameServer?.id ?? -1,
+          id: this.gameServer?.id ?? -1
         })
         .subscribe(response => {
           this.its.addMessage({
@@ -92,9 +92,9 @@ export class GameServersEditorComponent implements OnInit, OnChanges {
             icon: response.ok === true ? 'pi pi-check-circle' : 'pi pi-exclamation-triangle',
             summary: 'Spilserveren blev gemt',
             detail: response.message,
-            severity: response.ok === true ? 'success' : 'error',
+            severity: response.ok === true ? 'success' : 'error'
           });
-          this.close.emit(EditorType.GameServer);
+          this.closeHandler.emit(EditorType.GameServer);
         });
     } else {
       console.log('submit failed', this.gameServerForm.errors);

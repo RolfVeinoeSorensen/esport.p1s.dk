@@ -11,7 +11,7 @@ import { MessageModule } from 'primeng/message';
   selector: 'app-user-editor',
   imports: [InputTextModule, ButtonModule, ReactiveFormsModule, MessageModule],
   templateUrl: './user-editor.component.html',
-  styleUrl: './user-editor.component.css',
+  styleUrl: './user-editor.component.css'
 })
 export class UserEditorComponent implements OnInit {
   @Input() public id: number | undefined;
@@ -55,7 +55,7 @@ export class UserEditorComponent implements OnInit {
       addressSide: ['', [Validators.required]],
       addressPostalCode: ['', [Validators.required]],
       addressCity: ['', [Validators.required]],
-      mobile: ['', [Validators.required]],
+      mobile: ['', [Validators.required]]
     });
   }
 

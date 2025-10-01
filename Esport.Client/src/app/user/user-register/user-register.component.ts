@@ -11,7 +11,7 @@ import { InternalToastService } from '@services/internaltoast.service';
   selector: 'app-user-register',
   imports: [InputTextModule, ButtonModule, ReactiveFormsModule, MessageModule],
   templateUrl: './user-register.component.html',
-  styleUrl: './user-register.component.css',
+  styleUrl: './user-register.component.css'
 })
 export class UserRegisterComponent implements OnInit {
   private userService = inject(UsersService);
@@ -33,10 +33,10 @@ export class UserRegisterComponent implements OnInit {
         passwordRepeat: ['', [Validators.required]],
         firstname: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(255)]],
         lastname: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(255)]],
-        captchaCode: ['', [Validators.required, , Validators.minLength(6), Validators.maxLength(6)]],
+        captchaCode: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(6)]]
       },
       {
-        validators: [Validation.match('password', 'passwordRepeat')],
+        validators: [Validation.match('password', 'passwordRepeat')]
       }
     );
   }
@@ -62,7 +62,7 @@ export class UserRegisterComponent implements OnInit {
         password: this.registerForm.value.password,
         passwordRepeat: this.registerForm.value.passwordRepeat,
         captchaId: this.captcha.captchaId,
-        captchaCode: this.registerForm.value.captchaCode,
+        captchaCode: this.registerForm.value.captchaCode
       };
       this.userService.usersRegisterUser(req).subscribe(response => {
         if (response.ok === false && response.captcha) {
@@ -73,7 +73,7 @@ export class UserRegisterComponent implements OnInit {
           icon: response.ok === true ? 'pi pi-check-circle' : 'pi pi-exclamation-triangle',
           summary: 'Bruger registrering',
           detail: response.message,
-          severity: response.ok === true ? 'success' : 'error',
+          severity: response.ok === true ? 'success' : 'error'
         });
         this.registerForm.reset();
         this.formSubmitted = false;

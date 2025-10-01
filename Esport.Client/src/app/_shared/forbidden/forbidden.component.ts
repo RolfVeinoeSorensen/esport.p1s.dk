@@ -6,7 +6,7 @@ import { RouterLink } from '@angular/router';
   selector: 'app-forbidden',
   templateUrl: './forbidden.component.html',
   styleUrls: ['./forbidden.component.scss'],
-  imports: [Button, RouterLink],
+  imports: [Button, RouterLink]
 })
 export class ForbiddenComponent {
   constructor() {}
