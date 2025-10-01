@@ -36,6 +36,14 @@ try
     {
         options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
     });
+    builder.Services.AddHttpsRedirection(options =>
+    {
+        // Set the HTTPS port (default is 443 for production)
+        options.HttpsPort = 443;
+
+        // Optionally, set the status code for redirection (default is 307 Temporary Redirect)
+        options.RedirectStatusCode = StatusCodes.Status308PermanentRedirect;
+    });
 
     // configure strongly typed settings object
     builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
