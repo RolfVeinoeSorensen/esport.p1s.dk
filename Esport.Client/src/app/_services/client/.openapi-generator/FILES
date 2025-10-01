@@ -16,6 +16,7 @@ git_push.sh
 index.ts
 model/authRole.ts
 model/authUser.ts
+model/authenticateRequest.ts
 model/authenticateResponse.ts
 model/captchaDto.ts
 model/changePasswordRequest.ts
