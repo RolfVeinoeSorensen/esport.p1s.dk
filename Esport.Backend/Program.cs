@@ -83,16 +83,16 @@ try
 
     var app = builder.Build();
 
-    app.UseForwardedHeaders(new ForwardedHeadersOptions
-    {
-        ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
-    });
+    //app.UseForwardedHeaders(new ForwardedHeadersOptions
+    //{
+    //    ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+    //});
 
     // Register the Swagger generator and the Swagger UI middlewares
     app.UseOpenApi();
     app.UseSwaggerUi();
 
-    app.UseHttpsRedirection();
+    //app.UseHttpsRedirection();
 
     // global cors policy
     app.UseCors(x => x
