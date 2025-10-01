@@ -14,7 +14,7 @@ namespace Esport.Backend.Controllers
         private readonly IUserService userService = userService;
 
         [HttpPost("[action]")]
-        public ActionResult<AuthenticateResponse> Authenticate(AuthenticateRequest model)
+        public ActionResult<AuthenticateResponse> Authenticate([FromBody] AuthenticateRequest model)
         {
             var response = userService.Authenticate(model);
             
