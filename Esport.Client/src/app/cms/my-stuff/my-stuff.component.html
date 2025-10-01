@@ -144,7 +144,7 @@
       <app-games-editor [id]="selectedId"></app-games-editor>
     }
     @case (editorType.GameServer) {
-      <app-game-servers-editor [id]="selectedId" (close)="handleEditorSave($event)"></app-game-servers-editor>
+      <app-game-servers-editor [id]="selectedId" (closeHandler)="handleEditorSave($event)"></app-game-servers-editor>
     }
     @case (editorType.Event) {
       <app-event-editor [id]="selectedId"> </app-event-editor>
