@@ -38,7 +38,7 @@ export class AuthenticationService {
   }
 
   login(username: string, password: string) {
-    return this.service.usersAuthenticate(username, password).pipe(
+    return this.service.usersAuthenticate({ username: username, password: password }).pipe(
       map(res => {
         let user: User = new User();
         user.id = res.id;
