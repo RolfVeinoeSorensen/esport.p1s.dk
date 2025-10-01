@@ -32,19 +32,6 @@ try
         x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
     });
 
-    builder.Services.Configure<ForwardedHeadersOptions>(options =>
-    {
-        options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
-    });
-    builder.Services.AddHttpsRedirection(options =>
-    {
-        // Set the HTTPS port (default is 443 for production)
-        options.HttpsPort = 443;
-
-        // Optionally, set the status code for redirection (default is 307 Temporary Redirect)
-        options.RedirectStatusCode = StatusCodes.Status308PermanentRedirect;
-    });
-
     // configure strongly typed settings object
     builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
     builder.Services.AddMemoryCache();
@@ -105,7 +92,6 @@ try
     app.UseOpenApi();
     app.UseSwaggerUi();
 
-    app.UseForwardedHeaders();
     app.UseHttpsRedirection();
 
     // global cors policy
