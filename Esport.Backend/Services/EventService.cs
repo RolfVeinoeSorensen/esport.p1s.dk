@@ -1,6 +1,7 @@
 using Esport.Backend.Entities;
 using Microsoft.EntityFrameworkCore;
 using Esport.Backend.Dtos;
+using Esport.Backend.Models;
 
 namespace Esport.Backend.Services
 {
@@ -10,20 +11,39 @@ namespace Esport.Backend.Services
 
         private readonly DataContext db = context;
 
-        public Event CreateOrUpdateEvent(Event ev)
+        public Event CreateOrUpdateEvent(EventSubmitRequest ev, AuthUser currentUser)
         {
-            if (ev.Id == 0)
+            var existing = db.Events.FirstOrDefault(x => x.Id.Equals(ev.Id));
+            if (existing == null)
             {
-                db.Events.Add(ev);
+                Event newEvent = new()
+                {
+                    CreatedBy = currentUser.Id,
+                    CreatedDateTime = DateTime.Now,
+                    Name = ev.Name,
+                    Description = ev.Description,
+                    StartDateTime = ev.StartDateTime,
+                    EndDateTime = ev.EndDateTime,
+                };
+                db.Events.Add(newEvent);
                 db.SaveChanges();
-                return ev;
+                return newEvent;
             }
             else
             {
-                db.Update(ev);
+                db.Update(existing);
                 db.SaveChanges();
-                return ev;
+                return existing;
             }
+        }
+
+        private void AddTeamsToEvent(int eventId, ICollection<int> EventsUsers)
+        {
+
+        }
+        private void AddUsersToEvent(int eventId, ICollection<int> EventsTeams)
+        {
+
         }
 
         public Event CreateOrUpdateUserToEvent(EventsUser eventsUser)
@@ -99,7 +119,7 @@ namespace Esport.Backend.Services
                 .Where(eu => eu.UserId == userId && ((eu.Event.StartDateTime.Year >= year && eu.Event.StartDateTime.Month <= month) ||
                     (eu.Event.EndDateTime.Year >= year && eu.Event.EndDateTime.Month >= month)))
                 .OrderByDescending(o => o.Event.StartDateTime)
-                .Take(10).Select(r => new EventUserDto{ Event = r.Event, EventsUser = r }).ToList();
+                .Take(10).Select(r => new EventUserDto { Event = r.Event, EventsUser = r }).ToList();
         }
     }
 }

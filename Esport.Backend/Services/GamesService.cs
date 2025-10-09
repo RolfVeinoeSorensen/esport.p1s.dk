@@ -50,6 +50,7 @@ namespace Esport.Backend.Services
             {
                 existingGame.Name = game.Name;
                 existingGame.Description = game.Description;
+                existingGame.Logo = game.Logo;
                 db.Games.Update(existingGame);
             }
             db.SaveChanges();

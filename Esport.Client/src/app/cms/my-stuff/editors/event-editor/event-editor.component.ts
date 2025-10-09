@@ -1,7 +1,7 @@
 import { Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
 import { ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { EditorType } from '@models/editor-type';
-import { FileService } from '@services/client';
+import { EventsService } from '@services/client';
 import { InternalToastService } from '@services/internaltoast.service';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
@@ -16,7 +16,7 @@ import { MessageModule } from 'primeng/message';
 export class EventEditorComponent implements OnInit {
   @Input() public id: number | undefined;
   @Output() closeHandler = new EventEmitter<EditorType>();
-  private fs = inject(FileService);
+  private es = inject(EventsService);
   private formBuilder = inject(UntypedFormBuilder);
   private its = inject(InternalToastService);
   eventForm: UntypedFormGroup;
@@ -31,5 +31,15 @@ export class EventEditorComponent implements OnInit {
 
   ngOnInit(): void {
     throw new Error('Method not implemented.');
+  }
+
+  getEvent(id: number) {
+    this.es.eventsGetById(id).subscribe(event => {
+      console.log(event);
+    });
+  }
+  saveOrCreateEvent() {
+    // this.es.eventsCreateOrUpdateEvent({
+    // }).subscribe();
   }
 }
