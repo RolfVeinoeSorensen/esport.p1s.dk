@@ -13,7 +13,7 @@ namespace Esport.Backend.Services
 
         public IEnumerable<Game> GetAllGames()
         {
-            return db.Games;
+            return db.Games.Include(gs=>gs.GameServers);
         }
 
         public Game GetGameById(int id)

@@ -1,42 +1,80 @@
 <div class="card">
-  <form [formGroup]="gameServerForm" (ngSubmit)="onSubmit()" class="grid grid-cols-1 gap-4">
-    <div class="col-span-1">
-      <label for="server">Server</label>
-      <input
-        pInputText
-        class="w-full"
-        id="server"
-        formControlName="server"
-        [invalid]="isInvalid('server')"
-        placeholder="Server"
-        type="text"
-        size="255" />
-      @if (isInvalid('server')) {
-        <p-message severity="error" size="small" variant="simple"
-          >Server skal udfyldes og være mindre end 255 karakterer.</p-message
-        >
-      }
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+    <div class="col-span-1 md:col-span-2">
+      <p-table [value]="games" size="small" stripedRows [scrollable]="true" scrollHeight="400px" tableStyleClass="w-full">
+          <ng-template #header>
+              <tr>
+                  <th>Name</th>
+                  <th>Beskrivelse</th>
+                  <th>Logo</th>
+                  <th class="size-16"></th>
+              </tr>
+          </ng-template>
+          <ng-template #body let-game>
+              <tr>
+                  <td>{{ game.name }}</td>
+                  <td>{{ game.description }}</td>
+                  <td>{{ game.logo }}</td>
+                  <td>
+                    <p-button type="button" [disabled]="game.gameServers && game.gameServers.length > 0" severity="danger" text="true" icon="pi pi-trash" />
+                    <p-button type="button" text="true" (click)="selectGame(game)" icon="pi pi-pencil" />
+                  </td>
+              </tr>
+          </ng-template>
+      </p-table>
     </div>
-    <div class="col-span-1">
-      <label for="port">Port</label>
-      <input
-        pInputText
-        class="w-full"
-        id="port"
-        formControlName="port"
-        [invalid]="isInvalid('port')"
-        placeholder="Port"
-        type="number"
-        size="255" />
-      @if (isInvalid('port')) {
-        <p-message severity="error" size="small" variant="simple">Port skal udfyldes og være et tal.</p-message>
-      }
-    </div>
-    <div class="col-span-1 text-center">
-      @if (game !== undefined) {
-        <p-button type="button" severity="danger" label="Slet server" icon="pi pi-trash" (click)="onRemove(game.id)" />
-      }
-      <p-button type="submit" label="Gem server" icon="pi pi-save" />
-    </div>
-  </form>
+    <form [formGroup]="gameForm" (ngSubmit)="onSubmit()">
+      <div class="col-span-1 relative">
+        <p-button type="button" (click)="reset()" size="small" styleClass="w-full mb-4" label="Nyt spil" icon="pi pi-plus" />
+        <label for="name">Navn</label>
+        <input
+          pInputText
+          class="w-full"
+          id="name"
+          formControlName="name"
+          [invalid]="isInvalid('name')"
+          placeholder="Navn"
+          type="text"
+          size="255" />
+        @if (isInvalid('name')) {
+          <p-message severity="error" size="small" variant="simple"
+            >Navn skal udfyldes og være mindre end 255 karakterer.</p-message
+          >
+        }
+      </div>
+      <div class="col-span-1">
+        <label for="description">Beskrivelse</label>
+        <input
+          pInputText
+          class="w-full"
+          id="description"
+          formControlName="description"
+          [invalid]="isInvalid('description')"
+          placeholder="Beskrivelse"
+          type="text"
+          size="255" />
+        @if (isInvalid('description')) {
+          <p-message severity="error" size="small" variant="simple">Beskrivelse skal udfyldes.</p-message>
+        }
+      </div>
+      <div class="col-span-1">
+        <label for="description">Logo</label>
+        <input
+          pInputText
+          class="w-full"
+          id="logo"
+          formControlName="logo"
+          [invalid]="isInvalid('logo')"
+          placeholder="Logo"
+          type="text"
+          size="255" />
+        @if (isInvalid('logo')) {
+          <p-message severity="error" size="small" variant="simple">Logo skal udfyldes.</p-message>
+        }
+      </div>
+      <div class="col-span-1 md:col-span-3 text-center mt-4">
+        <p-button type="submit" [label]="selectedGame === undefined ? 'Opret spil':'Gem spil'" icon="pi pi-save" />
+      </div>
+    </form>
+  </div>
 </div>

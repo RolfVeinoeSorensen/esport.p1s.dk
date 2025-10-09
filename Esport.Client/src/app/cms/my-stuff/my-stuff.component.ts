@@ -90,6 +90,12 @@ export class MyStuffComponent implements OnInit {
     });
   }
 
+  removeGameServer(gameServer: GameServerDto) {
+    this.gs.gamesRemoveGameServer(gameServer.gameServer.id).subscribe(() => {
+      this.getGameServers();
+    });
+  }
+
   handleEditorSave(editorType: EditorType) {
     this.visibleEditor = false;
     switch (editorType) {
@@ -117,7 +123,7 @@ export class MyStuffComponent implements OnInit {
         this.editorText = isNew ? 'Opret aktivitet' : 'Rediger aktivitet';
         break;
       case EditorType.Game:
-        this.editorText = isNew ? 'Opret spil' : 'Rediger spil';
+        this.editorText = 'Rediger spil';
         break;
       case EditorType.GameServer:
         this.editorText = isNew ? 'Opret spil server' : 'Rediger spil server';

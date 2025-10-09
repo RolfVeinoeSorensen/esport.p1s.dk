@@ -30,6 +30,12 @@
             <div class="absolute bottom-0 right-0">
               <p-button
                 size="small"
+                icon="pi pi-trash"
+                text="true"
+                severity="danger"
+                (click)="removeGameServer(gs)" />
+              <p-button
+                size="small"
                 icon="pi pi-pencil"
                 text="true"
                 (click)="openEditor(editorType.GameServer, gs.gameServer.id)" />
@@ -135,13 +141,13 @@
     </div>
   </div>
 </p-card>
-<p-dialog [header]="editorText" [modal]="true" [(visible)]="visibleEditor" [style]="{ width: '90vw' }">
+<p-dialog [header]="editorText" [modal]="true" [(visible)]="visibleEditor" styleClass="w-full md:w-1/2">
   @switch (selectedEditorType) {
     @case (editorType.User) {
       <app-user-editor [id]="selectedId"></app-user-editor>
     }
     @case (editorType.Game) {
-      <app-games-editor [id]="selectedId"></app-games-editor>
+      <app-games-editor (closeHandler)="handleEditorSave($event)"></app-games-editor>
     }
     @case (editorType.GameServer) {
       <app-game-servers-editor [id]="selectedId" (closeHandler)="handleEditorSave($event)"></app-game-servers-editor>
