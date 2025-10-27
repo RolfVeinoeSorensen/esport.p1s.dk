@@ -6,7 +6,7 @@ export const environment = {
   site: 'https://localhost:4300',
   sitename: 'p1s.dk',
   sitemode: 'dev',
-  apiUrl: 'http://localhost:4302'
+  apiUrl: 'https://api.p1s.dk' //'http://localhost:4302'
 };
 
 /*

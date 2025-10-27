@@ -2,6 +2,7 @@ using Esport.Backend.Authorization;
 using Esport.Backend.Dtos;
 using Esport.Backend.Entities;
 using Esport.Backend.Enums;
+using Esport.Backend.Models;
 using Esport.Backend.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -36,12 +37,12 @@ namespace Esport.Backend.Controllers
 
         [Authorize([UserRole.Admin, UserRole.MemberAdult, UserRole.MemberKid])]
         [HttpPost("[action]")]
-        public ActionResult<Event> CreateOrUpdateEvent([FromBody] Event ev)
+        public ActionResult<Event> CreateOrUpdateEvent([FromBody] EventSubmitRequest ev)
         {
             if (HttpContext.Items["User"] is not AuthUser currentUser || currentUser.Roles.Any(x => x.Role.Equals(UserRole.Admin)) == true)
                 return Unauthorized(new { message = "Unauthorized" });
 
-            var eventResult = eventService.CreateOrUpdateEvent(ev);
+            var eventResult = eventService.CreateOrUpdateEvent(ev, currentUser);
             return Ok(eventResult);
         }
         [Authorize([UserRole.Admin, UserRole.MemberAdult, UserRole.MemberKid])]
