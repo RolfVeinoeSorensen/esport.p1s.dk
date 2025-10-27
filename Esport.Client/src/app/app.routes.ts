@@ -82,11 +82,13 @@ export const routes: Routes = [
       },
       {
         path: 'change-password/:token',
+        pathMatch: 'full',
         loadComponent: () =>
           import('@user/user-password-change/user-password-change.component').then(m => m.UserPasswordChangeComponent)
       },
       {
         path: 'activate-user/:token',
+        pathMatch: 'full',
         loadComponent: () => import('@user/user-activate/user-activate.component').then(m => m.UserActivateComponent)
       }
     ]
