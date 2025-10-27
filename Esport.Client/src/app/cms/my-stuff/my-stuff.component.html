@@ -24,9 +24,9 @@
             </div>
           </ng-template>
           <div class="relative">
-            <p class="m-0">{{ gs.gameServer.game?.description }}</p>
-            <p class="m-0">Server: {{ gs.gameServer.server }}</p>
-            <p class="m-0">Port: {{ gs.gameServer.port }}</p>
+            <div class="m-0 mb-4" [innerHTML]="gs.gameServer.game?.description"></div>
+            <p class="m-0 font-bold">Server: {{ gs.gameServer.server }}</p>
+            <p class="m-0 font-bold">Port: {{ gs.gameServer.port }}</p>
             <div class="absolute bottom-0 right-0">
               <p-button
                 size="small"

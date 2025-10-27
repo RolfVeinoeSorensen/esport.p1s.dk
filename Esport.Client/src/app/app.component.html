@@ -17,11 +17,15 @@
           [rounded]="true"
           [text]="true"
           [title]="'Toggle Dark Mode'"
+          severity="secondary"
           (onClick)="toggleDarkMode()" />
         <p-button
           [icon]="isLoggedIn === true ? 'pi pi-sign-out' : 'pi pi-sign-in'"
           [rounded]="true"
           [text]="true"
+          [label]="isLoggedIn === true ? 'Log ud' : 'Log ind'"
+          [title]="isLoggedIn === true ? 'Log ud' : 'Log ind'"
+          severity="secondary"
           (click)="onSigninOrSignoutClick()" />
       </div>
     </ng-template>

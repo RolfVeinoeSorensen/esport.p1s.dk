@@ -1,0 +1,11 @@
+:host ::ng-deep .p-scrolltop {
+  background: var(--primary); /* Change background color */
+  border-color: var(--secondary);
+  color: white; /* Change icon color */
+}
+
+:host ::ng-deep .p-scrolltop:hover {
+  background: var(--secondary); /* Change hover background color */
+  border-color: var(--primary);
+  color: white; /* Change icon color */
+}
