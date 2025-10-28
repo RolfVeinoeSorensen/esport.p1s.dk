@@ -37,13 +37,42 @@ namespace Esport.Backend.Services
             }
         }
 
-        private void AddTeamsToEvent(int eventId, ICollection<int> EventsUsers)
+        public void AddTeamsToEvent(int eventId, int teamId)
         {
-
+            var ev = db.Events.Include(t => t.Teams).ToList();
+            var exist = ev.Select(t => t.Teams.Where(x => x.Id.Equals(teamId))).FirstOrDefault();
+            if (exist == null)
+            {
+                EventsUser userEv = new Team
+                {
+                    EventId = eventId,
+                    UserId = u,
+                    Invited = DateTime.Now
+                };
+                db.Add(userEv);
+            }
+            db.SaveChanges();
         }
-        private void AddUsersToEvent(int eventId, ICollection<int> EventsTeams)
+        private void AddUsersToEvent(int eventId, ICollection<int> eventsUsers)
         {
+            var existing = db.EventsUsers.Where(us => us.EventId.Equals(eventId) && eventsUsers.Contains(us.UserId)).ToList();
+            eventsUsers.ToList().ForEach(u =>
+            {
+                var exist = existing.FirstOrDefault(us => us.UserId.Equals(u));
+                if (exist == null)
+                {
+                    EventsUser userEv = new EventsUser
+                    {
+                        EventId = eventId,
+                        UserId = u,
+                        Invited = DateTime.Now
+                    };
+                    db.Add(userEv);
+                }
 
+
+            });
+            db.SaveChanges();
         }
 
         public Event CreateOrUpdateUserToEvent(EventsUser eventsUser)
