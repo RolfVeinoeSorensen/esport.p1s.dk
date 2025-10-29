@@ -15,7 +15,7 @@
   <ng-template #body let-team>
     <tr>
       <td>{{ team.name }}</td>
-      <td>{{ team.members.length }}</td>
+      <td>{{ team.members.length > 0 ? team.members.length + 1 : 0 }}</td>
       <td>{{ team.validFrom | date: 'dd-MM-yyyy' }}</td>
       <td>{{ team.validTo | date: 'dd-MM-yyyy' }}</td>
       <td>
