@@ -163,5 +163,17 @@ namespace Esport.Backend.Services
                 .OrderByDescending(o => o.Event.StartDateTime)
                 .Take(10).Select(r => new EventUserDto { Event = r.Event, EventsUser = r }).ToListAsync();
         }
+
+        public async Task<IEnumerable<EventUserDto>> GetUpcomingUserEventsByUserId(int userId)
+        {
+            var dt = DateTime.Now;
+            IEnumerable<EventUserDto> result = [];
+            return await db.EventsUsers
+                .Include(eu => eu.User)
+                .Include(e => e.Event)
+                .Where(eu => eu.UserId == userId && eu.Event.StartDateTime >= dt)
+                .OrderByDescending(o => o.Event.StartDateTime)
+                .Take(10).Select(r => new EventUserDto { Event = r.Event, EventsUser = r }).ToListAsync();
+        }
     }
 }
