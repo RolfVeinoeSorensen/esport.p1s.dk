@@ -59,9 +59,9 @@ namespace Esport.Backend.Services
             return new AuthenticateResponse(user, jwtToken);
         }
 
-        public IEnumerable<AuthUser> GetAllUsers()
+        public async Task<List<AuthUser>> GetAllUsers()
         {
-            return db.AuthUsers;
+            return await db.AuthUsers.AsNoTracking().ToListAsync(); ;
         }
 
         public AuthUser GetUserById(int id)
@@ -225,6 +225,20 @@ namespace Esport.Backend.Services
 
             response.Message = "Bruger opdateret succesfuldt";
             return response;
+        }
+
+        public async Task<List<Team>> GetAllTeams()
+        {
+            return await db.Teams.AsNoTracking().ToListAsync();
+        }
+
+        public async Task<List<AuthUser>> GetAllTeamUsers(int teamId)
+        {
+            return await db.AuthUsers
+                .Include(u => u.Teams)
+                .Where(u => u.Teams.Any(t => t.Id == teamId))
+                .AsNoTracking()
+                .ToListAsync();
         }
     }
 }

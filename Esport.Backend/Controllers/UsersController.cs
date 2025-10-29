@@ -23,10 +23,26 @@ namespace Esport.Backend.Controllers
 
         [Authorize(UserRole.Admin)]
         [HttpGet("[action]")]
-        public ActionResult<IEnumerable<AuthUser>> GetAllUsers()
+        public async Task<ActionResult<List<AuthUser>>> GetAllUsers()
         {
-            var users = userService.GetAllUsers();
+            var users = await userService.GetAllUsers();
             return Ok(users);
+        }
+
+        [Authorize(UserRole.Admin)]
+        [HttpGet("[action]")]
+        public async Task<ActionResult<List<Team>>> GetAllTeams()
+        {
+            var teams = await userService.GetAllTeams();
+            return Ok(teams);
+        }
+
+        [Authorize(UserRole.Admin)]
+        [HttpGet("[action]")]
+        public async Task<ActionResult<List<AuthUser>>> GetAllTeamUsers(int teamId)
+        {
+            var teams = await userService.GetAllTeamUsers(teamId);
+            return Ok(teams);
         }
 
         [Authorize([UserRole.Admin, UserRole.MemberAdult, UserRole.MemberKid, UserRole.Editor])]

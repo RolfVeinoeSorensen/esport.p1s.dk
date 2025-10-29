@@ -35,7 +35,7 @@ namespace Esport.Backend.Controllers
             return Ok(eventResult);
         }
 
-        [Authorize([UserRole.Admin, UserRole.MemberAdult, UserRole.MemberKid])]
+        [Authorize([UserRole.Admin])]
         [HttpPost("[action]")]
         public async Task<ActionResult<Event>> CreateOrUpdateEvent([FromBody] EventSubmitRequest ev)
         {
@@ -45,7 +45,7 @@ namespace Esport.Backend.Controllers
             var eventResult = await eventService.CreateOrUpdateEvent(ev, currentUser);
             return Ok(eventResult);
         }
-        [Authorize([UserRole.Admin, UserRole.MemberAdult, UserRole.MemberKid])]
+        [Authorize([UserRole.Admin])]
         [HttpDelete("[action]")]
         public async Task<ActionResult> DeleteEvent(int id)
         {
@@ -88,7 +88,7 @@ namespace Esport.Backend.Controllers
             return Ok(events);
         }
 
-        [Authorize([UserRole.Admin, UserRole.MemberAdult, UserRole.MemberKid])]
+        [Authorize([UserRole.Admin])]
         [HttpPost("[action]")]
         public async Task<ActionResult<Event>> AddTeamToEvent([FromBody] AddTeamToEventRequest req)
         {
