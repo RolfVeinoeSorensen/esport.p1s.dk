@@ -14,6 +14,7 @@ configuration.ts
 encoder.ts
 git_push.sh
 index.ts
+model/addTeamToEventRequest.ts
 model/authRole.ts
 model/authUser.ts
 model/authenticateRequest.ts
@@ -23,6 +24,7 @@ model/changePasswordRequest.ts
 model/contactRequest.ts
 model/event.ts
 model/eventDto.ts
+model/eventSubmitRequest.ts
 model/eventUserDto.ts
 model/eventsUser.ts
 model/fileResponseDto.ts
@@ -42,7 +44,9 @@ model/registerRequest.ts
 model/submitResponse.ts
 model/tag.ts
 model/team.ts
+model/updateUserRequest.ts
 model/userRole.ts
+model/userToTeamRequest.ts
 model/usersGame.ts
 param.ts
 provide-api.ts
