@@ -240,5 +240,103 @@ namespace Esport.Backend.Services
                 .AsNoTracking()
                 .ToListAsync();
         }
+
+        public async Task<SubmitResponse> AddUserToTeam(UserToTeamRequest model)
+        {
+            var response = new SubmitResponse
+            {
+                Ok = true,
+            };
+            var user = await db.AuthUsers
+                .Include(u => u.Teams)
+                .FirstOrDefaultAsync(u => u.Id == model.UserId);
+            var team = await db.Teams.FirstOrDefaultAsync(t => t.Id == model.TeamId);
+            if (user == null || team == null)
+            {
+                response.Ok = false;
+                response.Message = "Bruger eller hold ikke fundet";
+                return response;
+            }
+
+            if (user.Teams.Any(t => t.Id == team.Id))
+            {
+                response.Ok = false;
+                response.Message = "Bruger er allerede medlem af holdet";
+                return response;
+            }
+
+            user.Teams.Add(team);
+            db.AuthUsers.Update(user);
+            await db.SaveChangesAsync();
+
+            response.Message = "Bruger tilføjet til holdet succesfuldt";
+            return response;
+        }
+        public async Task<SubmitResponse> RemoveUserFromTeam(UserToTeamRequest model)
+        {
+            var response = new SubmitResponse
+            {
+                Ok = true,
+            };
+            var user = await db.AuthUsers
+                .Include(u => u.Teams)
+                .FirstOrDefaultAsync(u => u.Id == model.UserId);
+            var team = await db.Teams.FirstOrDefaultAsync(t => t.Id == model.TeamId);
+            if (user == null || team == null)
+            {
+                response.Ok = false;
+                response.Message = "Bruger eller hold ikke fundet";
+                return response;
+            }
+
+            if (!user.Teams.Any(t => t.Id == team.Id))
+            {
+                response.Ok = false;
+                response.Message = "Bruger er ikke medlem af holdet";
+                return response;
+            }
+
+            user.Teams.Remove(team);
+            db.AuthUsers.Update(user);
+            await db.SaveChangesAsync();
+
+            response.Message = "Bruger fjernet fra holdet succesfuldt";
+            return response;
+        }
+
+        public async Task<SubmitResponse> CreateOrUpdateTeam(Team model)
+        {
+            var response = new SubmitResponse
+            {
+                Ok = true,
+            };
+            Team? team;
+            if (model.Id > 0)
+            {
+                team = await db.Teams.FirstOrDefaultAsync(t => t.Id == model.Id);
+                if (team == null)
+                {
+                    response.Ok = false;
+                    response.Message = "Hold ikke fundet";
+                    return response;
+                }
+                team.Name = model.Name;
+                team.Description = model.Description;
+                db.Teams.Update(team);
+                response.Message = "Hold opdateret succesfuldt";
+            }
+            else
+            {
+                team = new Team
+                {
+                    Name = model.Name,
+                    Description = model.Description,
+                };
+                await db.Teams.AddAsync(team);
+                response.Message = "Hold oprettet succesfuldt";
+            }
+            await db.SaveChangesAsync();
+            return response;
+        }
     }
 }

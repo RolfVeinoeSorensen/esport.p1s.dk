@@ -89,7 +89,32 @@ namespace Esport.Backend.Controllers
         [HttpPost("[action]")]
         public async Task<ActionResult<SubmitResponse>> UpdateUser([FromBody] UpdateUserRequest req)
         {
+            // only admins can access other user records
+            if (HttpContext.Items["User"] is not AuthUser currentUser || (currentUser.Roles.Any(x => x.Role.Equals(UserRole.Admin)) == false && currentUser.Id != req.Id))
+                return Unauthorized(new { message = "Unauthorized" });
             var response = await userService.UpdateUser(req);
+            return Ok(response);
+        }
+
+        [Authorize(UserRole.Admin)]
+        [HttpPost("[action]")]
+        public async Task<ActionResult<SubmitResponse>> AddUserToTeam([FromBody] UserToTeamRequest req)
+        {
+            var response = await userService.AddUserToTeam(req);
+            return Ok(response);
+        }
+        [Authorize(UserRole.Admin)]
+        [HttpPost("[action]")]
+        public async Task<ActionResult<SubmitResponse>> RemoveUserFromTeam([FromBody] UserToTeamRequest req)
+        {
+            var response = await userService.RemoveUserFromTeam(req);
+            return Ok(response);
+        }
+        [Authorize(UserRole.Admin)]
+        [HttpPost("[action]")]
+        public async Task<ActionResult<SubmitResponse>> CreateOrUpdateTeam([FromBody] Team req)
+        {
+            var response = await userService.CreateOrUpdateTeam(req);
             return Ok(response);
         }
     }

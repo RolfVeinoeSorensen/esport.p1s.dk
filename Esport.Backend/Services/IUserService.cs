@@ -16,5 +16,8 @@ namespace Esport.Backend.Services
         Task<SubmitResponse> UpdateUser(UpdateUserRequest model);
         Task<List<Team>> GetAllTeams();
         Task<List<AuthUser>> GetAllTeamUsers(int teamId);
+        Task<SubmitResponse> AddUserToTeam(UserToTeamRequest model);
+        Task<SubmitResponse> RemoveUserFromTeam(UserToTeamRequest model);
+        Task<SubmitResponse> CreateOrUpdateTeam(Team model);
     }
 }
