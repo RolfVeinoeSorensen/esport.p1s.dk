@@ -1,4 +1,4 @@
-import { Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { EditorType } from '@models/editor-type';
 import { SimpleId } from '@models/simple-id';
@@ -14,7 +14,7 @@ import { MessageModule } from 'primeng/message';
   templateUrl: './event-editor.component.html',
   styleUrl: './event-editor.component.css'
 })
-export class EventEditorComponent implements OnInit {
+export class EventEditorComponent implements OnInit, OnChanges {
   @Input() public id: SimpleId | undefined;
   @Output() closeHandler = new EventEmitter<EditorType>();
   private es = inject(EventsService);
@@ -29,15 +29,22 @@ export class EventEditorComponent implements OnInit {
       port: ['', [Validators.required]]
     });
   }
-
-  ngOnInit(): void {
-    throw new Error('Method not implemented.');
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log('Changes detected:', changes);
+    this.reset();
   }
 
-  getEvent(id: number) {
-    this.es.eventsGetById(id).subscribe(event => {
-      console.log(event);
-    });
+  ngOnInit(): void {
+    this.reset();
+  }
+
+  reset() {
+    this.eventForm.reset();
+    if (this.id?.id) {
+      this.es.eventsGetById(this.id.id).subscribe(event => {
+        console.log(event);
+      });
+    }
   }
   saveOrCreateEvent() {
     // this.es.eventsCreateOrUpdateEvent({
