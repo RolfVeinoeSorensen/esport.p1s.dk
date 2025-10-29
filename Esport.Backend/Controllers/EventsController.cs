@@ -87,5 +87,16 @@ namespace Esport.Backend.Controllers
             var events = await eventService.GetUserEventsByUserId(currentUser.Id, month, year);
             return Ok(events);
         }
+
+        [Authorize([UserRole.Admin, UserRole.MemberAdult, UserRole.MemberKid])]
+        [HttpPost("[action]")]
+        public async Task<ActionResult<Event>> AddTeamToEvent(int eventId, int teamId)
+        {
+            if (HttpContext.Items["User"] is not AuthUser currentUser || currentUser.Roles.Any(x => x.Role.Equals(UserRole.Admin)) == true)
+                return Unauthorized(new { message = "Unauthorized" });
+
+            var eventResult = await eventService.AddTeamToEvent(eventId, teamId);
+            return Ok(eventResult);
+        }
     }
 }
