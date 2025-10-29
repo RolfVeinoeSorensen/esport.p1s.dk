@@ -206,6 +206,7 @@ namespace Esport.Backend.Services
             }
 
             // update user properties
+            user.Username = model.Username;
             user.FirstName = model.FirstName;
             user.LastName = model.LastName;
             user.AddressStreet = model.AddressStreet;
