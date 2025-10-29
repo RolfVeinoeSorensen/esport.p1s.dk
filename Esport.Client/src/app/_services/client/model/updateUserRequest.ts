@@ -11,6 +11,7 @@
 
 export interface UpdateUserRequest { 
     id: number;
+    username: string;
     firstName: string;
     lastName: string;
     addressStreet: string;

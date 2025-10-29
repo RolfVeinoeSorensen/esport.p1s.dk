@@ -1,7 +1,7 @@
 import { Component, inject, Input, OnInit } from '@angular/core';
 import { ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { AuthenticationService } from '@services/authentication.service';
-import { AuthUser, FileService, UsersService } from '@services/client';
+import { AuthUser, FileService, UpdateUserRequest, UsersService } from '@services/client';
 import { InternalToastService } from '@services/internaltoast.service';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
@@ -79,22 +79,38 @@ export class UserEditorComponent implements OnInit {
 
   onSubmit() {
     this.formSubmitted = true;
-    // if (this.userForm.valid && this.userInfo) {
-    //   this.userInfo.username = this.userForm.value.username;
-    //   this.us.(this.userInfo).subscribe(response => {
-    //     this.its.addMessage({
-    //       id: 'userRegistered',
-    //       icon: response.ok === true ? 'pi pi-check-circle' : 'pi pi-exclamation-triangle',
-    //       summary: 'Bruger registrering',
-    //       detail: response.message,
-    //       severity: response.ok === true ? 'success' : 'error',
-    //     });
-    //     this.userForm.reset();
-    //     this.formSubmitted = false;
-    //   });
-    // } else {
-    //   console.log('submit failed', this.userForm.errors);
-    //   this.formSubmitted = false;
-    // }
+    if (this.userForm.valid && this.userInfo) {
+      let request: UpdateUserRequest = {
+        id: this.userInfo.id,
+        firstName: this.f['firstName'].value,
+        lastName: this.f['lastName'].value,
+        username: this.f['username'].value,
+        addressStreet: this.f['addressStreet'].value,
+        addressStreetNumber: this.f['addressStreetNumber'].value,
+        addressFloor: this.f['addressFloor'].value,
+        addressSide: this.f['addressSide'].value,
+        addressPostalCode: this.f['addressPostalCode'].value,
+        addressCity: this.f['addressCity'].value,
+        mobile: this.f['mobile'].value,
+        consentShowImages: this.f['consentShowImages'].value,
+        canBringLaptop: this.f['canBringLaptop'].value,
+        canBringStationaryPc: this.f['canBringStationaryPc'].value,
+        canBringPlaystation: this.f['canBringPlaystation'].value
+      };
+      this.us.usersUpdateUser(request).subscribe(response => {
+        this.its.addMessage({
+          id: 'userRegistered',
+          icon: response.ok === true ? 'pi pi-check-circle' : 'pi pi-exclamation-triangle',
+          summary: 'Bruger registrering',
+          detail: response.message,
+          severity: response.ok === true ? 'success' : 'error'
+        });
+        this.userForm.reset();
+        this.formSubmitted = false;
+      });
+    } else {
+      console.log('submit failed', this.userForm.errors);
+      this.formSubmitted = false;
+    }
   }
 }
