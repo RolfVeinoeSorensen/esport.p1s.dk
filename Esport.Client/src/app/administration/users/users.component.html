@@ -6,16 +6,24 @@
   <ng-template #header>
     <tr>
       <th>Email</th>
+      <th>Mobil</th>
       <th>Fornavn</th>
       <th>Efternavn</th>
+      <th>Roller</th>
       <th style="width: 6rem"></th>
     </tr>
   </ng-template>
   <ng-template #body let-user>
     <tr>
       <td>{{ user.username }}</td>
+      <td>{{ user.mobile }}</td>
       <td>{{ user.firstName }}</td>
       <td>{{ user.lastName }}</td>
+      <td>
+        @for (role of user?.roles; track role) {
+          <p-tag class="mr-2" severity="secondary" [value]="role.role" />
+        }
+      </td>
       <td>
         <p-button icon="pi pi-pencil" text="true" size="small" title="Rediger" class="p-button-text"></p-button>
         <p-button icon="fal fa-users-class" text="true" size="small" title="Hold" class="p-button-text"></p-button>

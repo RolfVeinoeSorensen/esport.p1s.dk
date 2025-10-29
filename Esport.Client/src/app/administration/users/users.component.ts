@@ -2,10 +2,11 @@ import { Component, inject, OnInit } from '@angular/core';
 import { AuthUser, UsersService } from '@services/client';
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
+import { TagModule } from 'primeng/tag';
 
 @Component({
   selector: 'app-users',
-  imports: [TableModule, ButtonModule],
+  imports: [TableModule, ButtonModule, TagModule],
   templateUrl: './users.component.html',
   styleUrl: './users.component.css'
 })
