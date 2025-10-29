@@ -61,7 +61,7 @@ namespace Esport.Backend.Services
 
         public async Task<List<AuthUser>> GetAllUsers()
         {
-            return await db.AuthUsers.Include(r => r.Roles).AsNoTracking().ToListAsync(); ;
+            return await db.AuthUsers.Include(r => r.Roles).AsNoTracking().ToListAsync();
         }
 
         public AuthUser GetUserById(int id)
