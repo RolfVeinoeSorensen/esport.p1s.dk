@@ -103,6 +103,14 @@ export const routes: Routes = [
         path: '',
         pathMatch: 'full',
         loadComponent: () => import('@admin/administration.component').then(m => m.AdministrationComponent)
+      },
+      {
+        path: 'users',
+        loadComponent: () => import('@admin/users/users.component').then(m => m.UsersComponent)
+      },
+      {
+        path: 'teams',
+        loadComponent: () => import('@admin/teams/teams.component').then(m => m.TeamsComponent)
       }
     ]
   },

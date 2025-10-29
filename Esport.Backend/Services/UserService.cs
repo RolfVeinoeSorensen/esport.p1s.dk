@@ -229,7 +229,7 @@ namespace Esport.Backend.Services
 
         public async Task<List<Team>> GetAllTeams()
         {
-            return await db.Teams.AsNoTracking().ToListAsync();
+            return await db.Teams.Include(u => u.Members).AsNoTracking().ToListAsync();
         }
 
         public async Task<List<AuthUser>> GetAllTeamUsers(int teamId)

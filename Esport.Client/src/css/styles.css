@@ -1,0 +1,75 @@
+@import 'tailwindcss';
+@import 'primeicons/primeicons.css';
+@import './fontawesome/css/all.min.css';
+@custom-variant dark (&:where(.dark, .dark *));
+html,
+body {
+  margin: 0;
+  background-color: #fbfaf5;
+}
+.dark html,
+.dark body {
+  background-color: #161618;
+}
+h1,
+h2,
+h3 {
+  display: block;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  font-weight: 800;
+}
+h1 {
+  font-size: 2em;
+}
+
+h2 {
+  font-size: 1.5em;
+}
+
+h3 {
+  font-size: 1.17em;
+}
+
+h4 {
+  font-size: 1em;
+}
+
+h5 {
+  font-size: 0.83em;
+}
+
+h6 {
+  font-size: 0.67em;
+}
+p {
+  display: block;
+  padding-bottom: 0.5rem;
+}
+/* Top menu */
+.main {
+  min-height: calc(100vh - 250px);
+  padding-bottom: 2rem;
+}
+.main-bg,
+.dark .main-bg {
+  background-color: #212124;
+}
+.brand-logo-link {
+  position: fixed;
+  top: 8px;
+  left: 8px;
+}
+.brand-logo-img {
+  height: 96px;
+}
+@media (max-width: 640px) {
+  .brand-logo-link {
+    position: fixed;
+    top: 4px;
+    left: calc(50% - 32px);
+  }
+  .brand-logo-img {
+    height: 64px;
+  }
+}
