@@ -1,6 +1,7 @@
 import { Component, EventEmitter, inject, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators, FormsModule } from '@angular/forms';
 import { EditorType } from '@models/editor-type';
+import { SimpleId } from '@models/simple-id';
 import { AuthUser, Game, GameServer, GamesService } from '@services/client';
 import { InternalToastService } from '@services/internaltoast.service';
 import { ButtonModule } from 'primeng/button';
@@ -15,7 +16,7 @@ import { SelectModule } from 'primeng/select';
   styleUrl: './game-servers-editor.component.css'
 })
 export class GameServersEditorComponent implements OnInit, OnChanges {
-  @Input() public id: number | undefined;
+  @Input() public id: SimpleId | undefined;
   @Output() closeHandler = new EventEmitter<EditorType>();
   private gs = inject(GamesService);
   private formBuilder = inject(UntypedFormBuilder);
@@ -50,8 +51,8 @@ export class GameServersEditorComponent implements OnInit, OnChanges {
     this.gameServerForm.reset();
     this.gs.gamesGetAllGames().subscribe(games => {
       this.games = games;
-      if (this.id)
-        this.gs.gamesGetGameServerById(this.id).subscribe(gameServer => {
+      if (this.id?.id)
+        this.gs.gamesGetGameServerById(this.id.id).subscribe(gameServer => {
           this.gameServer = gameServer;
           this.selectedGame = this.games.find(g => g.id === gameServer.gameId);
           this.f['server'].setValue(this.gameServer.server);

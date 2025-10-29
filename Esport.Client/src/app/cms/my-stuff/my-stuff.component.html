@@ -28,12 +28,7 @@
             <p class="m-0 font-bold">Server: {{ gs.gameServer.server }}</p>
             <p class="m-0 font-bold">Port: {{ gs.gameServer.port }}</p>
             <div class="absolute bottom-0 right-0">
-              <p-button
-                size="small"
-                icon="pi pi-trash"
-                text="true"
-                severity="danger"
-                (click)="removeGameServer(gs)" />
+              <p-button size="small" icon="pi pi-trash" text="true" severity="danger" (click)="removeGameServer(gs)" />
               <p-button
                 size="small"
                 icon="pi pi-pencil"
@@ -137,7 +132,7 @@
             "></i>
           <span>Playstation</span>
         </p>
-                <p>
+        <p>
           <i
             class="pi pi-check mr-2"
             [ngClass]="
@@ -154,7 +149,7 @@
 <p-dialog [header]="editorText" [modal]="true" [(visible)]="visibleEditor" styleClass="w-full md:w-3/4">
   @switch (selectedEditorType) {
     @case (editorType.User) {
-      <app-user-editor [id]="selectedId"></app-user-editor>
+      <app-user-editor [id]="selectedId" (closeHandler)="handleEditorSave($event)"></app-user-editor>
     }
     @case (editorType.Game) {
       <app-games-editor (closeHandler)="handleEditorSave($event)"></app-games-editor>

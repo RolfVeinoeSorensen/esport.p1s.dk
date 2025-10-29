@@ -1,6 +1,7 @@
 import { Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
 import { ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { EditorType } from '@models/editor-type';
+import { SimpleId } from '@models/simple-id';
 import { EventsService } from '@services/client';
 import { InternalToastService } from '@services/internaltoast.service';
 import { ButtonModule } from 'primeng/button';
@@ -14,7 +15,7 @@ import { MessageModule } from 'primeng/message';
   styleUrl: './event-editor.component.css'
 })
 export class EventEditorComponent implements OnInit {
-  @Input() public id: number | undefined;
+  @Input() public id: SimpleId | undefined;
   @Output() closeHandler = new EventEmitter<EditorType>();
   private es = inject(EventsService);
   private formBuilder = inject(UntypedFormBuilder);

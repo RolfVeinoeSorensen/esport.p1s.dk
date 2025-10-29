@@ -21,6 +21,7 @@ import { UserEditorComponent } from './editors/user-editor/user-editor.component
 import { GamesEditorComponent } from './editors/games-editor/games-editor.component';
 import { GameServersEditorComponent } from './editors/game-servers-editor/game-servers-editor.component';
 import { EventEditorComponent } from './editors/event-editor/event-editor.component';
+import { SimpleId } from '@models/simple-id';
 
 @Component({
   selector: 'app-my-stuff',
@@ -60,7 +61,7 @@ export class MyStuffComponent implements OnInit {
   editorText: string = '';
   editorType = EditorType;
   selectedEditorType!: EditorType;
-  selectedId: number | undefined;
+  selectedId: SimpleId | undefined;
   ngOnInit(): void {
     this.getMyEvents();
     this.getGameServers();
@@ -116,7 +117,7 @@ export class MyStuffComponent implements OnInit {
 
   openEditor(editorType: EditorType, id: number | undefined) {
     this.selectedEditorType = editorType;
-    this.selectedId = id;
+    this.selectedId = { ...{ id: id } };
     const isNew = id === undefined;
     switch (editorType) {
       case EditorType.Event:

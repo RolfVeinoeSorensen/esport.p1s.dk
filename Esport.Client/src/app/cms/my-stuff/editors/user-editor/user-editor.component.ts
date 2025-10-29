@@ -1,5 +1,7 @@
-import { Component, inject, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, inject, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { EditorType } from '@models/editor-type';
+import { SimpleId } from '@models/simple-id';
 import { AuthenticationService } from '@services/authentication.service';
 import { AuthUser, FileService, UpdateUserRequest, UsersService } from '@services/client';
 import { InternalToastService } from '@services/internaltoast.service';
@@ -14,8 +16,9 @@ import { ToggleSwitchModule } from 'primeng/toggleswitch';
   templateUrl: './user-editor.component.html',
   styleUrl: './user-editor.component.css'
 })
-export class UserEditorComponent implements OnInit {
-  @Input() public id: number | undefined;
+export class UserEditorComponent implements OnInit, OnChanges {
+  @Input() public id: SimpleId | undefined;
+  @Output() closeHandler = new EventEmitter<EditorType>();
   private us = inject(UsersService);
   private as: AuthenticationService = inject(AuthenticationService);
   private fs = inject(FileService);
@@ -52,9 +55,18 @@ export class UserEditorComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log('ngInit', this.id);
-    if (this.id)
-      this.us.usersGetUserById(this.id).subscribe(userInfo => {
+    this.reset();
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    console.log(changes);
+    this.reset();
+  }
+  reset() {
+    this.userForm.reset();
+    console.log('Loading user with id', this.id);
+    if (this.id?.id)
+      this.us.usersGetUserById(this.id.id).subscribe(userInfo => {
         this.userInfo = userInfo;
         this.f['username'].setValue(this.userInfo.username);
         this.f['firstName'].setValue(this.userInfo.firstName);
@@ -107,6 +119,7 @@ export class UserEditorComponent implements OnInit {
         });
         this.userForm.reset();
         this.formSubmitted = false;
+        this.closeHandler.emit(EditorType.User);
       });
     } else {
       console.log('submit failed', this.userForm.errors);
