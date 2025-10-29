@@ -6,12 +6,13 @@ namespace Esport.Backend.Services
 {
     public interface IEventService
     {
-        Dictionary<string, EventDto> GetAllEvents(int month, int year);
-        Event GetEventById(int id);
-        Event CreateOrUpdateEvent(EventSubmitRequest ev, AuthUser currentUser);
-        void DeleteEvent(int id);
-        Event CreateOrUpdateUserToEvent(EventsUser eventsUser);
-        Event DeleteUserFromEvent(int eventId, int userId);
-        IEnumerable<EventUserDto> GetUserEventsByUserId(int userId, int month, int year);
+        Task<Dictionary<string, EventDto>> GetAllEvents(int month, int year);
+        Task<Event> GetEventById(int id);
+        Task<Event> CreateOrUpdateEvent(EventSubmitRequest ev, AuthUser currentUser);
+        Task DeleteEvent(int id);
+        Task<Event> CreateOrUpdateUserToEvent(EventsUser eventsUser);
+        Task<Event> DeleteUserFromEvent(int eventId, int userId);
+        Task<IEnumerable<EventUserDto>> GetUserEventsByUserId(int userId, int month, int year);
+        Task<SubmitResponse> AddTeamToEvent(int eventId, int teamId);
     }
 }

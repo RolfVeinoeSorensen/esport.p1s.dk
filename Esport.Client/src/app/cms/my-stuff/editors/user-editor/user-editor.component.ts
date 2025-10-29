@@ -6,10 +6,11 @@ import { InternalToastService } from '@services/internaltoast.service';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
+import { ToggleSwitchModule } from 'primeng/toggleswitch';
 
 @Component({
   selector: 'app-user-editor',
-  imports: [InputTextModule, ButtonModule, ReactiveFormsModule, MessageModule],
+  imports: [InputTextModule, ButtonModule, ReactiveFormsModule, MessageModule, ToggleSwitchModule],
   templateUrl: './user-editor.component.html',
   styleUrl: './user-editor.component.css'
 })
@@ -28,20 +29,7 @@ export class UserEditorComponent implements OnInit {
   get f() {
     return this.userForm.controls;
   }
-  // firstName?: string;
-  // lastName?: string;
-  // username?: string;
-  // addressStreet?: string;
-  // addressStreetNumber?: number;
-  // addressFloor?: string;
-  // addressSide?: string;
-  // addressPostalCode?: string;
-  // addressCity?: string;
-  // mobile?: string;
-  // consentShowImages: boolean;
-  // canBringLaptop: boolean;
-  // canBringStationaryPc: boolean;
-  // canBringPlaystation: boolean;
+
   // imageId?: number;
   // image?: any;
   constructor() {
@@ -51,11 +39,15 @@ export class UserEditorComponent implements OnInit {
       username: ['', [Validators.required]],
       addressStreet: ['', [Validators.required]],
       addressStreetNumber: ['', [Validators.required]],
-      addressFloor: ['', [Validators.required]],
-      addressSide: ['', [Validators.required]],
+      addressFloor: [''],
+      addressSide: [''],
       addressPostalCode: ['', [Validators.required]],
       addressCity: ['', [Validators.required]],
-      mobile: ['', [Validators.required]]
+      mobile: ['', [Validators.required]],
+      consentShowImages: ['', [Validators.required]],
+      canBringLaptop: ['', [Validators.required]],
+      canBringStationaryPc: ['', [Validators.required]],
+      canBringPlaystation: ['', [Validators.required]]
     });
   }
 
@@ -67,6 +59,17 @@ export class UserEditorComponent implements OnInit {
         this.f['username'].setValue(this.userInfo.username);
         this.f['firstName'].setValue(this.userInfo.firstName);
         this.f['lastName'].setValue(this.userInfo.lastName);
+        this.f['addressStreet'].setValue(this.userInfo.addressStreet);
+        this.f['addressStreetNumber'].setValue(this.userInfo.addressStreetNumber);
+        this.f['addressFloor'].setValue(this.userInfo.addressFloor);
+        this.f['addressSide'].setValue(this.userInfo.addressSide);
+        this.f['addressPostalCode'].setValue(this.userInfo.addressPostalCode);
+        this.f['addressCity'].setValue(this.userInfo.addressCity);
+        this.f['mobile'].setValue(this.userInfo.mobile);
+        this.f['consentShowImages'].setValue(this.userInfo.consentShowImages);
+        this.f['canBringLaptop'].setValue(this.userInfo.canBringLaptop);
+        this.f['canBringStationaryPc'].setValue(this.userInfo.canBringStationaryPc);
+        this.f['canBringPlaystation'].setValue(this.userInfo.canBringPlaystation);
       });
   }
   isInvalid(controlName: string) {
@@ -75,7 +78,7 @@ export class UserEditorComponent implements OnInit {
   }
 
   onSubmit() {
-    // this.formSubmitted = true;
+    this.formSubmitted = true;
     // if (this.userForm.valid && this.userInfo) {
     //   this.userInfo.username = this.userForm.value.username;
     //   this.us.(this.userInfo).subscribe(response => {

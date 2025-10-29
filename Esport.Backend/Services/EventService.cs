@@ -11,9 +11,9 @@ namespace Esport.Backend.Services
 
         private readonly DataContext db = context;
 
-        public Event CreateOrUpdateEvent(EventSubmitRequest ev, AuthUser currentUser)
+        public async Task<Event> CreateOrUpdateEvent(EventSubmitRequest ev, AuthUser currentUser)
         {
-            var existing = db.Events.FirstOrDefault(x => x.Id.Equals(ev.Id));
+            var existing = await db.Events.FirstOrDefaultAsync(x => x.Id.Equals(ev.Id));
             if (existing == null)
             {
                 Event newEvent = new()
@@ -25,98 +25,111 @@ namespace Esport.Backend.Services
                     StartDateTime = ev.StartDateTime,
                     EndDateTime = ev.EndDateTime,
                 };
-                db.Events.Add(newEvent);
-                db.SaveChanges();
+                await db.Events.AddAsync(newEvent);
+                await db.SaveChangesAsync();
                 return newEvent;
             }
             else
             {
                 db.Update(existing);
-                db.SaveChanges();
+                await db.SaveChangesAsync();
                 return existing;
             }
         }
 
-        public void AddTeamsToEvent(int eventId, int teamId)
+        public async Task<SubmitResponse> AddTeamToEvent(int eventId, int teamId)
         {
-            var ev = db.Events.Include(t => t.Teams).ToList();
-            var exist = ev.Select(t => t.Teams.Where(x => x.Id.Equals(teamId))).FirstOrDefault();
+            var ev = db.Events.Include(t => t.Teams).Where(e => e.Id.Equals(eventId)).First();
+            var exist = ev.Teams.Where(x => x.Id.Equals(teamId)).FirstOrDefault();
+            var response = new SubmitResponse
+            {
+                Ok = true,
+                Message = "Team blev tilføjet til event"
+            };
             if (exist == null)
             {
-                EventsUser userEv = new Team
-                {
-                    EventId = eventId,
-                    UserId = u,
-                    Invited = DateTime.Now
-                };
-                db.Add(userEv);
+                var team = db.Teams.Find(teamId);
+                ev.Teams.Add(team);
+                db.UpdateRange(ev.Teams);
+                await db.SaveChangesAsync();
             }
-            db.SaveChanges();
+            ev.Teams.ToList().ForEach(async t =>
+            {
+                if (t.Id.Equals(teamId))
+                {
+                    await AddMissingUsersFromTeamToEvent(eventId, teamId);
+                }
+            });
+            return response;
         }
-        private void AddUsersToEvent(int eventId, ICollection<int> eventsUsers)
+        private async Task AddMissingUsersFromTeamToEvent(int eventId, int teamId)
         {
-            var existing = db.EventsUsers.Where(us => us.EventId.Equals(eventId) && eventsUsers.Contains(us.UserId)).ToList();
-            eventsUsers.ToList().ForEach(u =>
+            List<int> eventsUsers = await db.Teams
+                .Include(t => t.Members)
+                .Where(t => t.Id.Equals(teamId))
+                .SelectMany(t => t.Members)
+                .Select(m => m.Id)
+                .ToListAsync();
+            var existing = await db.EventsUsers.Where(us => us.EventId.Equals(eventId) && eventsUsers.Contains(us.UserId)).ToListAsync();
+            eventsUsers.ToList().ForEach(async u =>
             {
                 var exist = existing.FirstOrDefault(us => us.UserId.Equals(u));
                 if (exist == null)
                 {
-                    EventsUser userEv = new EventsUser
+                    EventsUser userEv = new()
                     {
                         EventId = eventId,
                         UserId = u,
                         Invited = DateTime.Now
                     };
-                    db.Add(userEv);
+                    await db.AddAsync(userEv);
                 }
-
-
             });
-            db.SaveChanges();
+            await db.SaveChangesAsync();
         }
 
-        public Event CreateOrUpdateUserToEvent(EventsUser eventsUser)
+        public async Task<Event> CreateOrUpdateUserToEvent(EventsUser eventsUser)
         {
             var eu = db.EventsUsers.Any(eu => eu.EventId == eventsUser.EventId && eu.UserId == eventsUser.UserId);
             if (eu == false)
             {
-                db.EventsUsers.Add(eventsUser);
-                db.SaveChanges();
-                return GetEventById(eventsUser.EventId);
+                await db.EventsUsers.AddAsync(eventsUser);
+                await db.SaveChangesAsync();
+                return await GetEventById(eventsUser.EventId);
             }
             else
             {
                 db.EventsUsers.Update(eventsUser);
-                db.SaveChanges();
-                return GetEventById(eventsUser.EventId);
+                await db.SaveChangesAsync();
+                return await GetEventById(eventsUser.EventId);
             }
         }
 
-        public void DeleteEvent(int id)
+        public async Task DeleteEvent(int id)
         {
-            var ev = db.Events.Find(id) ?? throw new KeyNotFoundException("Event not found");
+            var ev = await db.Events.FindAsync(id) ?? throw new KeyNotFoundException("Event not found");
             db.Events.Remove(ev);
-            db.SaveChanges();
+            await db.SaveChangesAsync();
         }
 
-        public Event DeleteUserFromEvent(int eventId, int userId)
+        public async Task<Event> DeleteUserFromEvent(int eventId, int userId)
         {
             var eu = db.EventsUsers.FirstOrDefault(eu => eu.EventId == eventId && eu.UserId == userId) ?? throw new KeyNotFoundException("User not found in event");
             db.EventsUsers.Remove(eu);
             db.SaveChanges();
-            return GetEventById(eventId);
+            return await GetEventById(eventId);
         }
 
-        public Dictionary<string, EventDto> GetAllEvents(int month, int year)
+        public async Task<Dictionary<string, EventDto>> GetAllEvents(int month, int year)
         {
             var firstDayOfMonth = new DateTime(year, month, 1);
             var lastDayOfMonth = firstDayOfMonth.AddMonths(1).AddDays(-1);
             var datesWithInfo = Extensions.Date.GetMonthYear(month, year);
-            var events = db.Events.Include(e => e.EventsUsers).ThenInclude(eu => eu.User)
+            var events = await db.Events.Include(e => e.EventsUsers).ThenInclude(eu => eu.User)
                 .Where(ev =>
                     (ev.StartDateTime.Year == year && ev.StartDateTime.Month == month) ||
                     (ev.EndDateTime.Year == year && ev.EndDateTime.Month == month))
-                .ToList();
+                .ToListAsync();
             Dictionary<string, EventDto> result = [];
             foreach (var dt in datesWithInfo)
             {
@@ -130,25 +143,25 @@ namespace Esport.Backend.Services
             return result;
         }
 
-        public Event GetEventById(int id)
+        public async Task<Event> GetEventById(int id)
         {
-            var ev = db.Events
+            var ev = await db.Events
                 .Include(e => e.EventsUsers)
                 .ThenInclude(eu => eu.User)
-                .FirstOrDefault(e => e.Id == id) ?? throw new KeyNotFoundException("Event not found");
+                .FirstOrDefaultAsync(e => e.Id == id) ?? throw new KeyNotFoundException("Event not found");
             return ev;
         }
 
-        public IEnumerable<EventUserDto> GetUserEventsByUserId(int userId, int month, int year)
+        public async Task<IEnumerable<EventUserDto>> GetUserEventsByUserId(int userId, int month, int year)
         {
             IEnumerable<EventUserDto> result = [];
-            return db.EventsUsers
+            return await db.EventsUsers
                 .Include(eu => eu.User)
                 .Include(e => e.Event)
                 .Where(eu => eu.UserId == userId && ((eu.Event.StartDateTime.Year >= year && eu.Event.StartDateTime.Month <= month) ||
                     (eu.Event.EndDateTime.Year >= year && eu.Event.EndDateTime.Month >= month)))
                 .OrderByDescending(o => o.Event.StartDateTime)
-                .Take(10).Select(r => new EventUserDto { Event = r.Event, EventsUser = r }).ToList();
+                .Take(10).Select(r => new EventUserDto { Event = r.Event, EventsUser = r }).ToListAsync();
         }
     }
 }

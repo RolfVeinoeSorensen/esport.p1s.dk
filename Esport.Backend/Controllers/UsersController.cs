@@ -17,7 +17,7 @@ namespace Esport.Backend.Controllers
         public ActionResult<AuthenticateResponse> Authenticate([FromBody] AuthenticateRequest model)
         {
             var response = userService.Authenticate(model);
-            
+
             return Ok(response);
         }
 
@@ -37,19 +37,19 @@ namespace Esport.Backend.Controllers
             if (HttpContext.Items["User"] is not AuthUser currentUser || (currentUser.Roles.Any(x => x.Role.Equals(UserRole.Admin)) == false && currentUser.Id != id))
                 return Unauthorized(new { message = "Unauthorized" });
 
-            var user =  userService.GetUserById(id);
+            var user = userService.GetUserById(id);
             return Ok(user);
         }
 
         [HttpPost("[action]")]
-        public async Task<ActionResult<SubmitResponse>> RegisterUser([FromBody]RegisterRequest req)
+        public async Task<ActionResult<SubmitResponse>> RegisterUser([FromBody] RegisterRequest req)
         {
             var response = await userService.RegisterUser(req);
             return Ok(response);
         }
 
         [HttpPost("[action]")]
-        public async Task<ActionResult<SubmitResponse>> ForgotPassword([FromBody]ForgotPasswordRequest req)
+        public async Task<ActionResult<SubmitResponse>> ForgotPassword([FromBody] ForgotPasswordRequest req)
         {
             var response = await userService.ForgotPasswordAsync(req);
             return Ok(response);
@@ -58,7 +58,7 @@ namespace Esport.Backend.Controllers
         [HttpPost("[action]")]
         public async Task<ActionResult<SubmitResponse>> ChangePassword([FromBody] ChangePasswordRequest req)
         {
-            var changed = await userService.ChangePassword(req.Token,req.Password);
+            var changed = await userService.ChangePassword(req.Token, req.Password);
             var response = new SubmitResponse { Ok = changed, Message = changed == true ? "Password blev skiftet" : "Password blev ikke skiftet" };
             return Ok(response);
         }
@@ -67,6 +67,13 @@ namespace Esport.Backend.Controllers
         {
             var activated = await userService.ActivateUser(token);
             var response = new SubmitResponse { Ok = activated, Message = activated == true ? "Din bruger er aktiveret" : "Din bruger kunne ikke aktiveres" };
+            return Ok(response);
+        }
+
+        [HttpPost("[action]")]
+        public async Task<ActionResult<SubmitResponse>> UpdateUser([FromBody] UpdateUserRequest req)
+        {
+            var response = await userService.UpdateUser(req);
             return Ok(response);
         }
     }

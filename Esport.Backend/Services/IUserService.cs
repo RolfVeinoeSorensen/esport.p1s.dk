@@ -13,5 +13,6 @@ namespace Esport.Backend.Services
         Task<SubmitResponse> ForgotPasswordAsync(ForgotPasswordRequest model);
         Task<bool> ChangePassword(string token, string password);
         Task<bool> ActivateUser(string token);
+        Task<SubmitResponse> UpdateUser(UpdateUserRequest model);
     }
 }

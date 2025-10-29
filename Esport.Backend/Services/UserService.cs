@@ -7,7 +7,6 @@ using Esport.Backend.Services.Message;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Options;
-using Org.BouncyCastle.Ocsp;
 using BCryptNet = BCrypt.Net.BCrypt;
 
 namespace Esport.Backend.Services
@@ -43,7 +42,7 @@ namespace Esport.Backend.Services
 
         public AuthenticateResponse Authenticate(AuthenticateRequest model)
         {
-            var user = db.AuthUsers.Include(ur=>ur.Roles).SingleOrDefault(x => x.Username == model.Username);
+            var user = db.AuthUsers.Include(ur => ur.Roles).SingleOrDefault(x => x.Username == model.Username);
 
             // validate
             if (user == null || !BCryptNet.Verify(model.Password, user.PasswordHash))
@@ -65,9 +64,9 @@ namespace Esport.Backend.Services
             return db.AuthUsers;
         }
 
-        public AuthUser GetUserById(int id) 
+        public AuthUser GetUserById(int id)
         {
-            var user = db.AuthUsers.Include(r=>r.Roles).FirstOrDefault(u=>u.Id.Equals(id));
+            var user = db.AuthUsers.Include(r => r.Roles).FirstOrDefault(u => u.Id.Equals(id));
             if (user == null) throw new KeyNotFoundException("User not found");
             return user;
         }
@@ -89,12 +88,13 @@ namespace Esport.Backend.Services
             {
                 var userExist = await db.AuthUsers.FirstOrDefaultAsync(x => x.Username.Equals(req.Username));
                 var pendingRole = await db.AuthRoles.FirstOrDefaultAsync(x => x.Role.Equals(Enums.UserRole.Pending));
-                if (userExist != null || pendingRole == null){
+                if (userExist != null || pendingRole == null)
+                {
                     response.Ok = false;
-                    response.Message = "Kunne ikke oprette brugere. Måske findes denne email allerede i vores system.";
+                    response.Message = "Kunne ikke oprette brugere. Mï¿½ske findes denne email allerede i vores system.";
                     response.Captcha = cs.RefreshCaptcha(req.CaptchaId);
                 }
-                else if(req.Password != req.PasswordRepeat)
+                else if (req.Password != req.PasswordRepeat)
                 {
                     response.Ok = false;
                     response.Message = "Password var ikke ens. Der blev ikke oprettet en bruger.";
@@ -161,7 +161,7 @@ namespace Esport.Backend.Services
         {
             var user = await db.AuthUsers.FirstOrDefaultAsync(x => x.PasswordResetToken.Equals(token));
             if (user == null) return false;
-            if(user.PasswordResetToken != null && user.PasswordResetTokenExpiration > DateTime.UtcNow)
+            if (user.PasswordResetToken != null && user.PasswordResetTokenExpiration > DateTime.UtcNow)
             {
                 user.PasswordHash = BCryptNet.HashPassword(password);
                 db.Update(user);
@@ -189,6 +189,42 @@ namespace Esport.Backend.Services
             {
                 return false;
             }
+        }
+
+        public async Task<SubmitResponse> UpdateUser(UpdateUserRequest model)
+        {
+            var response = new SubmitResponse
+            {
+                Ok = true,
+            };
+            var user = await db.AuthUsers.FirstOrDefaultAsync(u => u.Id == model.Id);
+            if (user == null)
+            {
+                response.Ok = false;
+                response.Message = "Bruger ikke fundet";
+                return response;
+            }
+
+            // update user properties
+            user.FirstName = model.FirstName;
+            user.LastName = model.LastName;
+            user.AddressStreet = model.AddressStreet;
+            user.AddressStreetNumber = model.AddressStreetNumber;
+            user.AddressFloor = model.AddressFloor;
+            user.AddressSide = model.AddressSide;
+            user.AddressPostalCode = model.AddressPostalCode;
+            user.AddressCity = model.AddressCity;
+            user.Mobile = model.Mobile;
+            user.ConsentShowImages = model.ConsentShowImages;
+            user.CanBringLaptop = model.CanBringLaptop;
+            user.CanBringStationaryPc = model.CanBringStationaryPc;
+            user.CanBringPlaystation = model.CanBringPlaystation;
+
+            db.AuthUsers.Update(user);
+            await db.SaveChangesAsync();
+
+            response.Message = "Bruger opdateret succesfuldt";
+            return response;
         }
     }
 }

@@ -1,56 +1,164 @@
 <div class="card">
-  <form [formGroup]="userForm" (ngSubmit)="onSubmit()" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-    <div class="col-span-2">
-      <label for="username">Email</label>
-      <input
-        pInputText
-        class="w-full"
-        id="username"
-        formControlName="username"
-        [invalid]="isInvalid('username')"
-        placeholder="Email"
-        type="email" />
-      @if (isInvalid('username')) {
-        <p-message severity="error" size="small" variant="simple"
-          >Email skal udfyldes og være mindre end 255 karakterer.</p-message
-        >
-      }
+  <form [formGroup]="userForm" (ngSubmit)="onSubmit()" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+    <div class="col-span-1">
+      <div class="mb-4">
+        <label for="username">Email</label>
+        <input
+          pInputText
+          class="w-full"
+          id="username"
+          formControlName="username"
+          [invalid]="isInvalid('username')"
+          placeholder="Email"
+          type="email" />
+        @if (isInvalid('username')) {
+          <p-message severity="error" size="small" variant="simple"
+            >Email skal udfyldes og være mindre end 255 karakterer.</p-message
+          >
+        }
+      </div>
+      <div class="mb-4">
+        <label for="firstName">Fornavn</label>
+        <input
+          pInputText
+          class="w-full"
+          id="firstName"
+          formControlName="firstName"
+          [invalid]="isInvalid('firstName')"
+          placeholder="Fornavn"
+          type="text"
+          size="255" />
+        @if (isInvalid('firstName')) {
+          <p-message severity="error" size="small" variant="simple"
+            >Fornavn skal udfyldes og være mindre end 255 karakterer.</p-message
+          >
+        }
+      </div>
+      <div>
+        <label for="lastName">Efternavn</label>
+        <input
+          pInputText
+          class="w-full"
+          id="lastName"
+          formControlName="lastName"
+          [invalid]="isInvalid('lastName')"
+          placeholder="Efternavn"
+          type="text"
+          size="255" />
+        @if (isInvalid('lastName')) {
+          <p-message severity="error" size="small" variant="simple"
+            >Efternavn skal udfyldes og være mindre end 255 karakterer.</p-message
+          >
+        }
+      </div>
     </div>
-    <div class="col-span-2 md:col-span-1">
-      <label for="firstName">Fornavn</label>
-      <input
-        pInputText
-        class="w-full"
-        id="firstName"
-        formControlName="firstName"
-        [invalid]="isInvalid('firstName')"
-        placeholder="Fornavn"
-        type="text"
-        size="255" />
-      @if (isInvalid('firstName')) {
-        <p-message severity="error" size="small" variant="simple"
-          >Fornavn skal udfyldes og være mindre end 255 karakterer.</p-message
-        >
-      }
+    <div class="col-span-1">
+      <div>
+        <label for="addressStreet">Gade</label>
+        <input
+          pInputText
+          class="w-full"
+          id="addressStreet"
+          formControlName="addressStreet"
+          [invalid]="isInvalid('addressStreet')"
+          placeholder="Gade"
+          type="text"
+          size="255" />
+        @if (isInvalid('addressStreet')) {
+          <p-message severity="error" size="small" variant="simple"
+            >Gade skal udfyldes og være mindre end 255 karakterer.</p-message
+          >
+        }
+      </div>
+      <div>
+        <label for="addressStreetNumber">Husnummer</label>
+        <input
+          pInputText
+          class="w-full"
+          id="addressStreetNumber"
+          formControlName="addressStreetNumber"
+          [invalid]="isInvalid('addressStreetNumber')"
+          placeholder="Husnummer"
+          type="text"
+          size="255" />
+        @if (isInvalid('addressStreetNumber')) {
+          <p-message severity="error" size="small" variant="simple">Husnummer skal udfyldes.</p-message>
+        }
+      </div>
+      <div>
+        <label for="addressFloor">Etage</label>
+        <input
+          pInputText
+          class="w-full"
+          id="addressFloor"
+          formControlName="addressFloor"
+          [invalid]="isInvalid('addressFloor')"
+          placeholder="Etage"
+          type="text"
+          size="255" />
+      </div>
+      <div>
+        <label for="addressSide">Side</label>
+        <input
+          pInputText
+          class="w-full"
+          id="addressSide"
+          formControlName="addressSide"
+          [invalid]="isInvalid('addressSide')"
+          placeholder="Side"
+          type="text"
+          size="255" />
+      </div>
+      <div>
+        <label for="addressPostalCode">Postnummer</label>
+        <input
+          pInputText
+          class="w-full"
+          id="addressPostalCode"
+          formControlName="addressPostalCode"
+          [invalid]="isInvalid('addressPostalCode')"
+          placeholder="Postnummer"
+          type="text"
+          size="255" />
+        @if (isInvalid('addressPostalCode')) {
+          <p-message severity="error" size="small" variant="simple">Postnummer skal udfyldes.</p-message>
+        }
+      </div>
+      <div>
+        <label for="addressCity">By</label>
+        <input
+          pInputText
+          class="w-full"
+          id="addressCity"
+          formControlName="addressCity"
+          [invalid]="isInvalid('addressCity')"
+          placeholder="By"
+          type="text"
+          size="255" />
+        @if (isInvalid('addressCity')) {
+          <p-message severity="error" size="small" variant="simple">By skal udfyldes.</p-message>
+        }
+      </div>
     </div>
-    <div class="col-span-2 md:col-span-1">
-      <label for="lastName">Efternavn</label>
-      <input
-        pInputText
-        class="w-full"
-        id="lastName"
-        formControlName="lastName"
-        [invalid]="isInvalid('lastName')"
-        placeholder="Efternavn"
-        type="text"
-        size="255" />
-      @if (isInvalid('lastName')) {
-        <p-message severity="error" size="small" variant="simple"
-          >Efternavn skal udfyldes og være mindre end 255 karakterer.</p-message
-        >
-      }
+    <div class="col-span-1">
+      <div class="mt-2 mb-2">
+        <p-toggleswitch formControlName="consentShowImages" id="consentShowImages" class="mr-2" />
+        <label for="consentShowImages">Må klubben vise billeder med dig på vores side?</label>
+      </div>
+      <div class="mt-2 mb-2">
+        <p-toggleswitch formControlName="canBringLaptop" id="canBringLaptop" class="mr-2" />
+        <label for="canBringLaptop">Kan medbringe laptop?</label>
+      </div>
+      <div class="mt-2 mb-2">
+        <p-toggleswitch formControlName="canBringStationaryPc" id="canBringStationaryPc" class="mr-2" />
+        <label for="canBringStationaryPc">Kan medbringe stationær PC?</label>
+      </div>
+      <div class="mt-2 mb-2">
+        <p-toggleswitch formControlName="canBringPlaystation" id="canBringPlaystation" class="mr-2" />
+        <label for="canBringPlaystation">Kan medbringe Playstation?</label>
+      </div>
     </div>
-    <div class="col-span-2 text-center">
+    <div class="col-span-1 md:col-span-3 text-right">
       <p-button type="submit" label="Gem bruger" icon="pi pi-save" />
     </div>
   </form>

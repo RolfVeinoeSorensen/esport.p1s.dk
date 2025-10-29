@@ -21,70 +21,70 @@ namespace Esport.Backend.Controllers
 
         [Authorize([UserRole.Admin, UserRole.MemberAdult, UserRole.MemberKid])]
         [HttpGet("[action]")]
-        public ActionResult<Dictionary<string, EventDto>> GetAllEvents(int month, int year)
+        public async Task<ActionResult<Dictionary<string, EventDto>>> GetAllEvents(int month, int year)
         {
-            var events = eventService.GetAllEvents(month, year);
+            var events = await eventService.GetAllEvents(month, year);
             return Ok(events);
         }
 
         [Authorize([UserRole.Admin, UserRole.MemberAdult, UserRole.MemberKid])]
         [HttpGet("[action]/{id:int}")]
-        public ActionResult<Event> GetById(int id)
+        public async Task<ActionResult<Event>> GetById(int id)
         {
-            var eventResult = eventService.GetEventById(id);
+            var eventResult = await eventService.GetEventById(id);
             return Ok(eventResult);
         }
 
         [Authorize([UserRole.Admin, UserRole.MemberAdult, UserRole.MemberKid])]
         [HttpPost("[action]")]
-        public ActionResult<Event> CreateOrUpdateEvent([FromBody] EventSubmitRequest ev)
+        public async Task<ActionResult<Event>> CreateOrUpdateEvent([FromBody] EventSubmitRequest ev)
         {
             if (HttpContext.Items["User"] is not AuthUser currentUser || currentUser.Roles.Any(x => x.Role.Equals(UserRole.Admin)) == true)
                 return Unauthorized(new { message = "Unauthorized" });
 
-            var eventResult = eventService.CreateOrUpdateEvent(ev, currentUser);
+            var eventResult = await eventService.CreateOrUpdateEvent(ev, currentUser);
             return Ok(eventResult);
         }
         [Authorize([UserRole.Admin, UserRole.MemberAdult, UserRole.MemberKid])]
         [HttpDelete("[action]")]
-        public ActionResult<Event> DeleteEvent(int id)
+        public async Task<ActionResult> DeleteEvent(int id)
         {
             if (HttpContext.Items["User"] as AuthUser is not AuthUser currentUser || currentUser.Roles.Any(x => x.Role.Equals(UserRole.Admin)) == true)
                 return Unauthorized(new { message = "Unauthorized" });
 
-            eventService.DeleteEvent(id);
+            await eventService.DeleteEvent(id);
             return Ok();
         }
 
         [Authorize([UserRole.Admin, UserRole.MemberAdult, UserRole.MemberKid])]
         [HttpPost("[action]")]
-        public ActionResult<Event> CreateOrUpdateUserToEvent([FromBody] EventsUser eventsUser)
+        public async Task<ActionResult<Event>> CreateOrUpdateUserToEvent([FromBody] EventsUser eventsUser)
         {
             if (HttpContext.Items["User"] is not AuthUser currentUser || currentUser.Roles.Any(x => x.Role.Equals(UserRole.Admin)) == true || currentUser.Id != eventsUser.UserId)
                 return Unauthorized(new { message = "Unauthorized" });
 
-            var eventResult = eventService.CreateOrUpdateUserToEvent(eventsUser);
+            var eventResult = await eventService.CreateOrUpdateUserToEvent(eventsUser);
             return Ok(eventResult);
         }
 
         [Authorize([UserRole.Admin, UserRole.MemberAdult, UserRole.MemberKid])]
         [HttpDelete("[action]")]
-        public ActionResult<Event> DeleteUserFromEvent(int eventId, int userId)
+        public async Task<ActionResult<Event>> DeleteUserFromEvent(int eventId, int userId)
         {
             if (HttpContext.Items["User"] is not AuthUser currentUser || currentUser.Roles.Any(x => x.Role.Equals(UserRole.Admin)) == true || currentUser.Id != userId)
                 return Unauthorized(new { message = "Unauthorized" });
 
-            var eventResult = eventService.DeleteUserFromEvent(eventId, userId);
+            var eventResult = await eventService.DeleteUserFromEvent(eventId, userId);
             return Ok(eventResult);
         }
 
         [Authorize([UserRole.Admin, UserRole.MemberAdult, UserRole.MemberKid])]
         [HttpGet("[action]")]
-        public ActionResult<IEnumerable<EventUserDto>> GetUserEventsByUserId(int month, int year)
+        public async Task<ActionResult<IEnumerable<EventUserDto>>> GetUserEventsByUserId(int month, int year)
         {
             if (HttpContext.Items["User"] is not AuthUser currentUser)
                 return Unauthorized(new { message = "Unauthorized" });
-            var events = eventService.GetUserEventsByUserId(currentUser.Id, month, year);
+            var events = await eventService.GetUserEventsByUserId(currentUser.Id, month, year);
             return Ok(events);
         }
     }

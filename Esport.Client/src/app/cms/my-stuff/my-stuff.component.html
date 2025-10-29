@@ -137,11 +137,21 @@
             "></i>
           <span>Playstation</span>
         </p>
+                <p>
+          <i
+            class="pi pi-check mr-2"
+            [ngClass]="
+              userInfo.consentShowImages === true
+                ? 'pi pi-check md:text-green-400 text-green-700'
+                : 'pi pi-times md:text-red-400 text-red-700'
+            "></i>
+          <span>Må klubben vise billeder med dig på vores side?</span>
+        </p>
       }
     </div>
   </div>
 </p-card>
-<p-dialog [header]="editorText" [modal]="true" [(visible)]="visibleEditor" styleClass="w-full md:w-1/2">
+<p-dialog [header]="editorText" [modal]="true" [(visible)]="visibleEditor" styleClass="w-full md:w-3/4">
   @switch (selectedEditorType) {
     @case (editorType.User) {
       <app-user-editor [id]="selectedId"></app-user-editor>
