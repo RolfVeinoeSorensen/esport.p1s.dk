@@ -2,11 +2,13 @@ import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
-import { EventDto, EventsService } from '@app/_services/client';
+import { EventDto, EventsService, Event } from '@app/_services/client';
+import { EventEditorComponent } from '../editors/event-editor/event-editor.component';
+import { SimpleId } from '@models/simple-id';
 
 @Component({
   selector: 'app-team-calendar',
-  imports: [CommonModule, ButtonModule, DialogModule],
+  imports: [CommonModule, ButtonModule, DialogModule, EventEditorComponent],
   templateUrl: './team-calendar.component.html',
   styleUrl: './team-calendar.component.css'
 })
@@ -20,17 +22,18 @@ export class TeamCalendarComponent implements OnInit {
   }
   diff: string[] = [];
   events: { [key: string]: EventDto } = {};
-  selectedDate: Date | null = null;
-  visibleDay = false;
+  visibleDetails = false;
+  selectedId: SimpleId | undefined;
 
   ngOnInit() {
     this.loadEvents();
   }
 
-  selectDate(event: EventDto) {
-    this.selectedDate = new Date(event.weekendWorkday.date);
-    if (event.events.length > 0) this.visibleDay = true;
+  selectEvent(event: Event) {
+    this.visibleDetails = true;
+    this.selectedId = { id: event.id };
   }
+
   getDaysInMonth(): Date[] {
     const days = [];
     const year = this.currentDate.getFullYear();

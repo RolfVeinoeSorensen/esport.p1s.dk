@@ -17,14 +17,11 @@
       @for (ue of userEvents; track ue) {
         <div class="relative w-full">
           <div class="absolute top-0 right-0">
-            @if (isAdmin === true) {
-              <p-button
-                size="small"
-                [icon]="isAdmin === true ? 'fal fa-pencil' : 'fal fa-info-circle'"
-                text="true"
-                severity="secondary"
-                (click)="openEditor(editorType.Event, ue.event.id)" />
-            }
+            <p-button
+              [icon]="isAdmin === true ? 'fal fa-pencil' : 'fal fa-info-circle'"
+              text="true"
+              severity="primary"
+              (click)="openEditor(editorType.Event, ue.event.id)" />
           </div>
           <h3>{{ ue.event.name }}</h3>
           <p class="text-gray-700 dark:text-gray-400">

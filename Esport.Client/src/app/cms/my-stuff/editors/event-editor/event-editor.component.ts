@@ -101,7 +101,7 @@ export class EventEditorComponent implements OnInit, OnChanges, OnDestroy {
       this.isEditor = this.as.isEditor();
       if (this.user?.id) this.getUser();
     });
-    if (this.id?.id) {
+    if (this.id?.id && (this.selectedEvent === undefined || this.id.id !== this.selectedEvent?.id)) {
       this.es.eventsGetById(this.id.id).subscribe(event => {
         this.selectedEvent = event;
         this.eventForm.patchValue({
@@ -111,11 +111,13 @@ export class EventEditorComponent implements OnInit, OnChanges, OnDestroy {
         this.startDateTime = new Date(event.startDateTime);
         this.endDateTime = new Date(event.endDateTime);
       });
-      if (this.allUsers.length === 0)
-        this.us
-          .usersGetAllUsers()
-          .subscribe(users => (this.allUsers = users.map(u => ({ ...u, fullName: `${u.firstName} ${u.lastName}` }))));
-      if (this.allTeams.length === 0) this.us.usersGetAllTeams().subscribe(teams => (this.allTeams = teams));
+      if (this.isAdmin === true) {
+        if (this.allUsers.length === 0)
+          this.us
+            .usersGetAllUsers()
+            .subscribe(users => (this.allUsers = users.map(u => ({ ...u, fullName: `${u.firstName} ${u.lastName}` }))));
+        if (this.allTeams.length === 0) this.us.usersGetAllTeams().subscribe(teams => (this.allTeams = teams));
+      }
     }
   }
 

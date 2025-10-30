@@ -5,35 +5,25 @@
       <input
         pInputText
         [disabled]="isAdmin === false"
+        [readOnly]="isAdmin === false"
         class="w-full"
         id="name"
         formControlName="name"
-        [invalid]="isInvalid('name')"
         placeholder="Navn"
         type="text" />
-      @if (isInvalid('name')) {
-        <p-message severity="error" size="small" variant="simple"
-          >Navn skal udfyldes og være mindre end 255 karakterer.</p-message
-        >
-      }
     </div>
     <div class="mb-4">
       <label for="description">Beskrivelse</label>
       <input
         pInputText
         [disabled]="isAdmin === false"
+        [readOnly]="isAdmin === false"
         class="w-full"
         id="description"
         formControlName="description"
-        [invalid]="isInvalid('description')"
         placeholder="Beskrivelse"
         type="text"
         size="255" />
-      @if (isInvalid('description')) {
-        <p-message severity="error" size="small" variant="simple"
-          >Beskrivelse skal udfyldes og være mindre end 255 karakterer.</p-message
-        >
-      }
     </div>
     <div class="mb-4">
       <label for="startDateTime" class="block">Start</label>
@@ -112,7 +102,14 @@
     @for (u of selectedEvent?.eventsUsers; track u) {
       <div>
         @if (isAdmin === true) {
-          <p-button type="button" size="small" text="true" severity="danger" icon="fal fa-times" />
+          <p-button type="button" size="small" text="true" severity="danger" icon="fal fa-trash" />
+        }
+        @if (u.accepted !== null) {
+          <i class="fal fa-check text-green-400 mr-2" title="Deltager"></i>
+        } @else if (u.declined !== null) {
+          <i class="fal fa-times text-red-400 mr-2" title="Deltager ikke"></i>
+        } @else {
+          <i class="fal fa-question text-gray-400 mr-2" title="Ikke svaret"></i>
         }
         {{ u.user?.firstName }} {{ u.user?.lastName }}
       </div>
