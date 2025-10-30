@@ -22,9 +22,6 @@ export interface AuthUser {
     lastName?: string;
     username?: string;
     createdUtc: string;
-    passwordHash?: string;
-    passwordResetToken?: string;
-    passwordResetTokenExpiration: string;
     addressStreet?: string;
     addressStreetNumber?: number;
     addressFloor?: string;
@@ -36,8 +33,6 @@ export interface AuthUser {
     canBringLaptop: boolean;
     canBringStationaryPc: boolean;
     canBringPlaystation: boolean;
-    activateAccountToken?: string;
-    activateAccountTokenExpiration?: string;
     isActivated: boolean;
     imageId?: number;
     events?: Array<Event>;
