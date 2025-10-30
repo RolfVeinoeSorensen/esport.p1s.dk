@@ -28,6 +28,9 @@ export interface EventParticipants {
   invited: number;
   rejected: number;
   accepted: number;
+  laptops: number;
+  stationaryPCs: number;
+  playstations: number;
 }
 
 @Component({
@@ -103,11 +106,21 @@ export class MyStuffComponent implements OnInit, OnDestroy {
   }
 
   getParticipantsCount(eventUser: EventUserDto): EventParticipants {
-    let res: EventParticipants = { invited: 0, rejected: 0, accepted: 0 };
+    let res: EventParticipants = {
+      invited: 0,
+      rejected: 0,
+      accepted: 0,
+      laptops: 0,
+      stationaryPCs: 0,
+      playstations: 0
+    };
     eventUser.event?.eventsUsers?.forEach(eu => {
       if (eu.accepted != null) res.accepted++;
       if (eu.declined != null) res.rejected++;
       if (eu.invited != null) res.invited++;
+      if (eu.user?.canBringLaptop === true) res.laptops++;
+      if (eu.user?.canBringStationaryPc === true) res.stationaryPCs++;
+      if (eu.user?.canBringPlaystation === true) res.playstations++;
     });
     return res;
   }

@@ -33,12 +33,16 @@
           <div class="w-full">
             @let counts = getParticipantsCount(ue);
             <p class="m-0 text-sm">
-              <span class="font-bold">{{ counts.accepted }}</span
-              ><i class="ml-2 mr-2 fal fa-user-check text-green-400"></i>
-              <span class="font-bold">{{ counts.rejected }}</span
-              ><i class="ml-2 mr-2 fal fa-user-times text-red-400"></i
-              ><span class="font-bold">{{ counts.invited }}</span
-              ><i class="ml-2 fal fa-users"></i>
+              <span class="font-bold"
+                >{{ counts.accepted }}<i class="ml-2 mr-2 fal fa-user-check text-green-400"></i
+              ></span>
+              <span class="font-bold"
+                >{{ counts.rejected }}<i class="ml-2 mr-2 fal fa-user-times text-red-400"></i
+              ></span>
+              <span class="font-bold">{{ counts.invited }}<i class="ml-2 mr-2 fal fa-users"></i></span>
+              <span class="font-bold">{{ counts.laptops }}<i class="ml-2 mr-2 fal fa-laptop"></i></span>
+              <span class="font-bold">{{ counts.stationaryPCs }}<i class="ml-2 mr-2 fal fa-desktop"></i></span>
+              <span class="font-bold">{{ counts.playstations }}<i class="ml-2 mr-2 fab fa-playstation"></i></span>
             </p>
           </div>
           <div class="w-full clearfix">
