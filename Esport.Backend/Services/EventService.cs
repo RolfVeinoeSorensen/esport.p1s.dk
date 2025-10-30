@@ -164,11 +164,15 @@ namespace Esport.Backend.Services
             .Where(eu => eu.UserId == userId && ((eu.Event.StartDateTime.Year >= year && eu.Event.StartDateTime.Month <= month) ||
                 (eu.Event.EndDateTime.Year >= year && eu.Event.EndDateTime.Month >= month)))
             .OrderByDescending(o => o.Event.StartDateTime)
-            .Take(10).Select(r => new EventUserDto { Event = r.Event, EventsUser = r })
+                .Take(10).Select(r => new EventUserDto { Event = r.Event, EventsUser = r, Participants = new EventParticipants() })
             .ToListAsync();
             var users = await db.AuthUsers.ToListAsync();
-            evu.ForEach(e => e.Participants = GetParticipantsCount(e.EventsUser, users));
-            return evu;
+            List<EventUserDto> res = new List<EventUserDto>();
+            evu.ForEach(e =>
+            {
+                res.Add(GetParticipantsCount(e, users));
+            });
+            return res;
         }
 
         public async Task<IEnumerable<EventUserDto>> GetUpcomingUserEventsByUserId(int userId)
@@ -181,29 +185,32 @@ namespace Esport.Backend.Services
                 .AsSplitQuery()
                 .Where(eu => eu.UserId == userId && eu.Event.StartDateTime >= dt)
                 .OrderBy(o => o.Event.StartDateTime)
-                .Take(10).Select(r => new EventUserDto { Event = r.Event, EventsUser = r })
+                .Take(10).Select(r => new EventUserDto { Event = r.Event, EventsUser = r, Participants = new EventParticipants() })
                 .ToListAsync();
             var users = await db.AuthUsers.ToListAsync();
-            evu.ForEach(e => e.Participants = GetParticipantsCount(e.EventsUser, users));
-            return evu;
+            List<EventUserDto> res = new List<EventUserDto>();
+            evu.ForEach(e =>
+            {
+                res.Add(GetParticipantsCount(e, users));
+            });
+            return res;
         }
 
-        public static EventParticipants GetParticipantsCount(EventsUser ev, List<AuthUser>? users)
+        private EventUserDto GetParticipantsCount(EventUserDto evu, List<AuthUser>? users)
         {
-            var res = new EventParticipants();
-            ev.Event.EventsUsers.ToList().ForEach(eu =>
+            evu.Event.EventsUsers.ToList().ForEach(eu =>
             {
                 var user = users?.FirstOrDefault(u => u.Id == eu.UserId);
-                if (user?.CanBringLaptop == true) res.Laptops++;
-                if (user?.CanBringStationaryPc == true) res.Desktops++;
-                if (user?.CanBringPlaystation == true) res.Playstations++;
+                if (user?.CanBringLaptop == true) evu.Participants.Laptops++;
+                if (user?.CanBringStationaryPc == true) evu.Participants.Desktops++;
+                if (user?.CanBringPlaystation == true) evu.Participants.Playstations++;
 
-                if (eu.Accepted != null) res.Accepted++;
-                if (eu.Declined != null) res.Declined++;
-                res.Invited++;
+                if (eu.Accepted != null) evu.Participants.Accepted++;
+                if (eu.Declined != null) evu.Participants.Declined++;
+                evu.Participants.Invited++;
             });
 
-            return res;
+            return evu;
         }
 
         public async Task<SubmitResponse> SaveEventAttendance(AttendEventRequest request, int userId)
