@@ -8,6 +8,7 @@ import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
 import { Event } from '@services/client/model/event';
+import e from 'express';
 
 @Component({
   selector: 'app-event-editor',
@@ -57,21 +58,30 @@ export class EventEditorComponent implements OnInit, OnChanges {
           description: event.description,
           startDateTime: event.startDateTime,
           endDateTime: event.endDateTime
-          // Map other event properties to form fields as needed
         });
       });
     }
   }
-  saveOrCreateEvent() {
-    let request: EventSubmitRequest = {
-      id: this.selectedEvent ? this.selectedEvent.id : 0,
-      name: this.eventForm.value.name,
-      description: this.eventForm.value.description,
-      startDateTime: this.eventForm.value.startDateTime,
-      endDateTime: this.eventForm.value.endDateTime
-    };
-    this.es.eventsCreateOrUpdateEvent(request).subscribe(res => {
-      console.log('Event saved successfully:', res);
-    });
+  isInvalid(controlName: string) {
+    const control = this.eventForm.get(controlName);
+    return control?.invalid && (control.touched || this.formSubmitted);
+  }
+  onSubmit() {
+    this.formSubmitted = true;
+    if (this.eventForm.valid) {
+      let request: EventSubmitRequest = {
+        id: this.selectedEvent ? this.selectedEvent.id : 0,
+        name: this.eventForm.value.name,
+        description: this.eventForm.value.description,
+        startDateTime: this.eventForm.value.startDateTime,
+        endDateTime: this.eventForm.value.endDateTime
+      };
+      this.es.eventsCreateOrUpdateEvent(request).subscribe(res => {
+        console.log('Event saved successfully:', res);
+      });
+    } else {
+      console.log('submit failed', this.eventForm.errors);
+      this.formSubmitted = false;
+    }
   }
 }

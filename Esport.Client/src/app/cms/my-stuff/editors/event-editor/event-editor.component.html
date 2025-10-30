@@ -1,1 +1,46 @@
-<p>event-editor works!</p>
+<form [formGroup]="eventForm" (ngSubmit)="onSubmit()" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+  <div class="col-span-1">
+    <div class="mb-4">
+      <label for="name">Navn</label>
+      <input
+        pInputText
+        class="w-full"
+        id="name"
+        formControlName="name"
+        [invalid]="isInvalid('name')"
+        placeholder="Navn"
+        type="text" />
+      @if (isInvalid('name')) {
+        <p-message severity="error" size="small" variant="simple"
+          >Navn skal udfyldes og være mindre end 255 karakterer.</p-message
+        >
+      }
+    </div>
+    <div class="mb-4">
+      <label for="description">Beskrivelse</label>
+      <input
+        pInputText
+        class="w-full"
+        id="description"
+        formControlName="description"
+        [invalid]="isInvalid('description')"
+        placeholder="Beskrivelse"
+        type="text"
+        size="255" />
+      @if (isInvalid('description')) {
+        <p-message severity="error" size="small" variant="simple"
+          >Beskrivelse skal udfyldes og være mindre end 255 karakterer.</p-message
+        >
+      }
+    </div>
+  </div>
+  <div class="col-span-1">
+    <h3>Teams</h3>
+  </div>
+  <div class="col-span-1">
+    <h3>Deltagere</h3>
+  </div>
+  <div class="col-span-1 md:col-span-3 text-right">
+    <p-button type="submit" label="Gem bruger" icon="pi pi-save" />
+  </div>
+</form>

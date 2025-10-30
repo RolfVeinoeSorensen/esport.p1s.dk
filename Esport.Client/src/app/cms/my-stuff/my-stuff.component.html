@@ -55,37 +55,38 @@
     </div>
     <p-card header="Mine aktiviteter">
       @for (ue of userEvents; track ue) {
-        <p class="text-sm text-gray-700 dark:text-gray-400">
-          {{ ue.event.startDateTime | date: 'dd. MMM yyyy HH:mm' }} - {{ ue.event.endDateTime | date: 'HH:mm' }}
-        </p>
-        <h3 class="mb-2">{{ ue.event.name }}</h3>
-        <p>Deltager du?</p>
-        <div class="text-right mb-4">
-          <p-button
-            size="small"
-            rounded="true"
-            icon="fal fa-check"
-            class="mr-2"
-            (click)="setEventAttendance(ue, true)"
-            [severity]="ue.eventsUser.accepted !== null ? 'success' : 'secondary'" />
-          <p-button
-            size="small"
-            rounded="true"
-            icon="fal fa-times"
-            (click)="setEventAttendance(ue, false)"
-            [severity]="ue.eventsUser.declined !== null ? 'danger' : 'secondary'" />
+        <div class="relative w-full">
+          @if (isAdmin === true) {
+            <div class="absolute top-0 right-0">
+              <p-button
+                size="small"
+                icon="fal fa-calendar-edit"
+                text="true"
+                severity="secondary"
+                (click)="openEditor(editorType.Event, ue.event.id)" />
+            </div>
+          }
+          <p class="text-sm text-gray-700 dark:text-gray-400">
+            {{ ue.event.startDateTime | date: 'dd. MMM yyyy HH:mm' }} - {{ ue.event.endDateTime | date: 'HH:mm' }}
+          </p>
+          <h3 class="mb-2">{{ ue.event.name }}</h3>
+          <p>Deltager du?</p>
+          <div class="text-right mb-4">
+            <p-button
+              size="small"
+              rounded="true"
+              icon="fal fa-check"
+              class="mr-2"
+              (click)="setEventAttendance(ue, true)"
+              [severity]="ue.eventsUser.accepted !== null ? 'success' : 'secondary'" />
+            <p-button
+              size="small"
+              rounded="true"
+              icon="fal fa-times"
+              (click)="setEventAttendance(ue, false)"
+              [severity]="ue.eventsUser.declined !== null ? 'danger' : 'secondary'" />
+          </div>
         </div>
-        <!-- <p-selectbutton
-          size="small"
-          fluid
-          [options]="eventAttendOptions"
-          [(ngModel)]="ue.eventsUser?.accepted != null ? true : false"
-          optionValue="value"
-          optionLabel="label">
-          <ng-template #item let-item>
-            <i [class]="item.icon"></i>
-          </ng-template>
-        </p-selectbutton> -->
       }
       @if (userEvents.length === 0) {
         <p class="mb-0">Du har ingen kommende events.</p>
