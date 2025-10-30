@@ -83,9 +83,9 @@ namespace Esport.Backend.Services
                         Invited = DateTime.Now
                     };
                     await db.AddAsync(userEv);
+                    await db.SaveChangesAsync();
                 }
             });
-            await db.SaveChangesAsync();
         }
 
         public async Task<Event> CreateOrUpdateUserToEvent(EventsUser eventsUser)
