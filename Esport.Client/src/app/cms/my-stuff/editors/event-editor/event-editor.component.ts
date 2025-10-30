@@ -68,9 +68,7 @@ export class EventEditorComponent implements OnInit, OnChanges {
       name: this.eventForm.value.name,
       description: this.eventForm.value.description,
       startDateTime: this.eventForm.value.startDateTime,
-      endDateTime: this.eventForm.value.endDateTime,
-      eventsUsers: [],
-      teams: []
+      endDateTime: this.eventForm.value.endDateTime
     };
     this.es.eventsCreateOrUpdateEvent(request).subscribe(res => {
       console.log('Event saved successfully:', res);
