@@ -18,8 +18,9 @@
         <div class="relative w-full">
           <div class="absolute top-0 right-0">
             <p-button
-              [icon]="isAdmin === true ? 'fal fa-pencil' : 'fal fa-info-circle'"
+              [icon]="isAdmin === true ? 'fal fa-pencil' : 'fal fa-eye'"
               text="true"
+              rounded="true"
               severity="primary"
               (click)="openEditor(editorType.Event, ue.event.id)" />
           </div>

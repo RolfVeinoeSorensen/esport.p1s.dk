@@ -156,7 +156,8 @@ export class MyStuffComponent implements OnInit, OnDestroy {
     const isNew = id === undefined;
     switch (editorType) {
       case EditorType.Event:
-        this.editorText = isNew ? 'Opret aktivitet' : 'Rediger aktivitet';
+        this.editorText =
+          this.isAdmin !== true ? 'Detaljer for aktivitet' : isNew ? 'Opret aktivitet' : 'Rediger aktivitet';
         break;
       case EditorType.Game:
         this.editorText = 'Rediger spil';
