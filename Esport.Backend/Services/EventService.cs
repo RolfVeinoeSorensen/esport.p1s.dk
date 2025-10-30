@@ -158,13 +158,14 @@ namespace Esport.Backend.Services
         {
             IEnumerable<EventUserDto> result = [];
             List<EventUserDto> evu = await db.EventsUsers
-            .Include(e => e.Event)
-            .ThenInclude(e => e.EventsUsers)
-            .AsSplitQuery()
-            .Where(eu => eu.UserId == userId && ((eu.Event.StartDateTime.Year >= year && eu.Event.StartDateTime.Month <= month) ||
-                (eu.Event.EndDateTime.Year >= year && eu.Event.EndDateTime.Month >= month)))
-            .OrderByDescending(o => o.Event.StartDateTime)
+                .Include(e => e.Event)
+                .ThenInclude(e => e.EventsUsers)
+                .AsSplitQuery()
+                .Where(eu => eu.UserId == userId && ((eu.Event.StartDateTime.Year >= year && eu.Event.StartDateTime.Month <= month) ||
+                    (eu.Event.EndDateTime.Year >= year && eu.Event.EndDateTime.Month >= month)))
+                .OrderByDescending(o => o.Event.StartDateTime)
                 .Take(10).Select(r => new EventUserDto { Event = r.Event, EventsUser = r, Participants = new EventParticipants() })
+                .AsNoTracking()
             .ToListAsync();
             var users = await db.AuthUsers.ToListAsync();
             List<EventUserDto> res = new List<EventUserDto>();
@@ -186,6 +187,7 @@ namespace Esport.Backend.Services
                 .Where(eu => eu.UserId == userId && eu.Event.StartDateTime >= dt)
                 .OrderBy(o => o.Event.StartDateTime)
                 .Take(10).Select(r => new EventUserDto { Event = r.Event, EventsUser = r, Participants = new EventParticipants() })
+                .AsNoTracking()
                 .ToListAsync();
             var users = await db.AuthUsers.ToListAsync();
             List<EventUserDto> res = new List<EventUserDto>();
@@ -201,13 +203,24 @@ namespace Esport.Backend.Services
             evu.Event.EventsUsers.ToList().ForEach(eu =>
             {
                 var user = users?.FirstOrDefault(u => u.Id == eu.UserId);
-                if (user?.CanBringLaptop == true) evu.Participants.Laptops++;
-                if (user?.CanBringStationaryPc == true) evu.Participants.Desktops++;
-                if (user?.CanBringPlaystation == true) evu.Participants.Playstations++;
+                if (user?.CanBringLaptop == true)
+                {
+                    evu.Participants.Laptops = evu.Participants.Laptops + 1;
+                }
 
-                if (eu.Accepted != null) evu.Participants.Accepted++;
-                if (eu.Declined != null) evu.Participants.Declined++;
-                evu.Participants.Invited++;
+                if (user?.CanBringStationaryPc == true)
+                {
+                    evu.Participants.Desktops = evu.Participants.Desktops + 1;
+                }
+
+                if (user?.CanBringPlaystation == true)
+                {
+                    evu.Participants.Playstations = evu.Participants.Playstations +1;
+                }
+
+                //if (eu.Accepted != null) evu.Participants.Accepted++;
+                //if (eu.Declined != null) evu.Participants.Declined++;
+                //evu.Participants.Invited++;
             });
 
             return evu;
