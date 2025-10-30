@@ -73,3 +73,22 @@ p {
     height: 64px;
   }
 }
+.clearfix {
+  overflow: auto;
+}
+
+.clearfix::after {
+  content: '';
+  clear: both;
+  display: table;
+}
+
+.center {
+  margin: auto;
+}
+.fl {
+  float: left;
+}
+.fr {
+  float: right;
+}

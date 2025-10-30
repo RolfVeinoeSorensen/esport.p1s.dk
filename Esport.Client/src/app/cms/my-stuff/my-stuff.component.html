@@ -70,21 +70,23 @@
             {{ ue.event.startDateTime | date: 'dd. MMM yyyy HH:mm' }} - {{ ue.event.endDateTime | date: 'HH:mm' }}
           </p>
           <h3 class="mb-2">{{ ue.event.name }}</h3>
-          <p>Deltager du?</p>
-          <div class="text-right mb-4">
-            <p-button
-              size="small"
-              rounded="true"
-              icon="fal fa-check"
-              class="mr-2"
-              (click)="setEventAttendance(ue, true)"
-              [severity]="ue.eventsUser.accepted !== null ? 'success' : 'secondary'" />
-            <p-button
-              size="small"
-              rounded="true"
-              icon="fal fa-times"
-              (click)="setEventAttendance(ue, false)"
-              [severity]="ue.eventsUser.declined !== null ? 'danger' : 'secondary'" />
+          <div class="w-full clearfix">
+            <p class="fl">Deltager du?</p>
+            <div class="fr text-right mb-4">
+              <p-button
+                size="small"
+                rounded="true"
+                icon="fal fa-check"
+                class="mr-2"
+                (click)="setEventAttendance(ue, true)"
+                [severity]="ue.eventsUser.accepted !== null ? 'success' : 'secondary'" />
+              <p-button
+                size="small"
+                rounded="true"
+                icon="fal fa-times"
+                (click)="setEventAttendance(ue, false)"
+                [severity]="ue.eventsUser.declined !== null ? 'danger' : 'secondary'" />
+            </div>
           </div>
         </div>
       }
