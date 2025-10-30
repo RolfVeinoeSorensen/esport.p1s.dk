@@ -34,7 +34,6 @@ export interface EventParticipants {
   stationaryPCs: number;
   playstations: number;
 }
-
 @Component({
   selector: 'app-my-stuff',
   imports: [
@@ -76,6 +75,7 @@ export class MyStuffComponent implements OnInit, OnDestroy {
   editorType = EditorType;
   selectedEditorType!: EditorType;
   selectedId: SimpleId | undefined;
+  participantsCache: { [key: number]: EventParticipants } = {};
 
   eventAttendOptions: any[] = [
     { icon: 'fal fa-check', label: 'Deltager', value: true },
@@ -108,27 +108,6 @@ export class MyStuffComponent implements OnInit, OnDestroy {
       this.userEvents = ue;
     });
   }
-
-  getParticipantsCount(eventUser: EventUserDto): EventParticipants {
-    let res: EventParticipants = {
-      invited: 0,
-      rejected: 0,
-      accepted: 0,
-      laptops: 0,
-      stationaryPCs: 0,
-      playstations: 0
-    };
-    eventUser.event?.eventsUsers?.forEach(eu => {
-      if (eu.accepted != null) res.accepted++;
-      if (eu.declined != null) res.rejected++;
-      if (eu.invited != null) res.invited++;
-      if (eu.user?.canBringLaptop === true) res.laptops++;
-      if (eu.user?.canBringStationaryPc === true) res.stationaryPCs++;
-      if (eu.user?.canBringPlaystation === true) res.playstations++;
-    });
-    return res;
-  }
-
   getGameServers() {
     this.gs.gamesGetAllGameServers().subscribe(gs => {
       this.gameServers = gs;

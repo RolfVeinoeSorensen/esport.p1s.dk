@@ -28,11 +28,10 @@
             {{ ue.event.startDateTime | date: 'dd. MMM yyyy HH:mm' }} - {{ ue.event.endDateTime | date: 'HH:mm' }}
           </p>
           <div class="w-full flex flex-wrap gap-2 mb-4 mt-2">
-            @let counts = getParticipantsCount(ue);
             <p-overlaybadge
               title="Inviterede"
               badgeSize="small"
-              [value]="counts.invited"
+              [value]="ue.participants.invited"
               severity="secondary"
               class="mr-2">
               <i class="fal fa-users" style="font-size: 1.6rem"></i>
@@ -40,7 +39,7 @@
             <p-overlaybadge
               title="Deltager"
               badgeSize="small"
-              [value]="counts.accepted"
+              [value]="ue.participants.accepted"
               severity="success"
               class="mr-2">
               <i class="fal fa-check text-green-400" style="font-size: 1.6rem"></i>
@@ -48,7 +47,7 @@
             <p-overlaybadge
               title="Deltager ikke"
               badgeSize="small"
-              [value]="counts.rejected"
+              [value]="ue.participants.declined"
               severity="danger"
               class="mr-2">
               <i class="fal fa-times text-red-400" style="font-size: 1.6rem"></i>
@@ -56,7 +55,7 @@
             <p-overlaybadge
               title="Laptops"
               badgeSize="small"
-              [value]="counts.laptops"
+              [value]="ue.participants.laptops"
               severity="secondary"
               class="mr-2">
               <i class="fal fa-laptop text-gray-400" style="font-size: 1.6rem"></i>
@@ -64,7 +63,7 @@
             <p-overlaybadge
               title="Desktops"
               badgeSize="small"
-              [value]="counts.stationaryPCs"
+              [value]="ue.participants.desktops"
               severity="secondary"
               class="mr-2">
               <i class="fal fa-desktop text-gray-400" style="font-size: 1.6rem"></i>
@@ -72,7 +71,7 @@
             <p-overlaybadge
               title="Playstations"
               badgeSize="small"
-              [value]="counts.playstations"
+              [value]="ue.participants.playstations"
               severity="secondary"
               class="mr-2">
               <i class="fab fa-playstation text-gray-400" style="font-size: 1.6rem"></i>

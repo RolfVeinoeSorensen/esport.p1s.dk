@@ -73,7 +73,7 @@
     @for (t of selectedEvent?.teams; track t) {
       <div>
         @if (isAdmin === true) {
-          <p-button type="button" size="small" text="true" severity="danger" icon="fal fa-times" />
+          <p-button type="button" size="small" text="true" severity="danger" icon="fal fa-trash" />
         }
         {{ t.name }}
       </div>
