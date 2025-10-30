@@ -25,6 +25,7 @@ model/changePasswordRequest.ts
 model/contactRequest.ts
 model/event.ts
 model/eventDto.ts
+model/eventParticipants.ts
 model/eventSubmitRequest.ts
 model/eventUserDto.ts
 model/eventsUser.ts

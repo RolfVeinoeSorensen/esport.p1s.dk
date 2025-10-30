@@ -180,7 +180,7 @@ namespace Esport.Backend.Services
                 .Take(10).Select(r => new EventUserDto { Event = r.Event, EventsUser = r, Participants = GetParticipantsCount(r.Event) }).ToListAsync();
         }
 
-        private EventParticipants GetParticipantsCount(Event ev)
+        private static EventParticipants GetParticipantsCount(Event ev)
         {
             var res = new EventParticipants();
 

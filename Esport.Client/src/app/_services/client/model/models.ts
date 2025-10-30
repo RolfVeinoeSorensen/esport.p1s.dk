@@ -9,6 +9,7 @@ export * from './changePasswordRequest';
 export * from './contactRequest';
 export * from './event';
 export * from './eventDto';
+export * from './eventParticipants';
 export * from './eventSubmitRequest';
 export * from './eventUserDto';
 export * from './eventsUser';

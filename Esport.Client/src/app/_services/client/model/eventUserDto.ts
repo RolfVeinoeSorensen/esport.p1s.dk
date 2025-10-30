@@ -7,6 +7,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { EventParticipants } from './eventParticipants';
 import { Event } from './event';
 import { EventsUser } from './eventsUser';
 
@@ -14,5 +15,6 @@ import { EventsUser } from './eventsUser';
 export interface EventUserDto { 
     event: Event;
     eventsUser: EventsUser;
+    participants: EventParticipants;
 }
 
