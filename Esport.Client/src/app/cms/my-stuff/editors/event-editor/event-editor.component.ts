@@ -77,7 +77,15 @@ export class EventEditorComponent implements OnInit, OnChanges {
         endDateTime: this.eventForm.value.endDateTime
       };
       this.es.eventsCreateOrUpdateEvent(request).subscribe(res => {
-        console.log('Event saved successfully:', res);
+        this.selectedEvent = res;
+        this.formSubmitted = false;
+        this.its.addMessage({
+          id: 'EventSaved',
+          icon: 'pi pi-check-circle',
+          summary: 'Event blev gemt',
+          detail: 'Event blev gemt succesfuldt.',
+          severity: 'success'
+        });
       });
     } else {
       console.log('submit failed', this.eventForm.errors);

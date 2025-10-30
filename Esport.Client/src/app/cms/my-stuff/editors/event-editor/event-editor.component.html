@@ -36,9 +36,15 @@
   </div>
   <div class="col-span-1">
     <h3>Teams</h3>
+    @for (t of selectedEvent?.teams; track t) {
+      <p>{{ t.name }}</p>
+    }
   </div>
   <div class="col-span-1">
     <h3>Deltagere</h3>
+    @for (u of selectedEvent?.eventsUsers; track u) {
+      <p>{{ u.user?.firstName }} {{ u.user?.lastName }}</p>
+    }
   </div>
   <div class="col-span-1 md:col-span-3 text-right">
     <p-button type="submit" label="Gem bruger" icon="pi pi-save" />

@@ -2,6 +2,7 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace Esport.Backend.Entities;
 
@@ -19,10 +20,12 @@ public partial class AuthUser
 
     public DateTime CreatedUtc { get; set; }
 
+    [JsonIgnore]
     public string PasswordHash { get; set; }
 
+    [JsonIgnore]
     public string PasswordResetToken { get; set; }
-
+    [JsonIgnore]
     public DateTime PasswordResetTokenExpiration { get; set; }
 
     public string AddressStreet { get; set; }
@@ -47,8 +50,9 @@ public partial class AuthUser
 
     public bool CanBringPlaystation { get; set; }
 
+    [JsonIgnore]
     public string ActivateAccountToken { get; set; }
-
+    [JsonIgnore]
     public DateTime? ActivateAccountTokenExpiration { get; set; }
 
     public bool IsActivated { get; set; }

@@ -1,5 +1,69 @@
 <h1>Mine ting</h1>
 <div class="grid grid-cols-1 md:grid-cols-12 gap-4 mb-4">
+  <div class="md:col-span-4">
+    <div class="relative w-full">
+      <h2>Mine aktiviteter</h2>
+      @if (isAdmin === true) {
+        <div class="absolute top-0 right-0">
+          <p-button
+            size="small"
+            icon="pi pi-calendar-plus"
+            text="true"
+            (click)="openEditor(editorType.Event, undefined)" />
+        </div>
+      }
+    </div>
+    <p-card>
+      @for (ue of userEvents; track ue) {
+        <div class="relative w-full">
+          <div class="absolute top-0 right-0">
+            @if (isAdmin === true) {
+              <p-button
+                size="small"
+                [icon]="isAdmin === true ? 'fal fa-pencil' : 'fal fa-info-circle'"
+                text="true"
+                severity="secondary"
+                (click)="openEditor(editorType.Event, ue.event.id)" />
+            }
+          </div>
+          <h3 class="mb-2">{{ ue.event.name }}</h3>
+          <p class="text-sm text-gray-700 dark:text-gray-400">
+            {{ ue.event.startDateTime | date: 'dd. MMM yyyy HH:mm' }} - {{ ue.event.endDateTime | date: 'HH:mm' }}
+          </p>
+          <div class="w-full clearfix">
+            <p class="fl text-sm">Deltager du?</p>
+            <div class="fr text-right mb-4">
+              <p-button
+                size="small"
+                rounded="true"
+                text="true"
+                icon="fal fa-check"
+                class="mr-2"
+                (click)="setEventAttendance(ue, true)"
+                [severity]="ue.eventsUser.accepted !== null ? 'success' : 'secondary'" />
+              <p-button
+                size="small"
+                rounded="true"
+                text="true"
+                icon="fal fa-times"
+                (click)="setEventAttendance(ue, false)"
+                [severity]="ue.eventsUser.declined !== null ? 'danger' : 'secondary'" />
+            </div>
+          </div>
+        </div>
+      }
+      @if (userEvents.length === 0) {
+        <p class="mb-0">Du har ingen kommende events.</p>
+      }
+    </p-card>
+    <h2>Discord</h2>
+    <p-card header="Bliv en del af fællesskabet">
+      <p>Vores Discord server er åben for alle medlemmer af klubben.</p>
+      <a href="https://discord.gg/BRz85AE9zK" target="_blank" class="no-underline">
+        <p-button pButton type="button" type="text" label="Gå til Discord" icon="pi pi-discord" class="w-full" />
+      </a>
+    </p-card>
+  </div>
   <div class="md:col-span-8">
     <div class="relative w-full">
       <h2>Klubbens servere</h2>
@@ -39,68 +103,6 @@
         </p-card>
       }
     </div>
-  </div>
-  <div class="md:col-span-4">
-    <div class="relative w-full">
-      <h2>Kalender</h2>
-      @if (isAdmin === true) {
-        <div class="absolute top-0 right-0">
-          <p-button
-            size="small"
-            icon="pi pi-calendar-plus"
-            text="true"
-            (click)="openEditor(editorType.Event, undefined)" />
-        </div>
-      }
-    </div>
-    <p-card header="Mine aktiviteter">
-      @for (ue of userEvents; track ue) {
-        <div class="relative w-full">
-          @if (isAdmin === true) {
-            <div class="absolute top-0 right-0">
-              <p-button
-                size="small"
-                icon="fal fa-calendar-edit"
-                text="true"
-                severity="secondary"
-                (click)="openEditor(editorType.Event, ue.event.id)" />
-            </div>
-          }
-          <p class="text-sm text-gray-700 dark:text-gray-400">
-            {{ ue.event.startDateTime | date: 'dd. MMM yyyy HH:mm' }} - {{ ue.event.endDateTime | date: 'HH:mm' }}
-          </p>
-          <h3 class="mb-2">{{ ue.event.name }}</h3>
-          <div class="w-full clearfix">
-            <p class="fl">Deltager du?</p>
-            <div class="fr text-right mb-4">
-              <p-button
-                size="small"
-                rounded="true"
-                icon="fal fa-check"
-                class="mr-2"
-                (click)="setEventAttendance(ue, true)"
-                [severity]="ue.eventsUser.accepted !== null ? 'success' : 'secondary'" />
-              <p-button
-                size="small"
-                rounded="true"
-                icon="fal fa-times"
-                (click)="setEventAttendance(ue, false)"
-                [severity]="ue.eventsUser.declined !== null ? 'danger' : 'secondary'" />
-            </div>
-          </div>
-        </div>
-      }
-      @if (userEvents.length === 0) {
-        <p class="mb-0">Du har ingen kommende events.</p>
-      }
-    </p-card>
-    <h2>Discord</h2>
-    <p-card header="Bliv en del af fællesskabet">
-      <p>Vores Discord server er åben for alle medlemmer af klubben.</p>
-      <a href="https://discord.gg/BRz85AE9zK" target="_blank" class="no-underline">
-        <p-button pButton type="button" type="text" label="Gå til Discord" icon="pi pi-discord" class="w-full" />
-      </a>
-    </p-card>
   </div>
 </div>
 <p-card>
