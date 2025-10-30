@@ -158,15 +158,14 @@ namespace Esport.Backend.Services
         {
             IEnumerable<EventUserDto> result = [];
             return await db.EventsUsers
-                .Include(eu => eu.User)
                 .Include(e => e.Event)
                 .ThenInclude(e => e.EventsUsers)
-                .ThenInclude(eux => eux.User)
+                .ThenInclude(eu => eu.User)
                 .AsSplitQuery()
                 .Where(eu => eu.UserId == userId && ((eu.Event.StartDateTime.Year >= year && eu.Event.StartDateTime.Month <= month) ||
                     (eu.Event.EndDateTime.Year >= year && eu.Event.EndDateTime.Month >= month)))
                 .OrderByDescending(o => o.Event.StartDateTime)
-                .Take(10).Select(r => new EventUserDto { Event = r.Event, EventsUser = r, Participants = GetParticipantsCount(r.Event) }).ToListAsync();
+                .Take(10).Select(r => new EventUserDto { Event = r.Event, EventsUser = r, Participants = GetParticipantsCount(r) }).ToListAsync();
         }
 
         public async Task<IEnumerable<EventUserDto>> GetUpcomingUserEventsByUserId(int userId)
@@ -174,21 +173,20 @@ namespace Esport.Backend.Services
             var dt = DateTime.Now;
             IEnumerable<EventUserDto> result = [];
             return await db.EventsUsers
-                .Include(eu => eu.User)
                 .Include(e => e.Event)
                 .ThenInclude(e => e.EventsUsers)
-                .ThenInclude(eux => eux.User)
+                .ThenInclude(eu => eu.User)
                 .AsSplitQuery()
                 .Where(eu => eu.UserId == userId && eu.Event.StartDateTime >= dt)
                 .OrderBy(o => o.Event.StartDateTime)
-                .Take(10).Select(r => new EventUserDto { Event = r.Event, EventsUser = r, Participants = GetParticipantsCount(r.Event) }).ToListAsync();
+                .Take(10).Select(r => new EventUserDto { Event = r.Event, EventsUser = r, Participants = GetParticipantsCount(r) }).ToListAsync();
         }
 
-        private static EventParticipants GetParticipantsCount(Event ev)
+        private static EventParticipants GetParticipantsCount(EventsUser ev)
         {
             var res = new EventParticipants();
 
-            ev.EventsUsers.ToList().ForEach(eu =>
+            ev.Event.EventsUsers.ToList().ForEach(eu =>
             {
                 if (eu.User.CanBringLaptop == true) res.Laptops++;
                 if (eu.User.CanBringStationaryPc == true) res.Desktops++;
