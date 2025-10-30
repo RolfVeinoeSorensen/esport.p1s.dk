@@ -160,6 +160,9 @@ namespace Esport.Backend.Services
             return await db.EventsUsers
                 .Include(eu => eu.User)
                 .Include(e => e.Event)
+                .ThenInclude(e => e.EventsUsers)
+                .ThenInclude(eux => eux.User)
+                .AsSplitQuery()
                 .Where(eu => eu.UserId == userId && ((eu.Event.StartDateTime.Year >= year && eu.Event.StartDateTime.Month <= month) ||
                     (eu.Event.EndDateTime.Year >= year && eu.Event.EndDateTime.Month >= month)))
                 .OrderByDescending(o => o.Event.StartDateTime)
@@ -174,6 +177,7 @@ namespace Esport.Backend.Services
                 .Include(eu => eu.User)
                 .Include(e => e.Event)
                 .ThenInclude(e => e.EventsUsers)
+                .ThenInclude(eux => eux.User)
                 .AsSplitQuery()
                 .Where(eu => eu.UserId == userId && eu.Event.StartDateTime >= dt)
                 .OrderBy(o => o.Event.StartDateTime)
@@ -186,12 +190,9 @@ namespace Esport.Backend.Services
 
             ev.EventsUsers.ToList().ForEach(eu =>
             {
-                if (eu.User is AuthUser u)
-                {
-                    if (u?.CanBringLaptop == true) res.Laptops++;
-                    if (u?.CanBringStationaryPc == true) res.Desktops++;
-                    if (u?.CanBringPlaystation == true) res.Playstations++;
-                }
+                if (eu.User.CanBringLaptop == true) res.Laptops++;
+                if (eu.User.CanBringStationaryPc == true) res.Desktops++;
+                if (eu.User.CanBringPlaystation == true) res.Playstations++;
 
                 if (eu.Accepted != null) res.Accepted++;
                 if (eu.Declined != null) res.Declined++;
