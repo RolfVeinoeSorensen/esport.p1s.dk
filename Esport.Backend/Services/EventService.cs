@@ -158,13 +158,15 @@ namespace Esport.Backend.Services
         {
             IEnumerable<EventUserDto> result = [];
             List<EventUserDto> evu = await db.EventsUsers
-               .Include(e => e.Event)
-               .ThenInclude(e => e.EventsUsers)
-                .AsSplitQuery()
-               .Where(eu => eu.UserId == userId && ((eu.Event.StartDateTime.Year >= year && eu.Event.StartDateTime.Month <= month) ||
-                   (eu.Event.EndDateTime.Year >= year && eu.Event.EndDateTime.Month >= month)))
-               .OrderByDescending(o => o.Event.StartDateTime)
-               .Take(10).Select(r => new EventUserDto { Event = r.Event, EventsUser = r }).ToListAsync();
+            .Include(e => e.Event)
+            .ThenInclude(e => e.EventsUsers)
+            .ThenInclude(eu => eu.User)
+            .Where(eu => eu.UserId == userId && ((eu.Event.StartDateTime.Year >= year && eu.Event.StartDateTime.Month <= month) ||
+                (eu.Event.EndDateTime.Year >= year && eu.Event.EndDateTime.Month >= month)))
+            .OrderByDescending(o => o.Event.StartDateTime)
+            .Take(10).Select(r => new EventUserDto { Event = r.Event, EventsUser = r })
+            .AsSplitQuery()
+            .ToListAsync();
             evu.ForEach(e => e.Participants = GetParticipantsCount(e.EventsUser));
             return evu;
         }
@@ -176,10 +178,12 @@ namespace Esport.Backend.Services
             List<EventUserDto> evu = await db.EventsUsers
                 .Include(e => e.Event)
                 .ThenInclude(e => e.EventsUsers)
-                .AsSplitQuery()
+                .ThenInclude(eu => eu.User)
                 .Where(eu => eu.UserId == userId && eu.Event.StartDateTime >= dt)
                 .OrderBy(o => o.Event.StartDateTime)
-                .Take(10).Select(r => new EventUserDto { Event = r.Event, EventsUser = r }).ToListAsync();
+                .Take(10).Select(r => new EventUserDto { Event = r.Event, EventsUser = r })
+                .AsSplitQuery()
+                .ToListAsync();
             evu.ForEach(e => e.Participants = GetParticipantsCount(e.EventsUser));
             return evu;
         }
