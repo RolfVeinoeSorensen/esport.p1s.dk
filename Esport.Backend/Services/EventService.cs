@@ -163,7 +163,7 @@ namespace Esport.Backend.Services
                 .Where(eu => eu.UserId == userId && ((eu.Event.StartDateTime.Year >= year && eu.Event.StartDateTime.Month <= month) ||
                     (eu.Event.EndDateTime.Year >= year && eu.Event.EndDateTime.Month >= month)))
                 .OrderByDescending(o => o.Event.StartDateTime)
-                .Take(10).Select(r => new EventUserDto { Event = r.Event, EventsUser = r }).ToListAsync();
+                .Take(10).Select(r => new EventUserDto { Event = r.Event, EventsUser = r, Participants = GetParticipantsCount(r.Event) }).ToListAsync();
         }
 
         public async Task<IEnumerable<EventUserDto>> GetUpcomingUserEventsByUserId(int userId)
@@ -177,7 +177,28 @@ namespace Esport.Backend.Services
                 .AsSplitQuery()
                 .Where(eu => eu.UserId == userId && eu.Event.StartDateTime >= dt)
                 .OrderBy(o => o.Event.StartDateTime)
-                .Take(10).Select(r => new EventUserDto { Event = r.Event, EventsUser = r }).ToListAsync();
+                .Take(10).Select(r => new EventUserDto { Event = r.Event, EventsUser = r, Participants = GetParticipantsCount(r.Event) }).ToListAsync();
+        }
+
+        private EventParticipants GetParticipantsCount(Event ev)
+        {
+            var res = new EventParticipants();
+
+            ev.EventsUsers.ToList().ForEach(eu =>
+            {
+                if (eu.User is AuthUser u)
+                {
+                    if (u?.CanBringLaptop == true) res.Laptops++;
+                    if (u?.CanBringStationaryPc == true) res.Desktops++;
+                    if (u?.CanBringPlaystation == true) res.Playstations++;
+                }
+
+                if (eu.Accepted != null) res.Accepted++;
+                if (eu.Declined != null) res.Declined++;
+                res.Invited++;
+            });
+
+            return res;
         }
 
         public async Task<SubmitResponse> SaveEventAttendance(AttendEventRequest request, int userId)
