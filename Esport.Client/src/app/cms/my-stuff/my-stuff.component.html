@@ -50,6 +50,15 @@
                 [severity]="ue.eventsUser.declined !== null ? 'danger' : 'secondary'" />
             </div>
           </div>
+          <div class="w-full">
+            @let counts = getParticipantsCount(ue);
+            <p class="m-0 text-sm">
+              Deltagere:
+              <span class="font-bold">{{ counts.accepted }}</span> accepteret,
+              <span class="font-bold">{{ counts.rejected }}</span> afvist,
+              <span class="font-bold">{{ counts.invited }}</span> inviteret
+            </p>
+          </div>
         </div>
       }
       @if (userEvents.length === 0) {

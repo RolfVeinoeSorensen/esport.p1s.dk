@@ -24,6 +24,12 @@ import { GameServersEditorComponent } from './editors/game-servers-editor/game-s
 import { EventEditorComponent } from './editors/event-editor/event-editor.component';
 import { SimpleId } from '@models/simple-id';
 
+export interface EventParticipants {
+  invited: number;
+  rejected: number;
+  accepted: number;
+}
+
 @Component({
   selector: 'app-my-stuff',
   imports: [
@@ -94,6 +100,16 @@ export class MyStuffComponent implements OnInit, OnDestroy {
     return this.es.eventsGetUpcomingUserEventsByUserId().subscribe(ue => {
       this.userEvents = ue;
     });
+  }
+
+  getParticipantsCount(eventUser: EventUserDto): EventParticipants {
+    let res: EventParticipants = { invited: 0, rejected: 0, accepted: 0 };
+    eventUser.event?.eventsUsers?.forEach(eu => {
+      if (eu.accepted != null) res.accepted++;
+      else if (eu.declined != null) res.rejected++;
+      else if (eu.invited != null) res.invited++;
+    });
+    return res;
   }
 
   getGameServers() {

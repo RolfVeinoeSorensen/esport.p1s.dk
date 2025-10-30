@@ -173,6 +173,8 @@ namespace Esport.Backend.Services
             return await db.EventsUsers
                 .Include(eu => eu.User)
                 .Include(e => e.Event)
+                .ThenInclude(e => e.EventsUsers)
+                .AsSplitQuery()
                 .Where(eu => eu.UserId == userId && eu.Event.StartDateTime >= dt)
                 .OrderBy(o => o.Event.StartDateTime)
                 .Take(10).Select(r => new EventUserDto { Event = r.Event, EventsUser = r }).ToListAsync();

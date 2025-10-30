@@ -104,7 +104,7 @@
     @for (u of selectedEvent?.eventsUsers; track u) {
       <div>
         <p-button type="button" size="small" text="true" severity="danger" icon="fal fa-times" />
-        {{ user.firstName }} {{ user.lastName }}
+        {{ u.user?.firstName }} {{ u.user?.lastName }}
       </div>
     }
   </div>
