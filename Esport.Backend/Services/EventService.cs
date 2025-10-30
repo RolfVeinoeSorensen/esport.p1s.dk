@@ -175,5 +175,30 @@ namespace Esport.Backend.Services
                 .OrderByDescending(o => o.Event.StartDateTime)
                 .Take(10).Select(r => new EventUserDto { Event = r.Event, EventsUser = r }).ToListAsync();
         }
+
+        public async Task<SubmitResponse> SaveEventAttendance(AttendEventRequest request, int userId)
+        {
+            var eventsUser = await db.EventsUsers.FirstOrDefaultAsync(eu => eu.EventId == request.EventId && eu.UserId == userId);
+            if (eventsUser == null)
+            {
+                return new SubmitResponse
+                {
+                    Ok = false,
+                    Message = "Kunne ikke finde deltager til event"
+                };
+            }
+            else
+            {
+                eventsUser.Accepted = request.Attend == true ? DateTime.Now : null;
+                eventsUser.Declined = request.Attend == false ? DateTime.Now : null;
+                db.EventsUsers.Update(eventsUser);
+                await db.SaveChangesAsync();
+                return new SubmitResponse
+                {
+                    Ok = true,
+                    Message = $"Din deltagelse er gemt. Du deltager {(request.Attend == false ? "IKKE " : "")}i eventet."
+                };
+            }
+        }
     }
 }

@@ -16,6 +16,7 @@ import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { ToggleSwitchModule } from 'primeng/toggleswitch';
 import { DialogModule } from 'primeng/dialog';
+import { SelectButtonModule } from 'primeng/selectbutton';
 import { EditorType } from '@models/editor-type';
 import { UserEditorComponent } from './editors/user-editor/user-editor.component';
 import { GamesEditorComponent } from './editors/games-editor/games-editor.component';
@@ -30,6 +31,7 @@ import { SimpleId } from '@models/simple-id';
     DatePipe,
     ButtonModule,
     ToggleSwitchModule,
+    SelectButtonModule,
     ReactiveFormsModule,
     FormsModule,
     CommonModule,
@@ -62,6 +64,12 @@ export class MyStuffComponent implements OnInit {
   editorType = EditorType;
   selectedEditorType!: EditorType;
   selectedId: SimpleId | undefined;
+
+  eventAttendOptions: any[] = [
+    { icon: 'fal fa-check', label: 'Deltager', value: true },
+    { icon: 'fal fa-times', label: 'Deltager ikke', value: false }
+  ];
+
   ngOnInit(): void {
     this.getMyEvents();
     this.getGameServers();
@@ -80,7 +88,7 @@ export class MyStuffComponent implements OnInit {
   }
 
   getMyEvents() {
-    return this.es.eventsGetUserEventsByUserId(this.month + 1, this.year).subscribe(ue => {
+    return this.es.eventsGetUpcomingUserEventsByUserId().subscribe(ue => {
       this.userEvents = ue;
     });
   }
@@ -96,6 +104,8 @@ export class MyStuffComponent implements OnInit {
       this.getGameServers();
     });
   }
+
+  setEventAttendance(eventUser: EventUserDto, attend: boolean) {}
 
   handleEditorSave(editorType: EditorType) {
     this.visibleEditor = false;

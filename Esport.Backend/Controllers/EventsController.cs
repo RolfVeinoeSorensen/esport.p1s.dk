@@ -110,5 +110,16 @@ namespace Esport.Backend.Controllers
                 return Ok(eventResult);
             }
         }
+
+        [Authorize([UserRole.Admin, UserRole.MemberAdult, UserRole.MemberKid])]
+        [HttpPost("[action]")]
+        public async Task<ActionResult<SubmitResponse>> SaveEventAttendance([FromBody] AttendEventRequest request)
+        {
+            if (HttpContext.Items["User"] is not AuthUser currentUser)
+                return Unauthorized(new { message = "Unauthorized" });
+
+            var response = await eventService.SaveEventAttendance(request, currentUser.Id);
+            return Ok(response);
+        }
     }
 }

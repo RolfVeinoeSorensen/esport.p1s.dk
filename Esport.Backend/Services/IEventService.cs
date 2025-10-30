@@ -15,5 +15,6 @@ namespace Esport.Backend.Services
         Task<IEnumerable<EventUserDto>> GetUserEventsByUserId(int userId, int month, int year);
         Task<IEnumerable<EventUserDto>> GetUpcomingUserEventsByUserId(int userId);
         Task<SubmitResponse> AddTeamToEvent(int eventId, int teamId);
+        Task<SubmitResponse> SaveEventAttendance(AttendEventRequest request, int userId);
     }
 }
