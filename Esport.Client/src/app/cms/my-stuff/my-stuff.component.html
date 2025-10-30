@@ -26,7 +26,7 @@
           </div>
           <h3>{{ ue.event.name }}</h3>
           <p class="text-gray-700 dark:text-gray-400">
-            {{ ue.event.startDateTime | date: 'dd. MMM yyyy HH:mm' }} - {{ ue.event.endDateTime | date: 'HH:mm' }}
+            {{ ue.event.startDateTime | date: 'EEEE, dd. MMM yyyy HH:mm' }} - {{ ue.event.endDateTime | date: 'HH:mm' }}
           </p>
           <div class="w-full flex flex-wrap gap-2 mb-4 mt-2">
             <p-overlaybadge
