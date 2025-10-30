@@ -4,6 +4,7 @@
       <label for="name">Navn</label>
       <input
         pInputText
+        [disabled]="isAdmin === false"
         class="w-full"
         id="name"
         formControlName="name"
@@ -20,6 +21,7 @@
       <label for="description">Beskrivelse</label>
       <input
         pInputText
+        [disabled]="isAdmin === false"
         class="w-full"
         id="description"
         formControlName="description"
@@ -33,20 +35,80 @@
         >
       }
     </div>
+    <div class="mb-4">
+      <label for="startDateTime" class="block">Start</label>
+      <p-datepicker
+        inputId="startDateTime"
+        [(ngModel)]="startDateTime"
+        [ngModelOptions]="{ standalone: true }"
+        [showTime]="true"
+        dateFormat="yy-mm-dd"
+        hourFormat="24"
+        appendTo="body" />
+    </div>
+    <div class="mb-4">
+      <label for="endDateTime" class="block">Slut</label>
+      <p-datepicker
+        inputId="endDateTime"
+        [(ngModel)]="endDateTime"
+        [ngModelOptions]="{ standalone: true }"
+        [showTime]="true"
+        dateFormat="yy-mm-dd"
+        hourFormat="24"
+        appendTo="body" />
+    </div>
   </div>
   <div class="col-span-1">
     <h3>Teams</h3>
+    <div>
+      <p-autocomplete
+        [(ngModel)]="selectedTeam"
+        [ngModelOptions]="{ standalone: true }"
+        showClear="true"
+        [suggestions]="teams"
+        (completeMethod)="searchTeams($event)"
+        optionLabel="name" />
+      <p-button
+        [disabled]="selectedTeam === undefined"
+        size="small"
+        class="ml-2"
+        icon="fal fa-plus"
+        text="true"
+        (click)="addTeam()" />
+    </div>
     @for (t of selectedEvent?.teams; track t) {
-      <p>{{ t.name }}</p>
+      <div>
+        <p-button type="button" size="small" text="true" severity="danger" icon="fal fa-times" />
+        {{ t.name }}
+      </div>
     }
   </div>
   <div class="col-span-1">
     <h3>Deltagere</h3>
+    <div>
+      <p-autocomplete
+        [(ngModel)]="selectedUser"
+        [ngModelOptions]="{ standalone: true }"
+        showClear="true"
+        [suggestions]="users"
+        (completeMethod)="searchUsers($event)"
+        optionLabel="fullName" />
+      <p-button
+        [disabled]="selectedUser === undefined"
+        size="small"
+        class="ml-2"
+        icon="fal fa-plus"
+        text="true"
+        (click)="addTeam()" />
+    </div>
     @for (u of selectedEvent?.eventsUsers; track u) {
-      <p>{{ u.user?.firstName }} {{ u.user?.lastName }} </p>
+      <div>
+        <p-button type="button" size="small" text="true" severity="danger" icon="fal fa-times" />
+        {{ user.firstName }} {{ user.lastName }}
+      </div>
     }
   </div>
   <div class="col-span-1 md:col-span-3 text-right">
-    <p-button type="submit" label="Gem bruger" icon="pi pi-save" />
+    <p-button type="submit" label="Gem Event" icon="pi pi-save" />
   </div>
 </form>

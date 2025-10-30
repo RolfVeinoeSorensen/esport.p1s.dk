@@ -1,5 +1,5 @@
 import { CommonModule, DatePipe } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import {
@@ -17,7 +17,6 @@ import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { ToggleSwitchModule } from 'primeng/toggleswitch';
 import { DialogModule } from 'primeng/dialog';
-import { SelectButtonModule } from 'primeng/selectbutton';
 import { EditorType } from '@models/editor-type';
 import { UserEditorComponent } from './editors/user-editor/user-editor.component';
 import { GamesEditorComponent } from './editors/games-editor/games-editor.component';
@@ -32,7 +31,6 @@ import { SimpleId } from '@models/simple-id';
     DatePipe,
     ButtonModule,
     ToggleSwitchModule,
-    SelectButtonModule,
     ReactiveFormsModule,
     FormsModule,
     CommonModule,
@@ -45,7 +43,7 @@ import { SimpleId } from '@models/simple-id';
   templateUrl: './my-stuff.component.html',
   styleUrl: './my-stuff.component.css'
 })
-export class MyStuffComponent implements OnInit {
+export class MyStuffComponent implements OnInit, OnDestroy {
   private es = inject(EventsService);
   private gs = inject(GamesService);
   private us = inject(UsersService);
@@ -80,6 +78,10 @@ export class MyStuffComponent implements OnInit {
       this.isEditor = this.as.isEditor();
       if (this.user?.id) this.getUser();
     });
+  }
+
+  ngOnDestroy(): void {
+    this.userSubscription.unsubscribe();
   }
 
   getUser() {

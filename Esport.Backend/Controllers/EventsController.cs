@@ -35,23 +35,20 @@ namespace Esport.Backend.Controllers
             return Ok(eventResult);
         }
 
-        [Authorize([UserRole.Admin])]
+        [Authorize(UserRole.Admin)]
         [HttpPost("[action]")]
         public async Task<ActionResult<Event>> CreateOrUpdateEvent([FromBody] EventSubmitRequest ev)
         {
-            if (HttpContext.Items["User"] is not AuthUser currentUser || currentUser.Roles.Any(x => x.Role.Equals(UserRole.Admin)) == true)
+            if (HttpContext.Items["User"] is not AuthUser currentUser)
                 return Unauthorized(new { message = "Unauthorized" });
 
             var eventResult = await eventService.CreateOrUpdateEvent(ev, currentUser);
             return Ok(eventResult);
         }
-        [Authorize([UserRole.Admin])]
+        [Authorize(UserRole.Admin)]
         [HttpDelete("[action]")]
         public async Task<ActionResult> DeleteEvent(int id)
         {
-            if (HttpContext.Items["User"] as AuthUser is not AuthUser currentUser || currentUser.Roles.Any(x => x.Role.Equals(UserRole.Admin)) == true)
-                return Unauthorized(new { message = "Unauthorized" });
-
             await eventService.DeleteEvent(id);
             return Ok();
         }
@@ -98,14 +95,11 @@ namespace Esport.Backend.Controllers
             return Ok(events);
         }
 
-        [Authorize([UserRole.Admin])]
+        [Authorize(UserRole.Admin)]
         [HttpPost("[action]")]
         public async Task<ActionResult<Event>> AddTeamToEvent([FromBody] AddTeamToEventRequest req)
         {
             {
-                if (HttpContext.Items["User"] is not AuthUser currentUser || currentUser.Roles.Any(x => x.Role.Equals(UserRole.Admin)) == true)
-                    return Unauthorized(new { message = "Unauthorized" });
-
                 var eventResult = await eventService.AddTeamToEvent(req.EventId, req.TeamId);
                 return Ok(eventResult);
             }
