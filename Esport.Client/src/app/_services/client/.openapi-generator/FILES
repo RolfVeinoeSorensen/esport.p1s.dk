@@ -15,6 +15,7 @@ encoder.ts
 git_push.sh
 index.ts
 model/addTeamToEventRequest.ts
+model/attendEventRequest.ts
 model/authRole.ts
 model/authUser.ts
 model/authenticateRequest.ts

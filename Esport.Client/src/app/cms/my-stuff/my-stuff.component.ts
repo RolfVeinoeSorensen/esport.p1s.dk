@@ -3,6 +3,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import {
+  AttendEventRequest,
   AuthUser,
   EventsService,
   EventUserDto,
@@ -105,7 +106,17 @@ export class MyStuffComponent implements OnInit {
     });
   }
 
-  setEventAttendance(eventUser: EventUserDto, attend: boolean) {}
+  setEventAttendance(eventUser: EventUserDto, attend: boolean) {
+    if (attend === true && eventUser.eventsUser.accepted != null) return;
+    if (attend === false && eventUser.eventsUser.declined != null) return;
+    var request: AttendEventRequest = {
+      eventId: eventUser.event.id,
+      attend: attend
+    };
+    this.es.eventsSaveEventAttendance(request).subscribe(() => {
+      this.getMyEvents();
+    });
+  }
 
   handleEditorSave(editorType: EditorType) {
     this.visibleEditor = false;

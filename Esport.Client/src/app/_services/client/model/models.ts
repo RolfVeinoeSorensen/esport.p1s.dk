@@ -1,4 +1,5 @@
 export * from './addTeamToEventRequest';
+export * from './attendEventRequest';
 export * from './authRole';
 export * from './authUser';
 export * from './authenticateRequest';
