@@ -26,7 +26,14 @@
     },
     "peacock.color": "#1857a4",
     "dotnet.defaultSolution": "Esport.slnx",
-    "cSpell.words": ["Dtos", "Esport", "firstname", "lastname", "sitename"],
+    "cSpell.words": [
+      "Dtos",
+      "Esport",
+      "firstname",
+      "lastname",
+      "overlaybadge",
+      "sitename"
+    ],
     "cSpell.language": "en,da"
   }
 }

@@ -27,23 +27,59 @@
             }
           </div>
           <h3>{{ ue.event.name }}</h3>
-          <p class="text-sm text-gray-700 dark:text-gray-400">
+          <p class="text-gray-700 dark:text-gray-400">
             {{ ue.event.startDateTime | date: 'dd. MMM yyyy HH:mm' }} - {{ ue.event.endDateTime | date: 'HH:mm' }}
           </p>
-          <div class="w-full">
+          <div class="w-full flex flex-wrap gap-2 mb-4 mt-2">
             @let counts = getParticipantsCount(ue);
-            <p class="m-0 text-sm">
-              <span class="font-bold"
-                >{{ counts.accepted }}<i class="ml-2 mr-2 fal fa-user-check text-green-400"></i
-              ></span>
-              <span class="font-bold"
-                >{{ counts.rejected }}<i class="ml-2 mr-2 fal fa-user-times text-red-400"></i
-              ></span>
-              <span class="font-bold">{{ counts.invited }}<i class="ml-2 mr-2 fal fa-users"></i></span>
-              <span class="font-bold">{{ counts.laptops }}<i class="ml-2 mr-2 fal fa-laptop"></i></span>
-              <span class="font-bold">{{ counts.stationaryPCs }}<i class="ml-2 mr-2 fal fa-desktop"></i></span>
-              <span class="font-bold">{{ counts.playstations }}<i class="ml-2 mr-2 fab fa-playstation"></i></span>
-            </p>
+            <p-overlaybadge
+              title="Inviterede"
+              badgeSize="small"
+              [value]="counts.invited"
+              severity="secondary"
+              class="mr-2">
+              <i class="fal fa-users" style="font-size: 1.6rem"></i>
+            </p-overlaybadge>
+            <p-overlaybadge
+              title="Deltager"
+              badgeSize="small"
+              [value]="counts.accepted"
+              severity="success"
+              class="mr-2">
+              <i class="fal fa-check text-green-400" style="font-size: 1.6rem"></i>
+            </p-overlaybadge>
+            <p-overlaybadge
+              title="Deltager ikke"
+              badgeSize="small"
+              [value]="counts.rejected"
+              severity="danger"
+              class="mr-2">
+              <i class="fal fa-times text-red-400" style="font-size: 1.6rem"></i>
+            </p-overlaybadge>
+            <p-overlaybadge
+              title="Laptops"
+              badgeSize="small"
+              [value]="counts.laptops"
+              severity="secondary"
+              class="mr-2">
+              <i class="fal fa-laptop text-gray-400" style="font-size: 1.6rem"></i>
+            </p-overlaybadge>
+            <p-overlaybadge
+              title="Desktops"
+              badgeSize="small"
+              [value]="counts.stationaryPCs"
+              severity="secondary"
+              class="mr-2">
+              <i class="fal fa-desktop text-gray-400" style="font-size: 1.6rem"></i>
+            </p-overlaybadge>
+            <p-overlaybadge
+              title="Playstations"
+              badgeSize="small"
+              [value]="counts.playstations"
+              severity="secondary"
+              class="mr-2">
+              <i class="fab fa-playstation text-gray-400" style="font-size: 1.6rem"></i>
+            </p-overlaybadge>
           </div>
           <div class="w-full clearfix">
             <p class="fl">Deltager du?</p>
@@ -51,7 +87,6 @@
               <p-button
                 size="small"
                 rounded="true"
-                text="true"
                 icon="fal fa-check"
                 class="mr-2"
                 (click)="setEventAttendance(ue, true)"
@@ -59,7 +94,6 @@
               <p-button
                 size="small"
                 rounded="true"
-                text="true"
                 icon="fal fa-times"
                 (click)="setEventAttendance(ue, false)"
                 [severity]="ue.eventsUser.declined !== null ? 'danger' : 'secondary'" />

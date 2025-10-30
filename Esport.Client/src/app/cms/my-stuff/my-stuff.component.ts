@@ -17,6 +17,8 @@ import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { ToggleSwitchModule } from 'primeng/toggleswitch';
 import { DialogModule } from 'primeng/dialog';
+import { BadgeModule } from 'primeng/badge';
+import { OverlayBadgeModule } from 'primeng/overlaybadge';
 import { EditorType } from '@models/editor-type';
 import { UserEditorComponent } from './editors/user-editor/user-editor.component';
 import { GamesEditorComponent } from './editors/games-editor/games-editor.component';
@@ -44,6 +46,8 @@ export interface EventParticipants {
     FormsModule,
     CommonModule,
     DialogModule,
+    BadgeModule,
+    OverlayBadgeModule,
     UserEditorComponent,
     GamesEditorComponent,
     GameServersEditorComponent,
