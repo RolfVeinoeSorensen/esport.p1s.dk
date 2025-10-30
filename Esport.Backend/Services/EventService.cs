@@ -160,6 +160,7 @@ namespace Esport.Backend.Services
             List<EventUserDto> evu = await db.EventsUsers
                .Include(e => e.Event)
                .ThenInclude(e => e.EventsUsers)
+                .AsSplitQuery()
                .Where(eu => eu.UserId == userId && ((eu.Event.StartDateTime.Year >= year && eu.Event.StartDateTime.Month <= month) ||
                    (eu.Event.EndDateTime.Year >= year && eu.Event.EndDateTime.Month >= month)))
                .OrderByDescending(o => o.Event.StartDateTime)
@@ -175,6 +176,7 @@ namespace Esport.Backend.Services
             List<EventUserDto> evu = await db.EventsUsers
                 .Include(e => e.Event)
                 .ThenInclude(e => e.EventsUsers)
+                .AsSplitQuery()
                 .Where(eu => eu.UserId == userId && eu.Event.StartDateTime >= dt)
                 .OrderBy(o => o.Event.StartDateTime)
                 .Take(10).Select(r => new EventUserDto { Event = r.Event, EventsUser = r }).ToListAsync();
