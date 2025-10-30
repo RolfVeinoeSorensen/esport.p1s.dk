@@ -70,7 +70,7 @@ namespace Esport.Backend.Services
                 .SelectMany(t => t.Members)
                 .Select(m => m.Id)
                 .ToList();
-            var existing = db.EventsUsers.Where(us => us.EventId.Equals(eventId) && eventsUsers.Contains(us.UserId)).ToList();
+            var existing = db.EventsUsers.Where(us => us.EventId.Equals(eventId)).ToList();
             eventsUsers.ForEach(u =>
             {
                 var exist = existing.FirstOrDefault(us => us.UserId.Equals(u));
