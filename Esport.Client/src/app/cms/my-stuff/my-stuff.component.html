@@ -26,12 +26,23 @@
                 (click)="openEditor(editorType.Event, ue.event.id)" />
             }
           </div>
-          <h3 class="mb-2">{{ ue.event.name }}</h3>
+          <h3>{{ ue.event.name }}</h3>
           <p class="text-sm text-gray-700 dark:text-gray-400">
             {{ ue.event.startDateTime | date: 'dd. MMM yyyy HH:mm' }} - {{ ue.event.endDateTime | date: 'HH:mm' }}
           </p>
+          <div class="w-full">
+            @let counts = getParticipantsCount(ue);
+            <p class="m-0 text-sm">
+              <span class="font-bold">{{ counts.accepted }}</span
+              ><i class="ml-2 mr-2 fal fa-user-check text-green-400"></i>
+              <span class="font-bold">{{ counts.rejected }}</span
+              ><i class="ml-2 mr-2 fal fa-user-times text-red-400"></i
+              ><span class="font-bold">{{ counts.invited }}</span
+              ><i class="ml-2 fal fa-users"></i>
+            </p>
+          </div>
           <div class="w-full clearfix">
-            <p class="fl text-sm">Deltager du?</p>
+            <p class="fl">Deltager du?</p>
             <div class="fr text-right mb-4">
               <p-button
                 size="small"
@@ -49,15 +60,6 @@
                 (click)="setEventAttendance(ue, false)"
                 [severity]="ue.eventsUser.declined !== null ? 'danger' : 'secondary'" />
             </div>
-          </div>
-          <div class="w-full">
-            @let counts = getParticipantsCount(ue);
-            <p class="m-0 text-sm">
-              Deltagere:
-              <span class="font-bold">{{ counts.accepted }}</span> accepteret,
-              <span class="font-bold">{{ counts.rejected }}</span> afvist,
-              <span class="font-bold">{{ counts.invited }}</span> inviteret
-            </p>
           </div>
         </div>
       }

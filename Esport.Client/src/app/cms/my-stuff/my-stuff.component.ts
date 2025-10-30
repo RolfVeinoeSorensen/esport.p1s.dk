@@ -106,8 +106,8 @@ export class MyStuffComponent implements OnInit, OnDestroy {
     let res: EventParticipants = { invited: 0, rejected: 0, accepted: 0 };
     eventUser.event?.eventsUsers?.forEach(eu => {
       if (eu.accepted != null) res.accepted++;
-      else if (eu.declined != null) res.rejected++;
-      else if (eu.invited != null) res.invited++;
+      if (eu.declined != null) res.rejected++;
+      if (eu.invited != null) res.invited++;
     });
     return res;
   }
