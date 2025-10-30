@@ -6,7 +6,7 @@ namespace Esport.Backend.Dtos
     {
         public required Event Event { get; set; }
         public required EventsUser EventsUser { get; set; }
-        public required EventParticipants Participants { get; set; }
+        public EventParticipants? Participants { get; set; }
 
     }
 

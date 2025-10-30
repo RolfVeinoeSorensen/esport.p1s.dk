@@ -157,27 +157,31 @@ namespace Esport.Backend.Services
         public async Task<IEnumerable<EventUserDto>> GetUserEventsByUserId(int userId, int month, int year)
         {
             IEnumerable<EventUserDto> result = [];
-            return await db.EventsUsers
-                .Include(e => e.Event)
-                .ThenInclude(e => e.EventsUsers)
-                .ThenInclude(eu => eu.User)
-                .Where(eu => eu.UserId == userId && ((eu.Event.StartDateTime.Year >= year && eu.Event.StartDateTime.Month <= month) ||
-                    (eu.Event.EndDateTime.Year >= year && eu.Event.EndDateTime.Month >= month)))
-                .OrderByDescending(o => o.Event.StartDateTime)
-                .Take(10).Select(r => new EventUserDto { Event = r.Event, EventsUser = r, Participants = GetParticipantsCount(r) }).ToListAsync();
+            List<EventUserDto> evu = await db.EventsUsers
+               .Include(e => e.Event)
+               .ThenInclude(e => e.EventsUsers)
+               .ThenInclude(eu => eu.User)
+               .Where(eu => eu.UserId == userId && ((eu.Event.StartDateTime.Year >= year && eu.Event.StartDateTime.Month <= month) ||
+                   (eu.Event.EndDateTime.Year >= year && eu.Event.EndDateTime.Month >= month)))
+               .OrderByDescending(o => o.Event.StartDateTime)
+               .Take(10).Select(r => new EventUserDto { Event = r.Event, EventsUser = r }).ToListAsync();
+            evu.ForEach(e => e.Participants = GetParticipantsCount(e.EventsUser));
+            return evu;
         }
 
         public async Task<IEnumerable<EventUserDto>> GetUpcomingUserEventsByUserId(int userId)
         {
             var dt = DateTime.Now;
             IEnumerable<EventUserDto> result = [];
-            return await db.EventsUsers
+            List<EventUserDto> evu = await db.EventsUsers
                 .Include(e => e.Event)
                 .ThenInclude(e => e.EventsUsers)
                 .ThenInclude(eu => eu.User)
                 .Where(eu => eu.UserId == userId && eu.Event.StartDateTime >= dt)
                 .OrderBy(o => o.Event.StartDateTime)
-                .Take(10).Select(r => new EventUserDto { Event = r.Event, EventsUser = r, Participants = GetParticipantsCount(r) }).ToListAsync();
+                .Take(10).Select(r => new EventUserDto { Event = r.Event, EventsUser = r }).ToListAsync();
+            evu.ForEach(e => e.Participants = GetParticipantsCount(e.EventsUser));
+            return evu;
         }
 
         private static EventParticipants GetParticipantsCount(EventsUser ev)
