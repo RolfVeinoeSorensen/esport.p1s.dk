@@ -71,7 +71,7 @@ namespace Esport.Backend.Services
                 .Select(m => m.Id)
                 .ToListAsync();
             var existing = await db.EventsUsers.Where(us => us.EventId.Equals(eventId) && eventsUsers.Contains(us.UserId)).ToListAsync();
-            eventsUsers.ForEach(async u =>
+            eventsUsers.ForEach(u =>
             {
                 var exist = existing.FirstOrDefault(us => us.UserId.Equals(u));
                 if (exist == null)
@@ -82,8 +82,8 @@ namespace Esport.Backend.Services
                         UserId = u,
                         Invited = DateTime.Now
                     };
-                    await db.AddAsync(userEv);
-                    await db.SaveChangesAsync();
+                    db.Add(userEv);
+                    db.SaveChanges();
                 }
             });
         }
