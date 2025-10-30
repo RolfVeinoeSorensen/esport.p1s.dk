@@ -190,9 +190,9 @@ namespace Esport.Backend.Services
             e.EventsUsers.ToList().ForEach(eu =>
             {
                 var user = users?.FirstOrDefault(u => u.Id == eu.UserId);
-                if (user?.CanBringLaptop == true) res.Laptops++;
-                if (user?.CanBringStationaryPc == true) res.Desktops++;
-                if (user?.CanBringPlaystation == true) res.Playstations++;
+                if (eu.Accepted != null && user?.CanBringLaptop == true) res.Laptops++;
+                if (eu.Accepted != null && user?.CanBringStationaryPc == true) res.Desktops++;
+                if (eu.Accepted != null && user?.CanBringPlaystation == true) res.Playstations++;
 
                 if (eu.Accepted != null) res.Accepted++;
                 if (eu.Declined != null) res.Declined++;
