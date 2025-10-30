@@ -165,7 +165,6 @@ namespace Esport.Backend.Services
                     (eu.Event.EndDateTime.Year >= year && eu.Event.EndDateTime.Month >= month)))
                 .OrderByDescending(o => o.Event.StartDateTime)
                 .Take(10).Select(r => new EventUserDto { Event = r.Event, EventsUser = r, Participants = new EventParticipants() })
-                .AsNoTracking()
             .ToListAsync();
             var users = await db.AuthUsers.ToListAsync();
             List<EventUserDto> res = new List<EventUserDto>();
@@ -187,7 +186,6 @@ namespace Esport.Backend.Services
                 .Where(eu => eu.UserId == userId && eu.Event.StartDateTime >= dt)
                 .OrderBy(o => o.Event.StartDateTime)
                 .Take(10).Select(r => new EventUserDto { Event = r.Event, EventsUser = r, Participants = new EventParticipants() })
-                .AsNoTracking()
                 .ToListAsync();
             var users = await db.AuthUsers.ToListAsync();
             List<EventUserDto> res = new List<EventUserDto>();
