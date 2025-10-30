@@ -15,7 +15,5 @@ export interface EventSubmitRequest {
     description: string;
     startDateTime: string;
     endDateTime: string;
-    eventsUsers: Array<number>;
-    teams: Array<number>;
 }
 
