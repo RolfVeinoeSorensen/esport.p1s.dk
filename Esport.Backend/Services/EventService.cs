@@ -71,7 +71,7 @@ namespace Esport.Backend.Services
                 .Select(m => m.Id)
                 .ToListAsync();
             var existing = await db.EventsUsers.Where(us => us.EventId.Equals(eventId) && eventsUsers.Contains(us.UserId)).ToListAsync();
-            eventsUsers.ToList().ForEach(async u =>
+            eventsUsers.ForEach(async u =>
             {
                 var exist = existing.FirstOrDefault(us => us.UserId.Equals(u));
                 if (exist == null)
@@ -146,8 +146,10 @@ namespace Esport.Backend.Services
         public async Task<Event> GetEventById(int id)
         {
             var ev = await db.Events
+                .Include(e => e.Teams)
                 .Include(e => e.EventsUsers)
                 .ThenInclude(eu => eu.User)
+                .AsSplitQuery()
                 .FirstOrDefaultAsync(e => e.Id == id) ?? throw new KeyNotFoundException("Event not found");
             return ev;
         }
@@ -158,6 +160,8 @@ namespace Esport.Backend.Services
             return await db.EventsUsers
                 .Include(eu => eu.User)
                 .Include(e => e.Event)
+                .ThenInclude(t => t.Teams)
+                .AsSplitQuery()
                 .Where(eu => eu.UserId == userId && ((eu.Event.StartDateTime.Year >= year && eu.Event.StartDateTime.Month <= month) ||
                     (eu.Event.EndDateTime.Year >= year && eu.Event.EndDateTime.Month >= month)))
                 .OrderByDescending(o => o.Event.StartDateTime)
@@ -171,6 +175,7 @@ namespace Esport.Backend.Services
             return await db.EventsUsers
                 .Include(eu => eu.User)
                 .Include(e => e.Event)
+                .ThenInclude(t => t.Teams)
                 .Where(eu => eu.UserId == userId && eu.Event.StartDateTime >= dt)
                 .OrderBy(o => o.Event.StartDateTime)
                 .Take(10).Select(r => new EventUserDto { Event = r.Event, EventsUser = r }).ToListAsync();
