@@ -142,17 +142,12 @@ export class AppComponent implements OnInit, OnDestroy {
     }
     if (this.isLoggedIn === true) {
       items.push({
-        label: 'Mine ting',
-        items: [
-          {
-            label: 'Overblik',
-            routerLink: 'my-stuff'
-          },
-          {
-            label: 'Kalender',
-            routerLink: 'my-stuff/team-calendar'
-          }
-        ]
+        label: 'Mit Overblik',
+        routerLink: 'my-stuff'
+      });
+      items.push({
+        label: 'Klub Kalender',
+        routerLink: 'my-stuff/team-calendar'
       });
     }
     const itemsPublic: MenuItem[] | undefined = [
