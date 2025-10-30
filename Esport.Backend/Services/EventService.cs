@@ -53,24 +53,24 @@ namespace Esport.Backend.Services
                 db.UpdateRange(ev.Teams);
                 await db.SaveChangesAsync();
             }
-            ev.Teams.ToList().ForEach(async t =>
+            ev.Teams.ToList().ForEach(t =>
             {
                 if (t.Id.Equals(teamId))
                 {
-                    await AddMissingUsersFromTeamToEvent(eventId, teamId);
+                    AddMissingUsersFromTeamToEvent(eventId, teamId);
                 }
             });
             return response;
         }
-        private async Task AddMissingUsersFromTeamToEvent(int eventId, int teamId)
+        private void AddMissingUsersFromTeamToEvent(int eventId, int teamId)
         {
-            List<int> eventsUsers = await db.Teams
+            List<int> eventsUsers = db.Teams
                 .Include(t => t.Members)
                 .Where(t => t.Id.Equals(teamId))
                 .SelectMany(t => t.Members)
                 .Select(m => m.Id)
-                .ToListAsync();
-            var existing = await db.EventsUsers.Where(us => us.EventId.Equals(eventId) && eventsUsers.Contains(us.UserId)).ToListAsync();
+                .ToList();
+            var existing = db.EventsUsers.Where(us => us.EventId.Equals(eventId) && eventsUsers.Contains(us.UserId)).ToList();
             eventsUsers.ForEach(u =>
             {
                 var exist = existing.FirstOrDefault(us => us.UserId.Equals(u));
