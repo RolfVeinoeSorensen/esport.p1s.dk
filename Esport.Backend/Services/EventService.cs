@@ -166,7 +166,8 @@ namespace Esport.Backend.Services
             .OrderByDescending(o => o.Event.StartDateTime)
             .Take(10).Select(r => new EventUserDto { Event = r.Event, EventsUser = r })
             .ToListAsync();
-            // evu.ForEach(e => e.Participants = GetParticipantsCount(e.EventsUser));
+            var users = await db.AuthUsers.ToListAsync();
+            evu.ForEach(e => e.Participants = GetParticipantsCount(e.EventsUser, users));
             return evu;
         }
 
@@ -182,19 +183,20 @@ namespace Esport.Backend.Services
                 .OrderBy(o => o.Event.StartDateTime)
                 .Take(10).Select(r => new EventUserDto { Event = r.Event, EventsUser = r })
                 .ToListAsync();
-            // evu.ForEach(e => e.Participants = GetParticipantsCount(e.EventsUser));
+            var users = await db.AuthUsers.ToListAsync();
+            evu.ForEach(e => e.Participants = GetParticipantsCount(e.EventsUser, users));
             return evu;
         }
 
-        private EventParticipants GetParticipantsCount(EventsUser ev)
+        public static EventParticipants GetParticipantsCount(EventsUser ev, List<AuthUser>? users)
         {
             var res = new EventParticipants();
-
             ev.Event.EventsUsers.ToList().ForEach(eu =>
             {
-                if (eu.User.CanBringLaptop == true) res.Laptops++;
-                if (eu.User.CanBringStationaryPc == true) res.Desktops++;
-                if (eu.User.CanBringPlaystation == true) res.Playstations++;
+                var user = users?.FirstOrDefault(u => u.Id == eu.UserId);
+                if (user?.CanBringLaptop == true) res.Laptops++;
+                if (user?.CanBringStationaryPc == true) res.Desktops++;
+                if (user?.CanBringPlaystation == true) res.Playstations++;
 
                 if (eu.Accepted != null) res.Accepted++;
                 if (eu.Declined != null) res.Declined++;

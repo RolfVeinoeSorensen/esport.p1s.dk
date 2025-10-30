@@ -15,6 +15,6 @@ import { EventsUser } from './eventsUser';
 export interface EventUserDto { 
     event: Event;
     eventsUser: EventsUser;
-    participants: EventParticipants;
+    participants?: EventParticipants;
 }
 
