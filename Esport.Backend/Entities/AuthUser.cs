@@ -60,7 +60,7 @@ public partial class AuthUser
     public int? ImageId { get; set; }
 
     public virtual ICollection<Event> Events { get; set; } = new List<Event>();
-
+    [JsonIgnore]
     public virtual ICollection<EventsUser> EventsUsers { get; set; } = new List<EventsUser>();
 
     public virtual File Image { get; set; }
