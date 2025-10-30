@@ -172,7 +172,7 @@ namespace Esport.Backend.Services
                 .Include(eu => eu.User)
                 .Include(e => e.Event)
                 .Where(eu => eu.UserId == userId && eu.Event.StartDateTime >= dt)
-                .OrderByDescending(o => o.Event.StartDateTime)
+                .OrderBy(o => o.Event.StartDateTime)
                 .Take(10).Select(r => new EventUserDto { Event = r.Event, EventsUser = r }).ToListAsync();
         }
 

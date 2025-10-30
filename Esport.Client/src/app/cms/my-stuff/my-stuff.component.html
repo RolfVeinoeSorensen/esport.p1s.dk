@@ -5,12 +5,12 @@
       <h2>Klubbens servere</h2>
       @if (isAdmin === true) {
         <div class="absolute top-0 right-0">
+          <p-button size="small" icon="fal fa-joystick" text="true" (click)="openEditor(editorType.Game, undefined)" />
           <p-button
             size="small"
-            icon="pi pi-folder-plus"
+            icon="fal fa-server"
             text="true"
-            (click)="openEditor(editorType.Game, undefined)" />
-          <p-button size="small" icon="pi pi-plus" text="true" (click)="openEditor(editorType.GameServer, undefined)" />
+            (click)="openEditor(editorType.GameServer, undefined)" />
         </div>
       }
     </div>
