@@ -22,6 +22,6 @@
       </div>
     }
   </div>
-  <div class="w-full" [innerHTML]="newsItem.content ?? '' | safeHtml"></div>
+  <div class="dynamic-html" [innerHTML]="newsItem.content ?? '' | safeHtml"></div>
   <small>Udgivet: {{ newsItem.updatedAt | date }}</small>
 }

@@ -74,7 +74,7 @@ export class NewsEditorComponent implements OnInit {
       this.newsService
         .newsCreateOrUpdateNews({
           title: this.newsForm.value.title,
-          content: this.newsForm.value.content,
+          content: this.newsForm.value.content.replaceAll('&nbsp;', ' '),
           id: this.news ? this.news.id : 0,
           isPublished: this.news ? this.news.isPublished : false,
           createdAt: this.news ? this.news.createdAt : new Date().toISOString(),

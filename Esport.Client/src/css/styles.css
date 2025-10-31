@@ -45,11 +45,6 @@ h6 {
 p {
   display: block;
   padding-bottom: 0.5rem;
-  white-space: normal;
-  word-wrap: normal;
-  overflow-wrap: break-word;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 /* Top menu */
 .main {
@@ -96,4 +91,14 @@ p {
 }
 .fr {
   float: right;
+}
+:host ::ng-deep .dynamic-html {
+  display: inline-flex;
+  max-width: 100%;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+}
+
+:host ::ng-deep .dynamic-html * {
+  max-width: 100px;
 }

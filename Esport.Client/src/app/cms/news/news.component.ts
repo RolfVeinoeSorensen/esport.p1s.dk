@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { AuthUser, News, NewsService, UsersService } from '@app/_services/client';
 import { User } from '@models/user';
@@ -14,7 +14,7 @@ import { SafeHtmlPipe } from '@pipes/safehtml.pipe';
   templateUrl: './news.component.html',
   styleUrl: './news.component.css'
 })
-export class NewsComponent implements OnInit {
+export class NewsComponent implements OnInit, OnDestroy {
   private newsService = inject(NewsService);
   private as: AuthenticationService = inject(AuthenticationService);
   private us = inject(UsersService);

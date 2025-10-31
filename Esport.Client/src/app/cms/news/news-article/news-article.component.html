@@ -1,6 +1,19 @@
 @if (news) {
-  <h1>{{ news.title }}</h1>
-  <div [innerHTML]="news.content"></div>
+  <div class="relative">
+    <h1>{{ news.title }}</h1>
+    @if (isAdmin === true || isEditor === true) {
+      <div class="absolute top-0 right-0">
+        <p-button
+          icon="fal fa-pencil"
+          text="true"
+          rounded="true"
+          severity="primary"
+          [routerLink]="'/news/edit/' + news.urlSlug" />
+      </div>
+    }
+  </div>
+
+  <div class="dynamic-html" [innerHTML]="news.content ?? '' | safeHtml"></div>
   <small>Udgivet: {{ news.updatedAt | date }}</small>
 } @else {
   <h1>Artiklen blev ikke fundet</h1>
