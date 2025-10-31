@@ -21,7 +21,7 @@
           [routerLink]="'/news/edit/' + newsItem.urlSlug" />
       </div>
     }
-    <div [innerHTML]="newsItem.content"></div>
-    <small>Udgivet: {{ newsItem.updatedAt | date }}</small>
   </div>
+  <div class="w-full" [innerHTML]="newsItem.content ?? '' | safeHtml"></div>
+  <small>Udgivet: {{ newsItem.updatedAt | date }}</small>
 }

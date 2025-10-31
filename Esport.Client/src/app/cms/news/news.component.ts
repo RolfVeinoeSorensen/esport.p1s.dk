@@ -6,10 +6,11 @@ import { User } from '@models/user';
 import { AuthenticationService } from '@services/authentication.service';
 import { Subscription } from 'rxjs';
 import { ButtonModule } from 'primeng/button';
+import { SafeHtmlPipe } from '@pipes/safehtml.pipe';
 
 @Component({
   selector: 'app-news',
-  imports: [DatePipe, RouterLink, ButtonModule],
+  imports: [DatePipe, RouterLink, ButtonModule, SafeHtmlPipe],
   templateUrl: './news.component.html',
   styleUrl: './news.component.css'
 })

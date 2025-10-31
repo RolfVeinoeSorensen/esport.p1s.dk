@@ -28,6 +28,7 @@
       "@cms/*": ["src/app/cms/*"],
       "@admin/*": ["src/app/administration/*"],
       "@user/*": ["src/app/user/*"],
+      "@pipes/*": ["src/app/_pipes/*"],
       "@app/*": ["src/app/*"]
     }
   },

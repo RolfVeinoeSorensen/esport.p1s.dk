@@ -5,7 +5,7 @@ import { ButtonModule } from 'primeng/button';
 import { MessageModule } from 'primeng/message';
 import { ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { News, NewsService } from '@app/_services/client';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-news-editor',
@@ -17,6 +17,7 @@ export class NewsEditorComponent implements OnInit {
   private formBuilder = inject(UntypedFormBuilder);
   private newsService = inject(NewsService);
   private activatedRoute = inject(ActivatedRoute);
+  private router = inject(Router);
   isNewPage = true;
   url_slug: string = '';
   newsForm: UntypedFormGroup;
@@ -86,6 +87,7 @@ export class NewsEditorComponent implements OnInit {
           this.news = news;
           this.isNewPage = false;
           this.url_slug = news.urlSlug != undefined ? news.urlSlug : this.url_slug;
+          this.router.navigateByUrl('/news/read-article/' + news.urlSlug);
         });
     }
     this.newsForm.reset();

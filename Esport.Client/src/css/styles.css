@@ -45,6 +45,11 @@ h6 {
 p {
   display: block;
   padding-bottom: 0.5rem;
+  white-space: normal;
+  word-wrap: normal;
+  overflow-wrap: break-word;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 /* Top menu */
 .main {
