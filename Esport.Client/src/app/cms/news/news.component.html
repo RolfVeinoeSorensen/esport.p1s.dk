@@ -1,9 +1,26 @@
-<h1>Nyheder</h1>
+<div class="relative">
+  <h1>Nyheder</h1>
+  @if (isAdmin === true || isEditor === true) {
+    <div class="absolute top-0 right-0">
+      <p-button icon="fal fa-plus" text="true" rounded="true" severity="primary" [routerLink]="'/news/create/'" />
+    </div>
+  }
+</div>
 @for (newsItem of news; track news) {
-  <div class="mb-4">
+  <div class="mb-4 relative">
     <h2>
       <a [routerLink]="'/news/read-article/' + newsItem.urlSlug">{{ newsItem.title }}</a>
     </h2>
+    @if (isAdmin === true || isEditor === true) {
+      <div class="absolute top-0 right-0">
+        <p-button
+          icon="fal fa-pencil"
+          text="true"
+          rounded="true"
+          severity="primary"
+          [routerLink]="'/news/edit/' + newsItem.urlSlug" />
+      </div>
+    }
     <div [innerHTML]="newsItem.content"></div>
     <small>Udgivet: {{ newsItem.updatedAt | date }}</small>
   </div>

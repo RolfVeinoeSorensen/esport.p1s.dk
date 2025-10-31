@@ -35,7 +35,11 @@ export class NewsEditorComponent implements OnInit {
   }
   ngOnInit() {
     this.activatedRoute.url.subscribe(urlSegment => {
-      this.url_slug = urlSegment.map(x => x.path).join('/');
+      this.url_slug = urlSegment
+        .map(x => x.path)
+        .join('/')
+        .replace('news/', '')
+        .replace('edit/', '');
       if (this.url_slug === '') {
         this.isNewPage = true;
       } else {
@@ -45,6 +49,7 @@ export class NewsEditorComponent implements OnInit {
     });
   }
   getData() {
+    console.log('Fetching news for URL slug:', this.url_slug);
     this.newsService.newsGetNewsByUrl(this.url_slug).subscribe(news => {
       this.news = news;
       if (this.news) {
