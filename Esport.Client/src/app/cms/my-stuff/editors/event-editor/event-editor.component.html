@@ -4,7 +4,6 @@
       <label for="name">Navn</label>
       <input
         pInputText
-        [disabled]="isAdmin === false"
         [readOnly]="isAdmin === false"
         class="w-full"
         id="name"
@@ -13,17 +12,15 @@
         type="text" />
     </div>
     <div class="mb-4">
-      <label for="description">Beskrivelse</label>
-      <input
-        pInputText
-        [disabled]="isAdmin === false"
+      <label class="block" for="description">Beskrivelse</label>
+      <textarea
+        rows="5"
+        cols="30"
         [readOnly]="isAdmin === false"
-        class="w-full"
-        id="description"
         formControlName="description"
-        placeholder="Beskrivelse"
-        type="text"
-        size="255" />
+        pTextarea
+        class="w-full"
+        [autoResize]="true"></textarea>
     </div>
     <div class="mb-4">
       <label for="startDateTime" class="block">Start</label>

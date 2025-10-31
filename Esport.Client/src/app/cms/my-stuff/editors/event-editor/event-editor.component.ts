@@ -16,6 +16,7 @@ import { AuthUser, EventsService, EventSubmitRequest, Team, UsersService } from 
 import { InternalToastService } from '@services/internaltoast.service';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
+import { TextareaModule } from 'primeng/textarea';
 import { MessageModule } from 'primeng/message';
 import { DatePickerModule } from 'primeng/datepicker';
 import { AutoCompleteCompleteEvent, AutoCompleteModule } from 'primeng/autocomplete';
@@ -32,6 +33,7 @@ export interface UserExtended extends AuthUser {
   selector: 'app-event-editor',
   imports: [
     InputTextModule,
+    TextareaModule,
     ButtonModule,
     FormsModule,
     ReactiveFormsModule,
