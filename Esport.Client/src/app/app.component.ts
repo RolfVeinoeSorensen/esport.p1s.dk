@@ -221,7 +221,7 @@ export class AppComponent implements OnInit, OnDestroy {
             icon: 'pi pi-exclamation-triangle',
             summary: 'Kunne ikke logge ind',
             detail:
-              'Det angivne brugernavn eller passeword var ikke korrekt. Forsøg igen eller bed om at få nulstillet dit password',
+              'Det angivne brugernavn eller password var ikke korrekt. Forsøg igen eller bed om at få nulstillet dit password',
             severity: 'error'
           });
           // this.error = error;
