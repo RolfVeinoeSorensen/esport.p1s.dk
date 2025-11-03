@@ -25,6 +25,7 @@ import { GamesEditorComponent } from './editors/games-editor/games-editor.compon
 import { GameServersEditorComponent } from './editors/game-servers-editor/game-servers-editor.component';
 import { EventEditorComponent } from './editors/event-editor/event-editor.component';
 import { SimpleId } from '@models/simple-id';
+import { InternalToastService } from '@services/internaltoast.service';
 
 export interface EventParticipants {
   invited: number;
@@ -60,6 +61,7 @@ export class MyStuffComponent implements OnInit, OnDestroy {
   private gs = inject(GamesService);
   private us = inject(UsersService);
   private as: AuthenticationService = inject(AuthenticationService);
+  private its = inject(InternalToastService);
   userSubscription!: Subscription;
   user!: User;
   userInfo: AuthUser | undefined;
@@ -127,7 +129,14 @@ export class MyStuffComponent implements OnInit, OnDestroy {
       eventId: eventUser.event.id,
       attend: attend
     };
-    this.es.eventsSaveEventAttendance(request).subscribe(() => {
+    this.es.eventsSaveEventAttendance(request).subscribe(response => {
+      this.its.addMessage({
+        id: 'eventAttendanceRegistered',
+        icon: response.ok === true ? 'pi pi-check-circle' : 'pi pi-exclamation-triangle',
+        summary: 'Event registrering',
+        detail: response.message,
+        severity: response.ok === true ? 'success' : 'error'
+      });
       this.getMyEvents();
     });
   }

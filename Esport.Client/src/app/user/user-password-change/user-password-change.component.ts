@@ -68,6 +68,13 @@ export class UserPasswordChangeComponent implements OnInit {
     } else {
       console.log('submit failed', this.changePasswordForm.errors);
       this.formSubmitted = false;
+      this.its.addMessage({
+        id: 'usersChangePassword',
+        icon: 'pi pi-exclamation-triangle',
+        summary: 'Password ændring fejlede',
+        detail: 'Der var desværre en fejl i det nye password du skrev. Prøv med et mere komplekst password.',
+        severity: 'error'
+      });
     }
   }
 }
