@@ -216,6 +216,14 @@ export class AppComponent implements OnInit, OnDestroy {
         },
         error: error => {
           console.log(error);
+          this.its.addMessage({
+            id: 'signinFailed',
+            icon: 'pi pi-exclamation-triangle',
+            summary: 'Kunne ikke logge ind',
+            detail:
+              'Det angivne brugernavn eller passeword var ikke korrekt. Forsøg igen eller bed om at få nulstillet dit password',
+            severity: 'error'
+          });
           // this.error = error;
           // this.loading = false;
         }
