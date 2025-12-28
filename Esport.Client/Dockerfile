@@ -15,9 +15,9 @@ COPY package.json package-lock.json ./
 RUN npm install -g @angular/cli
 RUN npm install
 COPY . ./
-#RUN npm run build - Does not work needs investigation
-CMD ["ng", "build", "--configuration", "production"]
-RUN cd /app/dist && find . -type f -exec brotli {} \;
+RUN ng build --configuration production
+# CMD ["ng", "build", "--configuration", "production"]
+# RUN cd /dist && find . -type f -exec brotli {} \;
 
 # Stage 2: Serve the application with Nginx
 FROM --platform=${BUILDPLATFORM} alpine
