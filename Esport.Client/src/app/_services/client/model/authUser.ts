@@ -11,7 +11,6 @@ import { AuthRole } from './authRole';
 import { News } from './news';
 import { Event } from './event';
 import { Team } from './team';
-import { EventsUser } from './eventsUser';
 import { UsersGame } from './usersGame';
 
 
@@ -36,7 +35,6 @@ export interface AuthUser {
     isActivated: boolean;
     imageId?: number;
     events?: Array<Event>;
-    eventsUsers?: Array<EventsUser>;
     image?: any;
     inverseParent?: Array<AuthUser>;
     newsCreatedByNavigations?: Array<News>;
