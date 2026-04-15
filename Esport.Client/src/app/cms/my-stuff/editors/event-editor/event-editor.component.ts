@@ -74,8 +74,8 @@ export class EventEditorComponent implements OnInit, OnChanges, OnDestroy {
 
   constructor() {
     this.eventForm = this.formBuilder.group({
-      name: ['', [Validators.required]],
-      description: ['', [Validators.required]]
+      name: [null, [Validators.required]],
+      description: [null, [Validators.required]]
     });
   }
   ngOnChanges(changes: SimpleChanges): void {
@@ -102,6 +102,13 @@ export class EventEditorComponent implements OnInit, OnChanges, OnDestroy {
       this.isAdmin = this.as.isAdmin();
       this.isEditor = this.as.isEditor();
       if (this.user?.id) this.getUser();
+      if (this.isAdmin === true) {
+        if (this.allUsers.length === 0)
+          this.us
+            .usersGetAllUsers()
+            .subscribe(users => (this.allUsers = users.map(u => ({ ...u, fullName: `${u.firstName} ${u.lastName}` }))));
+        if (this.allTeams.length === 0) this.us.usersGetAllTeams().subscribe(teams => (this.allTeams = teams));
+      }
     });
     if (this.id?.id && (this.selectedEvent === undefined || this.id.id !== this.selectedEvent?.id)) {
       this.es.eventsGetById(this.id.id).subscribe(event => {
@@ -113,13 +120,6 @@ export class EventEditorComponent implements OnInit, OnChanges, OnDestroy {
         this.startDateTime = new Date(event.startDateTime);
         this.endDateTime = new Date(event.endDateTime);
       });
-      if (this.isAdmin === true) {
-        if (this.allUsers.length === 0)
-          this.us
-            .usersGetAllUsers()
-            .subscribe(users => (this.allUsers = users.map(u => ({ ...u, fullName: `${u.firstName} ${u.lastName}` }))));
-        if (this.allTeams.length === 0) this.us.usersGetAllTeams().subscribe(teams => (this.allTeams = teams));
-      }
     }
   }
 
@@ -135,13 +135,13 @@ export class EventEditorComponent implements OnInit, OnChanges, OnDestroy {
   }
   onSubmit() {
     this.formSubmitted = true;
-    if (this.eventForm.valid) {
+    if (this.eventForm.valid && this.startDateTime !== null && this.endDateTime !== null) {
       let request: EventSubmitRequest = {
         id: this.selectedEvent ? this.selectedEvent.id : 0,
         name: this.eventForm.value.name,
         description: this.eventForm.value.description,
-        startDateTime: this.startDateTime?.toISOString() || '',
-        endDateTime: this.endDateTime?.toISOString() || ''
+        startDateTime: this.startDateTime.toISOString() || '',
+        endDateTime: this.endDateTime.toISOString() || ''
       };
       this.es.eventsCreateOrUpdateEvent(request).subscribe(res => {
         this.selectedEvent = res;
@@ -155,19 +155,40 @@ export class EventEditorComponent implements OnInit, OnChanges, OnDestroy {
         });
       });
     } else {
-      console.log('submit failed', this.eventForm.errors);
+      let formErrors: string = '';
+      // Get all Form Controls keys and loop them
+      Object.keys(this.eventForm.controls).forEach(key => {
+        // Get errors of every form control
+        const control = this.eventForm.get(key);
+        if (control) {
+          formErrors = formErrors.concat(`${key}: ${JSON.stringify(control.errors)}\n`);
+        }
+      });
+      this.its.addMessage({
+        id: 'EventSaveFailed',
+        icon: 'pi pi-times-circle',
+        summary: 'Gem event mislykkedes',
+        detail: `Tjek at alle felter er udfyldt korrekt.\n ${formErrors} start: ${this.startDateTime}\n end: ${this.endDateTime}`,
+        severity: 'error'
+      });
       this.formSubmitted = false;
     }
   }
 
   addTeam() {
-    this.es.eventsAddTeamToEvent({ eventId: this.selectedEvent!.id, teamId: this.selectedTeam!.id }).subscribe(() => {
+    if (!this.selectedEvent || !this.selectedTeam) return;
+    this.es.eventsAddTeamToEvent({ eventId: this.selectedEvent.id, teamId: this.selectedTeam.id }).subscribe(() => {
       this.reset();
     });
   }
   addUser() {}
   removeTeam(team: Team) {}
-  removeUser(user: UserExtended) {}
+  removeUser(user: UserExtended) {
+    if (!this.selectedEvent || !user.id) return;
+    this.es.eventsDeleteUserFromEvent(this.selectedEvent.id, user.id).subscribe(() => {
+      this.reset();
+    });
+  }
 
   searchUsers(event: AutoCompleteCompleteEvent) {
     this.users = [...this.allUsers].filter(

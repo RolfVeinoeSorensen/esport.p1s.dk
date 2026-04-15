@@ -1,4 +1,3 @@
-using Azure;
 using Esport.Backend.Authorization;
 using Esport.Backend.Entities;
 using Esport.Backend.Enums;

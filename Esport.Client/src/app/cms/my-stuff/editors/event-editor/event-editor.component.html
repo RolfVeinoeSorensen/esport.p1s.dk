@@ -8,8 +8,17 @@
         class="w-full"
         id="name"
         formControlName="name"
+        [invalid]="isInvalid('name')"
         placeholder="Navn"
         type="text" />
+      @if (isInvalid('name')) {
+        @if (eventForm.get('name')?.errors?.['required']) {
+          <p-message severity="error" size="small" variant="simple">Navn skal angives.</p-message>
+        }
+        @if (eventForm.get('name')?.errors?.['name']) {
+          <p-message severity="error" size="small" variant="simple">Skriv et gyldigt navn.</p-message>
+        }
+      }
     </div>
     <div class="mb-4">
       <label class="block" for="description">Beskrivelse</label>
@@ -18,6 +27,7 @@
         cols="30"
         [readOnly]="isAdmin === false"
         formControlName="description"
+        [invalid]="isInvalid('description')"
         pTextarea
         class="w-full"
         [autoResize]="true"></textarea>
