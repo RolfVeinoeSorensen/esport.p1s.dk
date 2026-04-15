@@ -5,7 +5,7 @@ import { filter, first, map, mergeMap, Subscription } from 'rxjs';
 import { MenuItem, MessageService } from 'primeng/api';
 import { MenubarModule } from 'primeng/menubar';
 import { InputTextModule } from 'primeng/inputtext';
-import { CommonModule, formatDate } from '@angular/common';
+import { formatDate } from '@angular/common';
 import { Ripple } from 'primeng/ripple';
 import { ScrollTop } from 'primeng/scrolltop';
 import { ButtonModule } from 'primeng/button';
@@ -28,7 +28,6 @@ import { ToastCloseEvent, ToastModule } from 'primeng/toast';
     MenubarModule,
     InputTextModule,
     Ripple,
-    CommonModule,
     ScrollTop,
     ButtonModule,
     FooterComponent,
