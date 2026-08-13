@@ -15,5 +15,6 @@ export interface EventSubmitRequest {
     description: string;
     startDateTime: string;
     endDateTime: string;
+    timezoneOffset: number;
 }
 

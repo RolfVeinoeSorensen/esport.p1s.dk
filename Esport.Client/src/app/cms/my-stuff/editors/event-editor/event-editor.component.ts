@@ -134,8 +134,6 @@ export class EventEditorComponent implements OnInit, OnChanges, OnDestroy {
     return control?.invalid && (control.touched || this.formSubmitted);
   }
   onSubmit() {
-    console.log(new Date().toLocaleString(), new Date().getTimezoneOffset(), new Date().toISOString());
-
     this.formSubmitted = true;
     if (this.eventForm.valid && this.startDateTime !== null && this.endDateTime !== null) {
       let request: EventSubmitRequest = {
@@ -143,7 +141,8 @@ export class EventEditorComponent implements OnInit, OnChanges, OnDestroy {
         name: this.eventForm.value.name,
         description: this.eventForm.value.description,
         startDateTime: this.startDateTime.toISOString() || '',
-        endDateTime: this.endDateTime.toISOString() || ''
+        endDateTime: this.endDateTime.toISOString() || '',
+        timezoneOffset: new Date().getTimezoneOffset()
       };
       this.es.eventsCreateOrUpdateEvent(request).subscribe(res => {
         this.selectedEvent = res;
