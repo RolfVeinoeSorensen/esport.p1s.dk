@@ -13,6 +13,9 @@ namespace Esport.Backend.Services
 
         public async Task<Event> CreateOrUpdateEvent(EventSubmitRequest ev, AuthUser currentUser)
         {
+            var timezoneOffset = ev.TimezoneOffset;
+            ev.StartDateTime = ev.StartDateTime.AddMinutes(-timezoneOffset);
+            ev.EndDateTime = ev.EndDateTime.AddMinutes(-timezoneOffset);
             try
             {
                 var existing = await db.Events.FirstOrDefaultAsync(x => x.Id.Equals(ev.Id));

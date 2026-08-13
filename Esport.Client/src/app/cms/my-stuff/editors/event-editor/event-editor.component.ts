@@ -134,6 +134,8 @@ export class EventEditorComponent implements OnInit, OnChanges, OnDestroy {
     return control?.invalid && (control.touched || this.formSubmitted);
   }
   onSubmit() {
+    console.log(new Date().toLocaleString(), new Date().getTimezoneOffset(), new Date().toISOString());
+
     this.formSubmitted = true;
     if (this.eventForm.valid && this.startDateTime !== null && this.endDateTime !== null) {
       let request: EventSubmitRequest = {

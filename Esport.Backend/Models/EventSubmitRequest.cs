@@ -14,5 +14,6 @@ namespace Esport.Backend.Models
         public DateTime StartDateTime { get; set; }
         [Required]
         public DateTime EndDateTime { get; set; }
+        public required int TimezoneOffset { get; set; }
     }
 }
