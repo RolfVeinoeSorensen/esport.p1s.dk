@@ -13,34 +13,46 @@ namespace Esport.Backend.Services
 
         public async Task<Event> CreateOrUpdateEvent(EventSubmitRequest ev, AuthUser currentUser)
         {
-            var existing = await db.Events.FirstOrDefaultAsync(x => x.Id.Equals(ev.Id));
-            if (existing == null)
+            try
             {
-                Event newEvent = new()
+                var existing = await db.Events.FirstOrDefaultAsync(x => x.Id.Equals(ev.Id));
+                if (existing != null)
                 {
-                    CreatedBy = currentUser.Id,
-                    CreatedDateTime = DateTime.Now,
-                    Name = ev.Name,
-                    Description = ev.Description,
-                    StartDateTime = ev.StartDateTime,
-                    EndDateTime = ev.EndDateTime,
-                };
-                await db.Events.AddAsync(newEvent);
-                await db.SaveChangesAsync();
-                return newEvent;
+                    existing.Name = ev.Name;
+                    existing.Description = ev.Description;
+                    existing.StartDateTime = ev.StartDateTime;
+                    existing.EndDateTime = ev.EndDateTime;
+                    db.Update(existing);
+                    await db.SaveChangesAsync();
+                    return existing;
+                }
+                else
+                {
+                    Event newEvent = new()
+                    {
+                        CreatedBy = currentUser.Id,
+                        CreatedDateTime = DateTime.Now,
+                        Name = ev.Name,
+                        Description = ev.Description,
+                        StartDateTime = ev.StartDateTime,
+                        EndDateTime = ev.EndDateTime,
+                    };
+                    await db.Events.AddAsync(newEvent);
+                    await db.SaveChangesAsync();
+                    return newEvent;
+                }
             }
-            else
+            catch (Exception ex)
             {
-                db.Update(existing);
-                await db.SaveChangesAsync();
-                return existing;
+                throw new Exception($"Error creating or updating event: {ex.InnerException?.Message ?? ex.Message}");
             }
+
         }
 
         public async Task<SubmitResponse> AddTeamToEvent(int eventId, int teamId)
         {
             var ev = db.Events.Include(t => t.Teams).Where(e => e.Id.Equals(eventId)).First();
-            var exist = ev.Teams.Where(x => x.Id.Equals(teamId)).FirstOrDefault();
+            var exist = ev.Teams.FirstOrDefault(x => x.Id.Equals(teamId));
             var response = new SubmitResponse
             {
                 Ok = true,
