@@ -3,8 +3,6 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "baseUrl": "./",
-    "outDir": "./dist/out-tsc",
     "strict": true,
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
@@ -19,16 +17,18 @@
     "target": "ES2022",
     "module": "ES2022",
     "paths": {
-      "@environments/*": ["src/environments/*"],
-      "@services/*": ["src/app/_services/*"],
-      "@helpers/*": ["src/app/_helpers/*"],
-      "@models/*": ["src/app/_models/*"],
-      "@shared/*": ["src/app/_shared/*"],
-      "@cms/*": ["src/app/cms/*"],
-      "@admin/*": ["src/app/administration/*"],
-      "@user/*": ["src/app/user/*"],
-      "@pipes/*": ["src/app/_pipes/*"],
-      "@app/*": ["src/app/*"]
+      // A new catch-all that replaces the baseUrl:
+      "*": ["./src/*"],
+      "@environments/*": ["./src/environments/*"],
+      "@services/*": ["./src/app/_services/*"],
+      "@helpers/*": ["./src/app/_helpers/*"],
+      "@models/*": ["./src/app/_models/*"],
+      "@shared/*": ["./src/app/_shared/*"],
+      "@cms/*": ["./src/app/cms/*"],
+      "@admin/*": ["./src/app/administration/*"],
+      "@user/*": ["./src/app/user/*"],
+      "@pipes/*": ["./src/app/_pipes/*"],
+      "@app/*": ["./src/app/*"]
     }
   },
   "angularCompilerOptions": {

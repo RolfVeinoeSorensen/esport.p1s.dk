@@ -12,6 +12,7 @@ services:
       - 4301:80
     volumes:
       - ./Esport.Client/public/uploads:/usr/share/nginx/html/uploads
+    restart: unless-stopped
   esport_backend:
     build:
       context: ./Esport.Backend
@@ -26,6 +27,7 @@ services:
       - 4302:8080
     volumes:
       - ./Esport.Client/public/uploads:/var/opt/uploads
+    restart: unless-stopped
   esport_database:
     build:
       context: ./Esport.Database
@@ -49,6 +51,7 @@ services:
       - ./Esport.MSSQL/secrets:/var/opt/mssql/secrets
     ports:
       - 4303:1433
+    restart: unless-stopped
 volumes:
   esport_mssql:
     driver: local
